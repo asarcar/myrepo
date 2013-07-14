@@ -1,0 +1,66 @@
+# User Specific Changes
+
+#-------------------
+# Personnal Aliases
+#-------------------
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias cpd='cp -av'
+alias mv='mv -i'
+# -> Prevents accidentally clobbering files.
+alias mkdir='mkdir -p'
+
+
+alias h='history'
+alias j='jobs -l'
+alias which='type -a'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# Pretty-print of some PATH variables:
+alias path='echo -e ${PATH//:/\\n}'
+alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
+alias which='which -a'
+
+alias du='du -kh'    # Makes a more readable output.
+alias df='df -kTh'
+
+#-------------------------------------------------------------
+# The 'ls' family (this assumes you use a recent GNU ls).
+#-------------------------------------------------------------
+# Add colors for filetype and  human-readable sizes by default on 'ls':
+alias ls='ls -h --color'
+alias lx='ls -lXB'         #  Sort by extension.
+alias lk='ls -lSr'         #  Sort by size, biggest last.
+alias lt='ls -ltr'         #  Sort by date, most recent last.
+alias lc='ls -ltcr'        #  Sort by/show change time,most recent last.
+alias lu='ls -ltur'        #  Sort by/show access time,most recent last.
+
+# The ubiquitous 'll': directories first, with alphanumeric sorting:
+alias ll="ls -lv --group-directories-first"
+alias lm='ll |more'        #  Pipe through 'more'
+alias lr='ll -R'           #  Recursive ls.
+alias la='ll -A'           #  Show hidden files.
+alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
+
+#-------------------------------------------------------------
+# Spelling typos - highly personnal and keyboard-dependent :-)
+#-------------------------------------------------------------
+
+alias xs='cd'
+alias vf='cd'
+alias moer='more'
+alias moew='more'
+alias kk='ll'
+
+#------------------------------------------------------------
+# Miscellaneous Commands
+#------------------------------------------------------------
+alias rynch='rsynch -avp'
+alias wgr='wget -w 1 -r -np -k -p'
+alias findprocess='ps xw | grep -v "grep" | grep'
+alias win2unix="sed -i 's/\r/\n/g'"
+alias detabifytable="awk -F\"\t\" '{print \$1, \$2, \$3, \$4}'"
+alias lf="ls | xargs head -1"
+alias rmtmp="\rm *~ .*~ *.*~"

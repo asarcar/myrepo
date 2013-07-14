@@ -1,0 +1,16 @@
+# User Specific Changes
+
+# Execute user specific .alias 
+if [ -f $HOME/.env.$USER/.$USER.alias ]; then
+  source $HOME/.env.$USER/.$USER.alias
+fi
+
+# Execute user specific .function 
+if [ -f $HOME/.env.$USER/.$USER.function ]; then
+  source $HOME/.env.$USER/.$USER.function
+fi
+
+# ENVIRONMENT VARIABLES
+
+# PATH Manipulations
+export PATH=.:$HOME/bin:$PATH
