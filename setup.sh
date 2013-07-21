@@ -37,7 +37,7 @@ fi
 if [ -d .env_custom/ ]; then
     mv .env_custom .env_custom~
 fi
-git clone https://github.com/startup-class/dotfiles.git
+# git clone https://github.com/startup-class/dotfiles.git
 ln -sb dotfiles/.screenrc .
 ln -sb dotfiles/.bash_profile .
 ln -sb dotfiles/.bashrc .
@@ -45,3 +45,20 @@ ln -sb dotfiles/.bashrc_custom .
 ln -sf dotfiles/.emacs.d .
 ln -sf dotfiles/.env_custom .
 
+# -----------------------------------------------------
+
+# ORY Common Development Libraries 
+
+# Install latest gcc 
+sudo apt-get install -y gcc
+
+# Install common C++ packages: boost
+sudo apt-get install -y libboost-all-dev
+
+# Install latest compile accelerators
+sudo apt-get install -y cmake distcc ccache
+
+# Install common google packages
+sudo apt-get install -y libprotobuf-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev
+
+# -----------------------------------------------------
