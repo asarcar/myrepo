@@ -1,0 +1,12 @@
+Host heroku.com
+Hostname heroku.com 
+Port 22 
+IdentitiesOnly yes 
+IdentityFile ~/.ssh/id_dsa.aws
+TCPKeepAlive yes 
+User sarcar_a@yahoo.com
+
+Host github.com
+Hostname github.com
+Port 22
+IdentityFile ~/.ssh/id_dsa.github

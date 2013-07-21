@@ -1,0 +1,11 @@
+[user]
+	name = Arijit Ory Sarcar
+	email = sarcar_a@yahoo.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[core]
+	excludesfile = /home/ubuntu/.gitignore
+[push]
+	default = tracking
