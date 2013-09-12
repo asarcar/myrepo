@@ -63,4 +63,4 @@ alias findprocess='ps xw | grep -v "grep" | grep'
 alias win2unix="sed -i 's/\r/\n/g'"
 alias detabifytable="awk -F\"\t\" '{print \$1, \$2, \$3, \$4}'"
 alias lf="ls | xargs head -1"
-alias rmtmp="\rm *~ .*~ *.*~"
+alias rmtmp="\rm *~ .*~ *.*~ *.pyc"
