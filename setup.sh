@@ -38,6 +38,13 @@ sudo apt-get install -y rlwrap
 ###############################
 sudo apt-get install -y pychecker
 
+##########################
+# R related installation #
+##########################
+sudo apt-get install -y r-base
+# Install ESS: R code within emacs
+sudo apt-get install -y ess
+
 # install dotfiles
 # move prior incarnation of dotfiles to an old directory
 pushd $HOME
@@ -67,10 +74,11 @@ ln -sb dotfiles/.gitignore .
 ln -sb dotfiles/.sshconfig_custom .ssh/config
 ln -sf dotfiles/.emacs.d .
 ln -sf dotfiles/.env_custom .
+ln -sf dotfiles/.Rprofile .
 popd
 # -----------------------------------------------------
 
-# ORY Common Development Libraries 
+# Common C++ Development Libraries 
 
 # Install latest gcc 
 sudo apt-get install -y gcc
@@ -82,6 +90,7 @@ sudo apt-get install -y libboost-all-dev
 sudo apt-get install -y cmake distcc ccache
 
 # Install common google packages
+# libgoogle-perftools-dev includes tcmalloc
 sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev
 
 # Google libgtest-dev static libraries not installed as binary: Build it
@@ -96,3 +105,11 @@ popd
 # Google libgoogle-glog-dev and libgflags-dev not available for Ubuntu 12.04
 
 # -----------------------------------------------------
+
+# -----------------------------------------------------
+
+# Common R Packaages ----------------------------------
+
+# Install latest packages not available in binary distribution by executing install within R
+R -e "install.packages(\"pysch\")"
+
