@@ -111,5 +111,5 @@ popd
 # Common R Packaages ----------------------------------
 
 # Install latest packages not available in binary distribution by executing install within R
-R -e "install.packages(\"pysch\")"
+R -e "install.packages(\"pysch\"); install.packages(\"sm\");"
 
