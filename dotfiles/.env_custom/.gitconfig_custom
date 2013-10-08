@@ -6,6 +6,6 @@
 	status = auto
 	branch = auto
 [core]
-	excludesfile = /home/ubuntu/.gitignore
+	excludesfile = ~/.gitignore
 [push]
 	default = tracking
