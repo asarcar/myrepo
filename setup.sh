@@ -68,13 +68,12 @@ pushd $HOME
 ln -sb dotfiles/.screenrc .
 ln -sb dotfiles/.bash_profile .
 ln -sb dotfiles/.bashrc .
-ln -sb dotfiles/.bashrc_custom .
-ln -sb dotfiles/.gitconfig_custom .gitconfig
-ln -sb dotfiles/.gitignore .
-ln -sb dotfiles/.sshconfig_custom .ssh/config
 ln -sf dotfiles/.emacs.d .
-ln -sf dotfiles/.env_custom .
 ln -sf dotfiles/.Rprofile .
+ln -sb dotfiles/.gitignore .
+ln -sf dotfiles/.env_custom .
+ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
+ln -sb dotfiles/.env_custom/.sshconfig_custom .ssh/config
 popd
 # -----------------------------------------------------
 

@@ -1,13 +1,13 @@
 # User Specific Changes
 
 # Execute user specific .alias 
-if [ -f $HOME/.env.$USER/.$USER.alias ]; then
-  source $HOME/.env.$USER/.$USER.alias
+if [ -f $HOME/.env_custom/.alias_custom ]; then
+  source $HOME/.env_custom/.alias_custom
 fi
 
 # Execute user specific .function 
-if [ -f $HOME/.env.$USER/.$USER.function ]; then
-  source $HOME/.env.$USER/.$USER.function
+if [ -f $HOME/.env_custom/.function_custom ]; then
+  source $HOME/.env_custom/.function_custom
 fi
 
 # ENVIRONMENT VARIABLES
