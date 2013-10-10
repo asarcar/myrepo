@@ -1,0 +1,52 @@
+******************************
+********** CSCOPE ************
+******************************
+
+* Edit your init.el file and add the xcscope:
+(require 'xcscope)
+(setq cscope-do-not-update-database t)
+
+* To create a cscope database for your code files:
+** EMACS: Navigate to the topmost direcory (under which all your code directories of current project are) 
+   in emacs (using C-x,C-f) and type C-c s I. 
+   This should create the files cscope.out and cscope.files.
+** SHELL: Create project-name.files & cscope-DB in any dir $DIR and for any project $PROJ
+   > cd $DIR
+   > find . -name *.[chR] -o -name *.cc -o -name *.cpp -o -name *.py -o -name *.php -o -name *.txt > $PROJ.files
+   > cscope -q -b -R -i $PROJ.files
+   > in-emacs-editor> "M-x cs8cope-set-initial-director $DIR"
+
+* Key Bindings	   
+  C-c s s Find symbol.
+  C-c s d Find global definition.
+  C-c s g Find global definition (alternate binding).
+  C-c s G Find global definition without prompting.
+  C-c s c Find functions calling a function.
+  C-c s C Find called functions (list functions called from a function).
+  C-c s t Find text string.
+  C-c s e Find egrep pattern.
+  C-c s f Find a file.
+  C-c s i Find files #including a file.
+
+* Navigate the cscope search results:
+  C-c s n Next symbol.
+  C-c s N Next file.
+  C-c s p Previous symbol.
+  C-c s P Previous file.
+  C-c s u Pop Mark #* Return to the point from where you jumped using
+
+*****************************
+********** ETAGS ************
+*****************************
+
+* SHELL: Create project-name.files & etags-DB in any dir $DIR and for any project $PROJ
+   > cd $DIR
+   > find . -name *.[chR] -o -name *.cc -o -name *.cpp -o -name *.py -o -name *.php -o -name *.txt > $PROJ.files
+   > cat $PROJ.files | xargs etags -a -o $PROJ.TAGS # creates TAGS file
+
+* Key Bindings 
+  M-.       goes to the symbol definition
+  M-0 M-.   goes to the next matching definition
+  M-*       return to your starting point
+  M-x tags-search <type your regexp>       initiate a search for all: declaration, definition, and invocations
+  M-,                                      go to the next match

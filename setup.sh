@@ -11,6 +11,9 @@ sudo apt-add-repository -y ppa:cassou/emacs
 sudo apt-get update
 sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
 
+# Install cscope
+sudo apt-get install -y cscope cscope-el
+
 ###################################
 # JAVASCRIPT related installation #
 ###################################

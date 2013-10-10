@@ -251,3 +251,62 @@ kill_process () {
     echo -e "Killing process $@\nProcess Number: "`ps xw | grep "$@" | cut -f2 -d ' ' | head -1`" killed!";
     kill `ps xw | grep "$@" | cut -f2 -d ' ' | head -1`;
 }
+
+#-------------------------------------------------------------
+# Source Code Utilities:
+#-------------------------------------------------------------
+file_ext="-name *.[chRCH] -o -name *.cc -o -name *.cpp -o -name *.c++ -o -name *.hh -o -name *.hpp -o -name *.h++ -o -name *.java -o -name *.py -o -name *.php -o -name *.js -o -name *.html -o -name *.txt"
+# Count number of lines of code in the directory $1 and (optionally) with extension $2
+proj_lc() {
+    local tmp=$file_ext
+
+    # Usage Validation
+    if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+        echo "Usage: proj_lc code-directory [file-extension]"
+        return;
+    fi
+
+    # Extension provided: just count files matching that extension
+    if [ "$#" -eq 2 ]; then
+        tmp="-name *.$2"
+    fi
+
+    find $1 $tmp | xargs wc -l
+}
+
+# Create project DB: cscope and etags DB for code in directory $1, put the DB in directory $2, and (optionally) only for files with extension $3 
+proj_db() {
+    local tmp=$file_ext
+    local dirname=""
+    local filename=""
+    local tagfilename=""
+    local codedbdir=""
+
+    # Usage Validation
+    if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
+        echo "Usage: proj_db proj-directory browse-index-db-directory [file-extension]"
+        return;
+    fi
+
+    # Extract the last part of the project directory path - use as base for db files 
+    dirname="${1##*/}"
+    filename="$dirname.files"
+    tagfilename="$dirname.TAGS"
+    codedbdir="$2/$dirname"
+
+    # Create extension specific file list and TAGS DB: does not help cscope 
+    # as only one file prefix is used in cscope case
+    if [ "$#" -eq 3 ]; then
+        tmp="-name *.$3"
+        filename="${1##*/}-$3.files"
+        tagfilename="${1##*/}-$3.TAGS"
+    fi
+
+    # Move into the directory where we will build the code browse index-db
+    mkdir -p $codedbdir
+    pushd $codedbdir
+    find $1 $tmp >| $filename
+    cscope -q -b -R -i $filename
+    cat $filename | xargs etags -a -o $tagfilename
+    popd
+}
