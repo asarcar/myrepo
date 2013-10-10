@@ -224,4 +224,7 @@ fi
 ## ------------------------------
 
 ## Define any user-specific variables you want here.
-source ~/dotfiles/.bashrc_custom
+# encapsulate all changes in custom specific .bashrc 
+if [ -f $HOME/.env_custom/.bashrc_custom ]; then
+  source $HOME/.env_custom/.bashrc_custom
+fi
