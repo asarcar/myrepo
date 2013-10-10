@@ -37,3 +37,8 @@
 (global-set-key (kbd "C-?") 'backward-kill-word)
 ;; BACKSPACE should delete backward & DEL should delete forward
 (normal-erase-is-backspace-mode 0)
+
+;; CSCOPE
+;; Load cscope support
+(require 'xcscope)
+(setq cscope-do-not-update-database t)
