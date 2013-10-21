@@ -110,14 +110,15 @@ popd
 
 # -----------------------------------------------------
 
-# Common R Packaages ----------------------------------
+# Common R Packages ----------------------------------
 
-# Install latest packages not available in binary distribution by executing install within R
-R -e "install.packages(c('pysch', 'sm', 'gclus'))"
 # Installation of rgl package gave error:
 # > "configure: error: missing required header GL/gl.h...
 # >  * removing ‘/home/asarcar/R/x86_64-pc-linux-gnu-library/2.15/rgl’"
 # Hence used the ubuntu binary distribution:
 sudo apt-get install -y r-cran-rgl
 
+# Install latest packages not available in binary distribution by executing install within R
+R -e "install.packages(c('pysch', 'sm', 'gclus', 'ggplot2'))"
 
+# -----------------------------------------------------
