@@ -68,6 +68,11 @@ install_manifest.txt
 *.tar
 *.zip
 
+###########################
+# Package Generated filed #
+###########################
+.Rhistory
+
 #######################
 # Logs and databases #
 ######################
