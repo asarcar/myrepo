@@ -2,7 +2,7 @@
 Host aws
 HostName ec2-54-201-14-195.us-west-2.compute.amazonaws.com
 User ubuntu
-IdentityFile ~/.ssh/asarcar-start-up-engineering-1.pem
+IdentityFile ~/.ssh/aws.pem
 
 # Juniper
 Host ipg-1
