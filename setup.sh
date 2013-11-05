@@ -2,7 +2,18 @@
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 # for headless setup. 
 
-# https://github.com/creationix/nvm
+# Validate that the command is executed where setup.sh and 
+# dotfiles are available: else terminate execution of script
+# and spew out a WARNING sign and exit
+if [ ! -f setup.sh ]; then
+    echo "Execute setup.sh from the directory where setup.sh exists"
+    exit 2  
+fi
+if [ ! -d dotfiles ]; then
+    echo "Execute setup.sh from the directory where dotfiles exists"
+    exit 2  
+fi
+
 sudo apt-get install -y git-core
 
 # Install emacs24
@@ -60,9 +71,10 @@ fi
 if [ -d .env_custom/ ]; then
     mv .env_custom .env_custom~
 fi
-if [ (-d .ssh/) -a ( -a .ssh/config]; then
+if [ [-d .ssh/ ] -a [ -f .ssh/config] ]; then
     mv .ssh/config .ssh/config.old
 fi
+# pop out of $HOME directory
 popd
 
 # Copy the new dotfiles inside this git directory to $HOME
@@ -76,7 +88,7 @@ ln -sf dotfiles/.Rprofile .
 ln -sb dotfiles/.gitignore .
 ln -sf dotfiles/.env_custom .
 ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
-ln -sb dotfiles/.env_custom/.sshconfig_custom .ssh/config
+ln -sb ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
 popd
 # -----------------------------------------------------
 
@@ -118,7 +130,10 @@ popd
 # Hence used the ubuntu binary distribution:
 sudo apt-get install -y r-cran-rgl
 
-# Install latest packages not available in binary distribution by executing install within R
-R -e "install.packages(c('pysch', 'sm', 'gclus', 'ggplot2'))"
-
+# R Package Installation is very unstable: for now commenting out the directory
+## Install latest packages not available in binary distribution by executing install within R
+# mkdir -p R
+## TODO: current all libraries for all R versions and 
+## for all architectures will go in same directory
+# R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/R')"
 # -----------------------------------------------------

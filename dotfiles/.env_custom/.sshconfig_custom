@@ -1,11 +1,42 @@
+# AWS-12.04 LTS
+Host aws-1
+HostName ec2-54-213-20-89.us-west-2.compute.amazonaws.com
+User ubuntu
+IdentityFile ~/.ssh/asarcar-start-up-engineering-1.pem
+
+# AWS-13.1
+Host aws
+HostName ec2-54-200-236-45.us-west-2.compute.amazonaws.com
+User ubuntu
+IdentityFile ~/.ssh/asarcar-start-up-engineering-1.pem
+
+# Juniper
+Host ipg-1
+HostName ipg-lnx-shell1.juniper.net
+User asarcar
+IdentityFile ~/.ssh/id_dsa.juniper
+
+Host ipg-2
+HostName ipg-lnx-shell2.juniper.net
+User asarcar
+IdentityFile ~/.ssh/id_dsa.juniper
+
+Host qosmos
+HostName 10.157.44.9
+User root
+IdentityFile ~/.ssh/id_dsa.qosmos.juniper
+
+# Heroku
 Host heroku.com
 Hostname heroku.com 
 Port 22 
 IdentitiesOnly yes 
-IdentityFile ~/.ssh/id_dsa.aws
+# IdentityFile ~/.ssh/id_dsa.aws
+IdentityFile ~/.ssh/id_dsa.sw-pub-dev
 TCPKeepAlive yes 
 User sarcar_a@yahoo.com
 
+# GitHub
 Host github.com
 Hostname github.com
 Port 22
