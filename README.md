@@ -43,10 +43,15 @@ pushd $HOME/git
 git clone git@github.com:asarcar/myrepo.git
 
 #***************
-# 5.
+# 5. Execute the installation script inside a screen session so that you 
+#    monitor the progress from any place
+screen -S dev-ops
+
 pushd $HOME/git/myrepo/
 ./setup.sh   
 popd # pop out of myrepo folder
+
+# exit the screen session if you so desire now that the job is complete
 #***************
 
 popd # pop out of git folder
