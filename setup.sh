@@ -52,6 +52,11 @@ sudo apt-get install -y rlwrap
 ###############################
 sudo apt-get install -y pychecker
 
+###############################
+# HEROKU related installation #
+###############################
+wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
 ##########################
 # R related installation #
 ##########################

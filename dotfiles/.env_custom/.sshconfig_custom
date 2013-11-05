@@ -1,12 +1,6 @@
-# AWS-12.04 LTS
-Host aws-1
-HostName ec2-54-213-20-89.us-west-2.compute.amazonaws.com
-User ubuntu
-IdentityFile ~/.ssh/asarcar-start-up-engineering-1.pem
-
-# AWS-13.1
+# AWS-13.10
 Host aws
-HostName ec2-54-200-236-45.us-west-2.compute.amazonaws.com
+HostName ec2-54-201-14-195.us-west-2.compute.amazonaws.com
 User ubuntu
 IdentityFile ~/.ssh/asarcar-start-up-engineering-1.pem
 
@@ -31,8 +25,7 @@ Host heroku.com
 Hostname heroku.com 
 Port 22 
 IdentitiesOnly yes 
-# IdentityFile ~/.ssh/id_dsa.aws
-IdentityFile ~/.ssh/id_dsa.sw-pub-dev
+IdentityFile ~/.ssh/id_dsa.heroku
 TCPKeepAlive yes 
 User sarcar_a@yahoo.com
 

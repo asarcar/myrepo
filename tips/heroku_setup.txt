@@ -1,0 +1,28 @@
+**************************************
+********** LOGIN & ACCESS ************
+**************************************
+which heroku # validate heroku is installed
+heroku auth:login
+# Enter user:passwd
+# Generate keys if not created: ssh-keygen -t dsa -f ~/.ssh/id_dsa.heroku
+heroku keys:add ~/.ssh/id_dsa.heroku.pub
+
+****************************************
+********* CLEAN JUNK APPS **************
+****************************************
+heroku apps      # List of apps
+heroku apps:info # Detailed info on app name
+heroku apps:destroy -a <app_name> --confirm <app_name> # Destroy the app
+
+****************************************
+********** SET UP BASIC APP ************
+****************************************
+pushd $MY_GIT_DIR
+git clone https://github.com/heroku/node-js-sample.git
+cd node-js-sample/
+# Create Heroku URL: e.g. http://guarded-hamlet-9972.herokuapp.com
+heroku create
+git push heroku master
+# Voila App is available in the browser
+heroku apps:info <app_name> # confirm the app is loaded and available
+popd
