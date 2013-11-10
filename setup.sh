@@ -110,7 +110,7 @@ sudo apt-get install -y cmake distcc ccache
 
 # Install common google packages
 # libgoogle-perftools-dev includes tcmalloc
-sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev
+sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
 
 # Google libgtest-dev static libraries not installed as binary: Build it
 pushd /tmp
@@ -120,10 +120,6 @@ sudo cmake -DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/
 sudo make
 sudo mv libg* /usr/lib
 popd
-
-# Google libgoogle-glog-dev and libgflags-dev not available for Ubuntu 12.04
-
-# -----------------------------------------------------
 
 # -----------------------------------------------------
 
