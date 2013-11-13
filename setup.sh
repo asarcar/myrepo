@@ -16,6 +16,9 @@ fi
 
 sudo apt-get install -y git-core
 
+# Install gdb
+sudo apt-get install -y gdb
+
 # Install emacs24
 # https://launchpad.net/~cassou/+archive/emacs
 sudo apt-add-repository -y ppa:cassou/emacs
