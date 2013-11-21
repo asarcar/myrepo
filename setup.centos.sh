@@ -86,7 +86,9 @@ ln -sf dotfiles/.Rprofile .
 ln -sb dotfiles/.gitignore .
 ln -sf dotfiles/.env_custom .
 ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
-ln -sb ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
+# ln messes up the permission of .ssh/config file - cp instead
+# ln -sb ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
+cp ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
 popd
 # -----------------------------------------------------
 
