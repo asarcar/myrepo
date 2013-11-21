@@ -56,6 +56,9 @@ sudo service memcached stop
 sudo service memcached start
 #    Validate the service is up
 # > echo "stats settings" | nc 192.168.0.1 11211
+# > memcached-tool 192.168.0.1:11211 
+# 4. Install the client side library to exercise memcached
+sudo yum install -y libmemcached
 
 # install dotfiles
 # move prior incarnation of dotfiles to an old directory
@@ -97,11 +100,11 @@ popd
 # gcc - already installed 
 # Install common C++ packages: libboost-all-dev: NOT available in yum 
 # Install latest compile accelerators: distcc: NOT available in yum
-yum install -y cmake ccache
+sudo yum install -y cmake ccache
 
 # Install common google packages: NONE of the below mentioned are available in yum 
-# libgoogle-perftools-dev libprotobuf-dev libgtest-dev libgoogle-perftools-dev 
+# libgoogle-perftools-dev libgtest-dev libgoogle-perftools-dev 
 # libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
-
+sudo yum install -y protobuf
 # -----------------------------------------------------
 
