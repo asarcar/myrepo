@@ -4,22 +4,6 @@ HostName ec2-54-201-14-195.us-west-2.compute.amazonaws.com
 User ubuntu
 IdentityFile ~/.ssh/aws.pem
 
-# Juniper
-Host ipg-1
-HostName ipg-lnx-shell1.juniper.net
-User asarcar
-IdentityFile ~/.ssh/id_dsa.juniper
-
-Host ipg-2
-HostName ipg-lnx-shell2.juniper.net
-User asarcar
-IdentityFile ~/.ssh/id_dsa.juniper
-
-Host qosmos
-HostName 10.157.44.9
-User root
-IdentityFile ~/.ssh/id_dsa.qosmos.juniper
-
 # Heroku
 Host heroku.com
 Hostname heroku.com 
@@ -34,3 +18,54 @@ Host github.com
 Hostname github.com
 Port 22
 IdentityFile ~/.ssh/id_dsa.github
+
+# Juniper
+Host ipg-1
+HostName ipg-lnx-shell1.juniper.net
+User asarcar
+IdentityFile ~/.ssh/id_dsa.juniper
+
+Host ipg-2
+HostName ipg-lnx-shell2.juniper.net
+User asarcar
+IdentityFile ~/.ssh/id_dsa.juniper
+
+Host qosmos
+HostName 10.157.44.9
+User root
+IdentityFile ~/.ssh/id_dsa.juniper
+
+Host ssd-1
+HostName esbu-vse2100-6.englab.juniper.net
+User root
+IdentityFile ~/.ssh/id_dsa.juniper
+
+Host ssd-2
+HostName esbu-vse2100-7.englab.juniper.net
+User root
+IdentityFile ~/.ssh/id_dsa.juniper
+
+Host ssd-git.juniper.net
+HostName ssd-git.juniper.net
+User asarcar
+IdentityFile ~/.ssh/id_dsa.juniper
+
+# CDBU Server: svl-junos-pool118.juniper.net
+Host cdbu
+HostName svl-junos-pool118.juniper.net
+User asarcar
+IdentityFile ~/.ssh/id_dsa.juniper
+ 
+# CTO LAB SERVERS
+# Host Network Adapter Servers: HostNetworkAdapter-1/2
+Host hna-1
+HostName 10.83.252.236
+User asarcar
+IdentityFile ~/.ssh/id_dsa.juniper
+
+Host hna-2
+HostName 10.83.252.237
+User asarcar
+IdentityFile ~/.ssh/id_dsa.juniper
+
+
