@@ -14,9 +14,21 @@ if [ ! -d dotfiles ]; then
     exit 2  
 fi
 
-sudo apt-get install -y git-core
+####################
+# Common Utilities #
+####################
+# screen: multiple work sessions on a terminal
 
-# Install gdb
+sudo yum install -y rlwrap
+# Install screen
+sudo apt-get install -y screen 
+# rlwrap: command completion and history
+sudo apt-get install -y rlwrap
+# iftop: Command line tool that displays bandwidth usage on an interface
+sudo apt-get install -y iftop
+# git: distributed version control system
+sudo apt-get install -y git-core
+# gdb: GNU debugger
 sudo apt-get install -y gdb
 
 # Install emacs24
@@ -118,6 +130,7 @@ sudo apt-get install -y cmake distcc ccache
 sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
 
 # Google libgtest-dev static libraries not installed as binary: Build it
+# Still required with Ubuntu 13.10+
 pushd /tmp
 mkdir -p .build
 cd .build

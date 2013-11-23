@@ -33,8 +33,20 @@ fi
 # > service network restart
 #   Validate the ethernet ports are correctly set and configured
 # > ethtool eth<n> 
-# Install screen
+
+# Upgrade to the latest packages: remove obsoleted packages
+sudo yum upgrade
+
+####################
+# Common Utilities #
+####################
+# screen: multiple work sessions on a terminal
 sudo yum install -y screen 
+# rlwrap: command completion and histor
+sudo yum install -y rlwrap
+# iftop: Command line tool that displays bandwidth usage on an interface
+sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+sudo yum install -y iftop
 
 # Install Git - installed by default
 # Install gdb - installed by default
@@ -43,22 +55,20 @@ sudo yum install -y screen
 
 # Install memcached
 # 1. Install Remi dependency on Centos
-sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
-sudo rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-5.rpm
-sudo yum --enablerepo=remi install -y memcached
 # 2. Ensure that configuration options are correctly set
 # > nano -w /etc/sysconfig/memcached
 #   CACHESIZE='8192'; OPTIONS="-l 192.168.0.1"
 # 3. Start the memcached service on bootup and 
 #    start it now as well (for idempotency stop the service before starting)
+sudo yum install -y memcached-devel
 sudo chkconfig memcached on
 sudo service memcached stop
 sudo service memcached start
 #    Validate the service is up
 # > echo "stats settings" | nc 192.168.0.1 11211
 # > memcached-tool 192.168.0.1:11211 
-# 4. Install the client side library to exercise memcached
-sudo yum install -y libmemcached
+# 4. Install the client side library to exercise memcached: libmemcached
+sudo yum install -y libmemcached-devel
 
 # install dotfiles
 # move prior incarnation of dotfiles to an old directory
@@ -74,6 +84,10 @@ if [ -d .env_custom/ ]; then
 fi
 if [ [-d .ssh/ ] -a [ -f .ssh/config] ]; then
     mv .ssh/config .ssh/config.old
+fi
+# Centos seems to create a .emacs file by default
+if [ -f .emacs ]; then
+    mv .emacs .emacs.old
 fi
 # pop out of $HOME directory
 popd
@@ -106,5 +120,27 @@ sudo yum install -y cmake ccache
 # libgoogle-perftools-dev libgtest-dev libgoogle-perftools-dev 
 # libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
 sudo yum install -y protobuf
+
+# Google Flags: Not available via binary yum: install gflags-2.0 (dependency on gflags-devel) 
+# and gflags-devel-2.0 via RPM
+sudo rpm -Uvh https://gflags.googlecode.com/files/gflags-2.0-1.amd64.rpm https://gflags.googlecode.com/files/gflags-devel-2.0-1.amd64.rpm
+# Google Log: Not available via binary yum: install glog-2.0 (dependency on glog-devel) 
+# and glog-devel via RPM
+pushd /tmp
+wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.g
+tar xzvf glog-0.3.3.tar.gz
+cd glog-0.3.3
+export CMAKE_PREFIX_PATH=/usr
+cd google-glog
+./configure --prefix=$CMAKE_PREFIX_PATH
+make
+sudo make install
+popd
+# Libraries are installed in lib instead of lib64: make sure it is added to lib64
+# 1. Add /usr/lib to a conf file in ld.so.conf.d directory: we create a new google-libs.conf
+echo "/usr/lib" | sudo tee /etc/ld.so.conf.d/google-libs.conf > /dev/null
+# 2. Re-Run ldconfig to load this library as well
+sudo ldconfig
+
 # -----------------------------------------------------
 
