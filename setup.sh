@@ -17,19 +17,58 @@ fi
 #############
 # UTILITIES #
 #############
+sudo yum install -y rlwrap
+# Install screen
+sudo apt-get install -y screen 
+# rlwrap: command completion and history
+sudo apt-get install -y rlwrap
+# iftop: Command line tool that displays bandwidth usage on an interface
+sudo apt-get install -y iftop
+# git: distributed version control system
 sudo apt-get install -y git-core
+# dos2unix: removed CR & LF in dos files to LF for unix
+sudo apt-get install -y dos2unix
 
+############################
+# SW Development Utilities #
+############################
+# -----------------------------------------------------
 # Install emacs24
 # https://launchpad.net/~cassou/+archive/emacs
 sudo apt-add-repository -y ppa:cassou/emacs
 sudo apt-get update
 sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
-
 # Install cscope
 sudo apt-get install -y cscope cscope-el
+# gdb: GNU debugger
+sudo apt-get install -y gdb
+# -----------------------------------------------------
 
-# dos2unix: removed CR & LF in dos files to LF for unix
-sudo apt-get install -y dos2unix
+# -----------------------------------------------------
+# Common C++ Development Libraries 
+# Install latest gcc 
+sudo apt-get install -y gcc
+
+# Install common C++ packages: boost
+sudo apt-get install -y libboost-all-dev
+
+# Install latest compile accelerators
+sudo apt-get install -y cmake distcc ccache
+
+# Install common google packages
+# libgoogle-perftools-dev includes tcmalloc
+sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
+
+# Google libgtest-dev static libraries not installed as binary: Build it
+# Still required with Ubuntu 13.10+
+pushd /tmp
+mkdir -p .build
+cd .build
+sudo cmake -DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/
+sudo make
+sudo mv libg* /usr/lib
+popd
+# -----------------------------------------------------
 
 ###################################
 # JAVASCRIPT related installation #
@@ -66,10 +105,27 @@ wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 ##########################
 # R related installation #
 ##########################
+# -----------------------------------------------------
 sudo apt-get install -y r-base
 # Install ESS: R code within emacs
 sudo apt-get install -y ess
+# Common R Packages ----------------------------------
 
+# Installation of rgl package gave error:
+# > "configure: error: missing required header GL/gl.h...
+# >  * removing ‘/home/asarcar/R/x86_64-pc-linux-gnu-library/2.15/rgl’"
+# Hence used the ubuntu binary distribution:
+sudo apt-get install -y r-cran-rgl
+
+# R Package Installation is very unstable: for now commenting out the directory
+## Install latest packages not available in binary distribution by executing install within R
+# mkdir -p R
+## TODO: current all libraries for all R versions and 
+## for all architectures will go in same directory
+# R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/R')"
+# -----------------------------------------------------
+
+# -----------------------------------------------------
 # install dotfiles
 # move prior incarnation of dotfiles to an old directory
 pushd $HOME
@@ -99,48 +155,9 @@ ln -sf dotfiles/.Rprofile .
 ln -sb dotfiles/.gitignore .
 ln -sf dotfiles/.env_custom .
 ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
-ln -sb ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
+# ln messes up the permission of .ssh/config file - cp instead
+# ln -sb ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
+cp ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
 popd
 # -----------------------------------------------------
 
-# Common C++ Development Libraries 
-
-# Install latest gcc 
-sudo apt-get install -y gcc
-
-# Install common C++ packages: boost
-sudo apt-get install -y libboost-all-dev
-
-# Install latest compile accelerators
-sudo apt-get install -y cmake distcc ccache
-
-# Install common google packages
-# libgoogle-perftools-dev includes tcmalloc
-sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
-
-# Google libgtest-dev static libraries not installed as binary: Build it
-pushd /tmp
-mkdir -p .build
-cd .build
-sudo cmake -DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/
-sudo make
-sudo mv libg* /usr/lib
-popd
-
-# -----------------------------------------------------
-
-# Common R Packages ----------------------------------
-
-# Installation of rgl package gave error:
-# > "configure: error: missing required header GL/gl.h...
-# >  * removing ‘/home/asarcar/R/x86_64-pc-linux-gnu-library/2.15/rgl’"
-# Hence used the ubuntu binary distribution:
-sudo apt-get install -y r-cran-rgl
-
-# R Package Installation is very unstable: for now commenting out the directory
-## Install latest packages not available in binary distribution by executing install within R
-# mkdir -p R
-## TODO: current all libraries for all R versions and 
-## for all architectures will go in same directory
-# R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/R')"
-# -----------------------------------------------------
