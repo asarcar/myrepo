@@ -14,6 +14,9 @@ if [ ! -d dotfiles ]; then
     exit 2  
 fi
 
+#############
+# UTILITIES #
+#############
 sudo apt-get install -y git-core
 
 # Install emacs24
@@ -24,6 +27,9 @@ sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
 
 # Install cscope
 sudo apt-get install -y cscope cscope-el
+
+# dos2unix: removed CR & LF in dos files to LF for unix
+sudo apt-get install -y dos2unix
 
 ###################################
 # JAVASCRIPT related installation #
