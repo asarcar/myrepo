@@ -14,29 +14,87 @@ if [ ! -d dotfiles ]; then
     exit 2  
 fi
 
+#
+# Machine Setup: Assumed that Machine Setup instructions have been executed: refer to 
+# tips/system_commands.txt
+#
+
 # Upgrade to the latest packages: remove obsoleted packages
 sudo yum upgrade
 
-####################
-# Common Utilities #
-####################
+#############
+# UTILITIES #
+#############
+# rlwrap: command completion and history 
+sudo yum install -y rlwrap
 # screen: multiple work sessions on a terminal
 sudo yum install -y screen 
-# rlwrap: command completion and histor
-sudo yum install -y rlwrap
 # iftop: Command line tool that displays bandwidth usage on an interface
 sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 sudo yum install -y iftop
+# git: distributed version control system
+# Install git-core - installed by default
+# dos2unix: removed CR & LF in dos files to LF for unix
+sudo yum install -y dos2unix
+# lshw: Hardware Lister
+sudo yum install -y lshw
+# hwloc/lstopo: provides a portable abstraction of hierarchical architectures 
+sudo yum install -y hwloc
 # sysstat: sar (system activity report) and iostat monitoring commands
 sudo yum install -y sysstat
 # telnet client
 sudo yum install -y telnet
 
-# Install Git - installed by default
-# Install gdb - installed by default
+############################
+# SW Development Utilities #
+############################
+# -----------------------------------------------------
 # Install emacs24 - emacs23 available as binary package - emacs24 not yet available as binary
 # Install cscope - installed by default
+# Install gdb - installed by default
+# https://launchpad.net/~cassou/+archive/emacs
+# -----------------------------------------------------
 
+# -----------------------------------------------------
+# Common C++ Development Libraries 
+#
+# Install latest gcc - already installed 
+
+# Install latest compile accelerators: distcc: NOT available in yum
+
+# Install common C++ packages: libboost-all-dev: NOT available in yum 
+sudo yum install -y cmake ccache
+
+# Install common google packages: NONE of the below mentioned are available in yum 
+# libgoogle-perftools-dev libgtest-dev libgoogle-perftools-dev 
+# libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
+sudo yum install -y protobuf
+
+# Google Flags: Not available via binary yum: install gflags-2.0 (dependency on gflags-devel) 
+# and gflags-devel-2.0 via RPM
+sudo rpm -Uvh https://gflags.googlecode.com/files/gflags-2.0-1.amd64.rpm https://gflags.googlecode.com/files/gflags-devel-2.0-1.amd64.rpm
+# Google Log: Not available via binary yum: install glog-2.0 (dependency on glog-devel) 
+# and glog-devel via RPM
+pushd /tmp
+wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.g
+tar xzvf glog-0.3.3.tar.gz
+cd glog-0.3.3
+export CMAKE_PREFIX_PATH=/usr
+cd google-glog
+./configure --prefix=$CMAKE_PREFIX_PATH
+make
+sudo make install
+popd
+# Libraries are installed in lib instead of lib64: make sure it is added to lib64
+# 1. Add /usr/lib to a conf file in ld.so.conf.d directory: we create a new google-libs.conf
+echo "/usr/lib" | sudo tee /etc/ld.so.conf.d/google-libs.conf > /dev/null
+# 2. Re-Run ldconfig to load this library as well
+sudo ldconfig
+# -----------------------------------------------------
+
+###################
+# SW Applications #
+###################
 # Install memcached
 # 1. Install Remi dependency on Centos
 # 2. Ensure that configuration options are correctly set
@@ -54,6 +112,9 @@ sudo service memcached start
 # 4. Install the client side library to exercise memcached: libmemcached
 sudo yum install -y libmemcached-devel
 
+########################
+# Personal Environment #
+########################
 # install dotfiles
 # move prior incarnation of dotfiles to an old directory
 pushd $HOME
@@ -93,38 +154,4 @@ cp ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
 popd
 # -----------------------------------------------------
 
-# Common C++ Development Libraries 
-
-# gcc - already installed 
-# Install common C++ packages: libboost-all-dev: NOT available in yum 
-# Install latest compile accelerators: distcc: NOT available in yum
-sudo yum install -y cmake ccache
-
-# Install common google packages: NONE of the below mentioned are available in yum 
-# libgoogle-perftools-dev libgtest-dev libgoogle-perftools-dev 
-# libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
-sudo yum install -y protobuf
-
-# Google Flags: Not available via binary yum: install gflags-2.0 (dependency on gflags-devel) 
-# and gflags-devel-2.0 via RPM
-sudo rpm -Uvh https://gflags.googlecode.com/files/gflags-2.0-1.amd64.rpm https://gflags.googlecode.com/files/gflags-devel-2.0-1.amd64.rpm
-# Google Log: Not available via binary yum: install glog-2.0 (dependency on glog-devel) 
-# and glog-devel via RPM
-pushd /tmp
-wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.g
-tar xzvf glog-0.3.3.tar.gz
-cd glog-0.3.3
-export CMAKE_PREFIX_PATH=/usr
-cd google-glog
-./configure --prefix=$CMAKE_PREFIX_PATH
-make
-sudo make install
-popd
-# Libraries are installed in lib instead of lib64: make sure it is added to lib64
-# 1. Add /usr/lib to a conf file in ld.so.conf.d directory: we create a new google-libs.conf
-echo "/usr/lib" | sudo tee /etc/ld.so.conf.d/google-libs.conf > /dev/null
-# 2. Re-Run ldconfig to load this library as well
-sudo ldconfig
-
-# -----------------------------------------------------
 

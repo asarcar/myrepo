@@ -14,7 +14,7 @@
    > cd $DIR
    > find . -name *.[chR] -o -name *.cc -o -name *.cpp -o -name *.py -o -name *.php -o -name *.txt > $PROJ.files
    > cscope -q -b -R -i $PROJ.files
-   > in-emacs-editor> "M-x cs8cope-set-initial-director $DIR"
+   > in-emacs-editor> "M-x cscope-set-initial-director $DIR"
 
 * Key Bindings	   
   C-c s s Find symbol.
