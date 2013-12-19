@@ -14,26 +14,6 @@ if [ ! -d dotfiles ]; then
     exit 2  
 fi
 
-# Assumed the following are taken care: 
-# 1. As ROOT: Add User
-# > useradd asarcar
-# > passwd asarcar
-# 2. As ROOT: Allow User to execute Sudo: edit /etc/sudoers file 
-#    Add the following line at end "asarcar ALL=(ALL)       ALL"
-# > visudo 
-# 3. Disable security and privilege levels of command execution "SELINUX=disabled"
-# > sudo vi /etc/selinux/config
-# 4. Turn off firewalls for IPTables IP6Tables
-# > sudo chkconfig iptables off
-# > sudo chkconfig ip6tables off
-# 5. Ensure that ethernet ports are enabled by default on boot with DHCP enabled if appropriate
-# > sudo vi /etc/sysconfig/network-scripts/ifcfg-eth<n>
-#   ONBOOT=yes 
-#   BOOTPROTO=dhcp or BOOTPROTO=none
-# > service network restart
-#   Validate the ethernet ports are correctly set and configured
-# > ethtool eth<n> 
-
 # Upgrade to the latest packages: remove obsoleted packages
 sudo yum upgrade
 
@@ -47,6 +27,10 @@ sudo yum install -y rlwrap
 # iftop: Command line tool that displays bandwidth usage on an interface
 sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 sudo yum install -y iftop
+# sysstat: sar (system activity report) and iostat monitoring commands
+sudo yum install -y sysstat
+# telnet client
+sudo yum install -y telnet
 
 # Install Git - installed by default
 # Install gdb - installed by default
