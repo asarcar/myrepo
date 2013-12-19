@@ -1,0 +1,74 @@
+#################
+# Machine Setup #
+#################
+# 1. As ROOT: Add User
+# > useradd asarcar
+# > passwd asarcar
+# 2. As ROOT: Allow User to execute Sudo: edit /etc/sudoers file 
+#    Add the following line at end "asarcar ALL=(ALL)       ALL"
+# > visudo 
+# 3. Disable security and privilege levels of command execution "SELINUX=disabled"
+# > sudo vi /etc/selinux/config
+# 4. Turn off firewalls for IPTables IP6Tables
+# > sudo chkconfig iptables off
+# > sudo chkconfig ip6tables off
+# 5. Ensure that ethernet ports are enabled by default on boot with DHCP enabled if appropriate
+# > sudo vi /etc/sysconfig/network-scripts/ifcfg-eth<n>
+#   ONBOOT=yes 
+#   BOOTPROTO=dhcp or BOOTPROTO=none
+# > service network restart
+#   Validate the ethernet ports are correctly set and configured
+# > ethtool eth<n> 
+
+#############
+# HW Status #
+#############
+## dmidecode: installed by default
+# baseboard - google baseboard to get specs
+dmidecode -t 2
+# physical memory array
+dmidecode -t 16
+# memory device types
+dmidecode -t 17
+
+# lshw: Hardware Lister: lists: cpu, memory, pci, ...
+lshw
+# numa: list nodes, cpus, memory stats, distances, etc.
+numactl --hardware
+
+## hwloc: lstopo: renders the topology of the machine, as discovered by hwloc
+lstopo 
+
+# cat /proc/xyz: provides various system parameters
+cat /proc/cpuinfo
+cat /proc/interrupts | grep eth0
+#> cat /proc/irq/128/smp_affinity_list: find the smp affinity list of interrupt line 128
+#> echo 0 > /proc/irq/128/smp_affinity_list: bind the interrupts to cpu-id 0
+
+# ethtool: provides information for every ethernet port
+ethtool eth0
+
+# lspci: list all PCIe endpoints and capabilities
+lspci -vv
+#> 04:00.0 Ethernet controller: Intel Corporation 82599EB 10-Gigabit SFI/SFP+ Network Connection (rev 01)
+#>        Capabilities: [a0] Express (v2) Endpoint, MSI 00
+#>                LnkCap: Port #0, Speed 5GT/s, Width x8, ASPM L0s, Latency L0 <1us, L1 <8us
+#>                LnkSta: Speed 5GT/s, Width x8, TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+
+##################
+# Runtime Status #
+##################
+# Thread #
+# ps -p <process-id> -o tid= -L: list all threads
+#> ps -p 8756 -o tid= -L | sort -n | tail -n +2 | head -n -1
+
+# taskset -pc <cpu-id> <tid>: bind the thread <tid> to <cpu-id>
+#> taskset -pc 2 8757
+
+# IO/Virtual Memory/MultiProcess Stat
+iostat -m
+vmstat -s
+mpstat -P 10
+
+# System Activity Reporter: sar <-c|-u|-q...>
+sar
