@@ -14,10 +14,14 @@ if [ ! -d dotfiles ]; then
     exit 2  
 fi
 
+# Upgrade to the latest packages: remove obsoleted packages
+sudo apt-get -y upgrade
+
 #############
 # UTILITIES #
 #############
-sudo yum install -y rlwrap
+# rlwrap: command completion and history 
+sudo apt-get install -y rlwrap
 # Install screen
 sudo apt-get install -y screen 
 # rlwrap: command completion and history
@@ -28,6 +32,10 @@ sudo apt-get install -y iftop
 sudo apt-get install -y git-core
 # dos2unix: removed CR & LF in dos files to LF for unix
 sudo apt-get install -y dos2unix
+# lshw: Hardware Lister
+sudo apt-get install -y lshw
+# hwloc/lstopo: provides a portable abstraction of hierarchical architectures 
+sudo apt-get install -y hwloc
 
 ############################
 # SW Development Utilities #
@@ -49,11 +57,11 @@ sudo apt-get install -y gdb
 # Install latest gcc 
 sudo apt-get install -y gcc
 
-# Install common C++ packages: boost
-sudo apt-get install -y libboost-all-dev
-
 # Install latest compile accelerators
 sudo apt-get install -y cmake distcc ccache
+
+# Install common C++ packages: boost
+sudo apt-get install -y libboost-all-dev
 
 # Install common google packages
 # libgoogle-perftools-dev includes tcmalloc
@@ -144,6 +152,9 @@ fi
 # pop out of $HOME directory
 popd
 
+########################
+# Personal Environment #
+########################
 # Copy the new dotfiles inside this git directory to $HOME
 cp -r dotfiles $HOME
 pushd $HOME
