@@ -44,6 +44,9 @@ sudo yum install -y hwloc
 sudo yum install -y sysstat
 # telnet client
 sudo yum install -y telnet
+# graphviz: rich set of graph drawing tools e.g. contains dot tool
+# used by doxygen to display relationships
+sudo yum install -y graphviz-dev
 
 ############################
 # SW Development Utilities #
@@ -54,6 +57,8 @@ sudo yum install -y telnet
 # Install gdb - installed by default
 # https://launchpad.net/~cassou/+archive/emacs
 # -----------------------------------------------------
+# doxygen: Documentation system for C, C++, Java, Python and other languages
+sudo yum intall -y doxygen
 
 # -----------------------------------------------------
 # Common C++ Development Libraries 

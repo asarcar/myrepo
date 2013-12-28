@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 # for headless setup. 
@@ -43,6 +44,10 @@ sudo apt-get install -y lshw
 sudo apt-get install -y hwloc
 # sysstat: sar (system activity report) and iostat monitoring commands
 sudo yum install -y sysstat
+# telnet client: provided by default
+# graphviz: rich set of graph drawing tools e.g. contains dot tool
+# used by doxygen to display relationships
+sudo apt-get install -y graphviz-dev
 
 ############################
 # SW Development Utilities #
@@ -57,6 +62,8 @@ sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
 sudo apt-get install -y cscope cscope-el
 # gdb: GNU debugger
 sudo apt-get install -y gdb
+# doxygen: Documentation system for C, C++, Java, Python and other languages
+sudo apt-get intall -y doxygen
 # -----------------------------------------------------
 
 # -----------------------------------------------------

@@ -1,10 +1,11 @@
-#######################
-# Derived Directories #
-#######################
+#################################
+# Derived/Generated Directories #
+#################################
 bin
 pkg
-test_ip_op
-
+tmp
+build
+html
 #######################
 # Eclipse Directories #
 #######################
@@ -48,7 +49,9 @@ Release/src
 ###############
 # Built files #
 ###############
+/tmp/*
 /build/*
+/html/*
 CMakeCache.txt
 CMakeFiles
 # Careful - how to do so for only CMake generated Makefile
