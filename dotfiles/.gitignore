@@ -3,9 +3,6 @@
 #################################
 bin
 pkg
-tmp
-build
-html
 #######################
 # Eclipse Directories #
 #######################
@@ -46,12 +43,18 @@ Release/src
 *.la
 *.a
 
+################################
+# SW Dev Generated Directories #
+################################
+bin
+doc
+lib
+include
+tmp
+build
 ###############
 # Built files #
 ###############
-/tmp/*
-/build/*
-/html/*
 CMakeCache.txt
 CMakeFiles
 # Careful - how to do so for only CMake generated Makefile
