@@ -100,6 +100,8 @@ lspci -vv
 # sudo -S to accept passwd from commandline
 #> echo 'my-passwd' | sudo -S <command>
 
+# Directory Structure Review: tree <dir_name>
+#> tree /home
 ##############
 # Monitoring #
 ##############
