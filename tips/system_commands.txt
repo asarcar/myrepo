@@ -2,13 +2,16 @@
 # Machine Setup #
 #################
 # * As ROOT: Add User "asarcar" and add it to sudo group
-#   asarcar should be added to asarcar primary group and sudo additional group
-# > useradd asarcar -G sudo
+# > adduser asarcar 
 # > passwd asarcar
-### User should be able to execute sudo: as /etc/sudoers file 
-### should pre-configured to grant permissions to all members 
-### of this group (You should not have to make any changes to this):
+### User should be able to execute sudo: 
+### Grant permissions to all members sudo group 
+### Following line already exists by default in /etc/sudoers file
 ### %sudo   ALL=(ALL:ALL) ALL
+# > adduser asarcar sudo
+### Now asarcar belongs to primary group "asarcar" and additional group "sudo"
+
+
 # * Disable security and privilege levels of command execution "SELINUX=disabled"
 # > sudo vi /etc/selinux/config
 # * Turn off firewalls for IPTables IP6Tables
