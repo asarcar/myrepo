@@ -59,7 +59,8 @@ cd git/myrepo/
 ### Update names and identity if working with alternate 
 ### repository identity (e.g. sarcar2).
 ### Edit ~/.ssh/config file to ensure github ssh points to the correct DSA key
-#> git config --global user.name "Arijit Sarcar"
+### Uncomment Identities
+#> git config --global user.name "Arijit Sarcar II"
 #> git config --global user.email "asarcar@yahoo.com"
 #> cd # move to home directory
 #> cd .ssh

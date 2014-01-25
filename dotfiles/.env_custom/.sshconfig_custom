@@ -25,6 +25,7 @@ Host github.com
   Hostname github.com
   Port 22
   IdentityFile ~/.ssh/id_dsa.github
+#  IdentityFile ~/.ssh/id_dsa.sarcar2.github
   IdentitiesOnly yes 
 
 # Juniper
