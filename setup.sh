@@ -126,7 +126,7 @@ sudo apt-get install -y pychecker
 ###############################
 # HEROKU related installation #
 ###############################
-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo -S sh
 
 ##########################
 # R related installation #
@@ -164,8 +164,10 @@ fi
 if [ -d .env_custom/ ]; then
     mv .env_custom .env_custom~
 fi
-if [ [-d .ssh/ ] -a [ -f .ssh/config] ]; then
-    mv .ssh/config .ssh/config.old
+if [ -d .ssh/ ]; then
+    if [ -f .ssh/config ]; then
+        mv .ssh/config .ssh/config.old
+    fi
 fi
 # pop out of $HOME directory
 popd
