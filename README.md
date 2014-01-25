@@ -6,19 +6,21 @@
 
 #
 # 1. Go to junk and record all actions in case one has to undo
-mkdir -p $HOME/junk
-pushd $HOME/junk
+cd
+mkdir -p junk
+cd junk
 
 # Start script to record what all exactly has been run/installed/etc.
 #$$$$$$$$$$$$$$$
 script
-popd # pop out of junk folder
+cd # pop out of junk folder
 
 #!!!!!!!!!!!!!!!
 # 2. ensure that the .ssh config and id_rsa/dsa keys are set
 # to at least allow access to user's Github repository 
-mkdir -p $HOME/.ssh
-pushd $HOME/.ssh
+cd # move to home directory   	     
+mkdir -p .ssh
+cd .ssh
 
 # Copy id_dsa for github from another m/c to this machine
 # scp user@mc:.ssh/id_dsa.github* .
@@ -31,15 +33,18 @@ echo "Hostname github.com" >> config
 echo "Port 22" >> config
 echo "IdentityFile ~/.ssh/id_dsa.github" >> config
 
-popd # Move out of .ssh directory
+cd # Move out of .ssh directory to home directory
 #!!!!!!!!!!!!!!!
 
 #---------------
 # 3. Install git 
-# 4. Check out the envirorment scripts and custom files
+# 4. Check out the environment scripts and custom files
 sudo apt-get install -y git-core
-mkdir -p $HOME/git
-pushd $HOME/git
+cd # move to home directory
+mkdir -p git
+cd git
+git config --global user.name "Arijit Sarcar"
+git config --global user.email "sarcar_a@yahoo.com"
 git clone git@github.com:asarcar/myrepo.git
 
 #***************
@@ -47,25 +52,33 @@ git clone git@github.com:asarcar/myrepo.git
 #    monitor the progress from any place
 screen -S dev-ops
 
-pushd $HOME/git/myrepo/
+cd # move to home directory
+cd git/myrepo/
 ./setup.sh   
-popd # pop out of myrepo folder
+
+### Update names and identity if working with alternate 
+### repository identity (e.g. sarcar2).
+### Edit ~/.ssh/config file to ensure github ssh points to the correct DSA key
+#> git config --global user.name "Arijit Sarcar"
+#> git config --global user.email "asarcar@yahoo.com"
+#> cd # move to home directory
+#> cd .ssh
+#> Replace "IdentityFile ~/.ssh/id_dsa.github" with
+# "IdentityFile ~/.ssh/id_dsa.sarcar2.github"
 
 # exit the screen session if you so desire now that the job is complete
 #***************
 
-popd # pop out of git folder
-#---------------
-
 exit # exit out of script recording
 #$$$$$$$$$$$$$$$
 
+
+# Instructions:
+# See also http://github.com/startup-class/setup to install prerequisite
+# programs. If all goes well, in addition to a more useful prompt, now you can
+# do `emacs -nw hello.js` and hitting `C-c!` to launch an interactive SSJS
+# REPL, among many other features. See the
 # See also http://github.com/startup-class/dotfiles and
 # [Startup Engineering Video Lectures 4a/4b]
 # (https://class.coursera.org/startup-001/lecture/index)
 # for more details.
-
-
-
-
-

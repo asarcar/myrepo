@@ -85,7 +85,7 @@ sudo rpm -Uvh https://gflags.googlecode.com/files/gflags-2.0-1.amd64.rpm https:/
 # Google Log: Not available via binary yum: install glog-2.0 (dependency on glog-devel) 
 # and glog-devel via RPM
 pushd /tmp
-wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.g
+wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.gz
 tar xzvf glog-0.3.3.tar.gz
 cd glog-0.3.3
 export CMAKE_PREFIX_PATH=/usr
@@ -136,8 +136,10 @@ fi
 if [ -d .env_custom/ ]; then
     mv .env_custom .env_custom~
 fi
-if [ [-d .ssh/ ] -a [ -f .ssh/config] ]; then
-    mv .ssh/config .ssh/config.old
+if [ -d .ssh/ ]; then
+    if [ -f .ssh/config ]; then
+        mv .ssh/config .ssh/config.old
+    fi
 fi
 # Centos seems to create a .emacs file by default
 if [ -f .emacs ]; then
