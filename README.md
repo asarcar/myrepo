@@ -73,7 +73,7 @@ exit # exit out of script recording
 #$$$$$$$$$$$$$$$
 
 
-# Instructions:
+# Instructions in case running NODE.JS javascript:
 # See also http://github.com/startup-class/setup to install prerequisite
 # programs. If all goes well, in addition to a more useful prompt, now you can
 # do `emacs -nw hello.js` and hitting `C-c!` to launch an interactive SSJS
