@@ -47,6 +47,8 @@ sudo yum install -y telnet
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo yum install -y graphviz-dev
+# sshpass: allows one to execute ssh without submitting password:
+# sshpass -p 'passwd' ssh user@host command...
 
 ############################
 # SW Development Utilities #

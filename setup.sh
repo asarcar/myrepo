@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 # for headless setup. 
@@ -48,6 +47,9 @@ sudo yum install -y sysstat
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo apt-get install -y graphviz-dev
+# sshpass: allows one to execute ssh without submitting password:
+# sshpass -p 'passwd' ssh user@host command...
+sudo apt-get install -y sshpass
 
 ############################
 # SW Development Utilities #
