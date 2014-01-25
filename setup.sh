@@ -25,6 +25,8 @@ sudo apt-get -y upgrade
 #############
 # UTILITIES #
 #############
+# tree: displays directory tree in color
+sudo apt-get install -y tree
 # rlwrap: command completion and history 
 sudo apt-get install -y rlwrap
 # Install screen

@@ -25,6 +25,8 @@ sudo yum upgrade
 #############
 # UTILITIES #
 #############
+# tree: displays directory tree in color
+# TODO: sudo yum install -y tree
 # rlwrap: command completion and history 
 sudo yum install -y rlwrap
 # screen: multiple work sessions on a terminal
