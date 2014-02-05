@@ -2,6 +2,13 @@
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 # for headless setup. 
 
+if [ $# -ne 1 ]; then
+  echo "Usage: setup.centos.sh <sudo-password>"
+  exit 2 
+fi
+
+PWD=$1
+
 # Validate that the command is executed where setup.sh and 
 # dotfiles are available: else terminate execution of script
 # and spew out a WARNING sign and exit
@@ -15,9 +22,13 @@ if [ ! -d dotfiles ]; then
 fi
 
 #
-# Machine Setup: Assumed that Machine Setup instructions have been executed: refer to 
-# tips/system_commands.txt
+# Machine Setup: Assumed that basic Machine Setup instructions have been 
+# executed: IPMI set, partitions created, user/group accounts created, sudo
+# permissions granted, mgmt interface configured, etc: 
+# refer to tips/system_commands.txt
 #
+# Set up system to accept without password for subsequent commands
+echo $PWD | sudo -S ls -al
 
 # Upgrade to the latest packages: remove obsoleted packages
 sudo apt-get -y upgrade

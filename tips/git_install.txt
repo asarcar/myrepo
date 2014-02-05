@@ -10,7 +10,7 @@ cd
 mkdir -p junk
 cd junk
 
-# Start script to record what all exactly has been run/installed/etc.
+# start script to record what all exactly has been run/installed/etc.
 #$$$$$$$$$$$$$$$
 script
 cd # pop out of junk folder
@@ -48,13 +48,13 @@ git config --global user.email "sarcar_a@yahoo.com"
 git clone git@github.com:asarcar/myrepo.git
 
 #***************
+# IF INTERESTED IN UPDATING SETUP
 # 5. Execute the installation script inside a screen session so that you 
 #    monitor the progress from any place
 screen -S dev-ops
-
 cd # move to home directory
 cd git/myrepo/
-./setup.sh   
+./setup.sh  # or setup.centos.sh 
 
 ### Update names and identity if working with alternate 
 ### repository identity (e.g. sarcar2).
@@ -72,7 +72,6 @@ cd git/myrepo/
 
 exit # exit out of script recording
 #$$$$$$$$$$$$$$$
-
 
 # Instructions in case running NODE.JS javascript:
 # See also http://github.com/startup-class/setup to install prerequisite
