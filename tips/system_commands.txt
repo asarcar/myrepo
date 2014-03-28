@@ -102,6 +102,10 @@ mpstat -P 10
 #> killall <process-name> # killall netserver
 #> ps axlww | grep <process-name> # ps axlww | grep netserver
 
-# Track Open Ports
+# Track Ports
+# Listen Ports
 #> netstat -a | grep LISTEN
+# Open Ports
+netstat -tulpn 
+
 

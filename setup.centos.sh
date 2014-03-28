@@ -68,7 +68,8 @@ sudo yum install -y telnet
 # used by doxygen to display relationships
 sudo yum install -y graphviz-dev
 # sshpass: allows one to execute ssh without submitting password:
-# sshpass -p 'passwd' ssh user@host command: Centos: Comes packaged with the OS
+# sshpass -p 'passwd' ssh user@host command: available in epel-release*rpm release package
+sudo yum install -y sshpass
 
 ############################
 # SW Development Utilities #
@@ -132,15 +133,15 @@ sudo ldconfig
 #   CACHESIZE='8192'; OPTIONS="-l 192.168.0.1"
 # 3. Start the memcached service on bootup and 
 #    start it now as well (for idempotency stop the service before starting)
-sudo yum install -y memcached-devel
-sudo chkconfig memcached on
-sudo service memcached stop
-sudo service memcached start
+# sudo yum install -y memcached-devel
+# sudo chkconfig memcached on
+# sudo service memcached stop
+# sudo service memcached start
 #    Validate the service is up
 # > echo "stats settings" | nc 192.168.0.1 11211
 # > memcached-tool 192.168.0.1:11211 
 # 4. Install the client side library to exercise memcached: libmemcached
-sudo yum install -y libmemcached-devel
+# sudo yum install -y libmemcached-devel
 
 ###########################
 # Miscellaneous Languages #
