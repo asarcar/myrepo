@@ -1,0 +1,5 @@
+################
+# Command Line #
+################
+# Open Any Document 
+gnome-open doc-name.xxx
