@@ -2,6 +2,13 @@
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 # for headless setup. 
 
+if [ $# -ne 1 ]; then
+  echo "Usage: setup.centos.sh <sudo-password>"
+  exit 2 
+fi
+
+PWD=$1
+
 # Validate that the command is executed where setup.sh and 
 # dotfiles are available: else terminate execution of script
 # and spew out a WARNING sign and exit
@@ -15,9 +22,13 @@ if [ ! -d dotfiles ]; then
 fi
 
 #
-# Machine Setup: Assumed that Machine Setup instructions have been executed: refer to 
-# tips/system_commands.txt
+# Machine Setup: Assumed that basic Machine Setup instructions have been 
+# executed: IPMI set, partitions created, user/group accounts created, sudo
+# permissions granted, mgmt interface configured, etc: 
+# refer to tips/system_commands.txt
 #
+# Set up system to accept without password for subsequent commands
+echo $PWD | sudo -S ls -al
 
 # Upgrade to the latest packages: remove obsoleted packages
 sudo apt-get -y upgrade --fix-missing
@@ -25,6 +36,8 @@ sudo apt-get -y upgrade --fix-missing
 #############
 # UTILITIES #
 #############
+# tree: displays directory tree in color
+sudo apt-get install -y tree
 # rlwrap: command completion and history 
 sudo apt-get install -y rlwrap
 # Install screen
@@ -47,6 +60,9 @@ sudo yum install -y sysstat
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo apt-get install -y graphviz-dev
+# sshpass: allows one to execute ssh without submitting password:
+# sshpass -p 'passwd' ssh user@host command...
+sudo apt-get install -y sshpass
 
 ############################
 # SW Development Utilities #
@@ -126,7 +142,7 @@ sudo apt-get install -y pychecker
 ###############################
 # HEROKU related installation #
 ###############################
-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo -S sh
 
 ##########################
 # R related installation #
@@ -174,10 +190,10 @@ fi
 if [ -d .env_custom/ ]; then
     mv .env_custom .env_custom~
 fi
-if [-d .ssh/ ]; then 
-if [-f .ssh/config]; then
-    mv .ssh/config .ssh/config.old
-fi
+if [ -d .ssh/ ]; then
+    if [ -f .ssh/config ]; then
+        mv .ssh/config .ssh/config.old
+    fi
 fi
 # pop out of $HOME directory
 popd

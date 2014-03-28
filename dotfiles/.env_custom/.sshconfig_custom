@@ -1,71 +1,89 @@
-# AWS-13.10
+# AWS-13.10 Ubuntu
 Host aws
-HostName ec2-54-201-14-195.us-west-2.compute.amazonaws.com
-User ubuntu
-IdentityFile ~/.ssh/aws.pem
+  HostName ec2-54-201-14-195.us-west-2.compute.amazonaws.com
+  User ubuntu
+  IdentityFile ~/.ssh/aws.pem
+  IdentitiesOnly yes
+
+# AWS-13.10 Ubuntu
+Host myaws
+  HostName ec2-54-201-14-195.us-west-2.compute.amazonaws.com
+  User asarcar
+  IdentityFile ~/.ssh/aws.pem
+  IdentitiesOnly yes
 
 # Heroku
 Host heroku.com
-Hostname heroku.com 
-Port 22 
-IdentitiesOnly yes 
-IdentityFile ~/.ssh/id_dsa.heroku
-TCPKeepAlive yes 
-User sarcar_a@yahoo.com
+  Hostname heroku.com 
+  Port 22 
+  TCPKeepAlive yes 
+  User sarcar_a@yahoo.com
+  IdentityFile ~/.ssh/id_dsa.heroku
 
 # GitHub
 Host github.com
-Hostname github.com
-Port 22
-IdentityFile ~/.ssh/id_dsa.github
+  Hostname github.com
+  Port 22
+  IdentityFile ~/.ssh/id_dsa.github
+#  IdentityFile ~/.ssh/id_dsa.sarcar2.github
+  IdentitiesOnly yes 
 
 # Juniper
 Host ipg-1
-HostName ipg-lnx-shell1.juniper.net
-User asarcar
-IdentityFile ~/.ssh/id_dsa.juniper
+  HostName ipg-lnx-shell1.juniper.net
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
 
 Host ipg-2
-HostName ipg-lnx-shell2.juniper.net
-User asarcar
-IdentityFile ~/.ssh/id_dsa.juniper
+  HostName ipg-lnx-shell2.juniper.net
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
 
 Host qosmos
-HostName 10.157.44.9
-User root
-IdentityFile ~/.ssh/id_dsa.juniper
+  HostName 10.157.44.9
+  User root
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
 
 Host ssd-1
-HostName esbu-vse2100-6.englab.juniper.net
-User root
-IdentityFile ~/.ssh/id_dsa.juniper
+  HostName esbu-vse2100-6.englab.juniper.net
+  User root
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
 
 Host ssd-2
-HostName esbu-vse2100-7.englab.juniper.net
-User root
-IdentityFile ~/.ssh/id_dsa.juniper
+  HostName esbu-vse2100-7.englab.juniper.net
+  User root
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
 
-Host ssd-git.juniper.net
-HostName ssd-git.juniper.net
-User asarcar
-IdentityFile ~/.ssh/id_dsa.juniper
+Host ssd-git
+  HostName ssd-git.juniper.net
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
 
 # CDBU Server: svl-junos-pool118.juniper.net
 Host cdbu
-HostName svl-junos-pool118.juniper.net
-User asarcar
-IdentityFile ~/.ssh/id_dsa.juniper
+  HostName svl-junos-pool118.juniper.net
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
  
 # CTO LAB SERVERS
 # Host Network Adapter Servers: HostNetworkAdapter-1/2
 Host hna-1
-HostName 10.83.252.236
-User asarcar
-IdentityFile ~/.ssh/id_dsa.juniper
+  HostName 10.83.252.236
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
 
 Host hna-2
-HostName 10.83.252.237
-User asarcar
-IdentityFile ~/.ssh/id_dsa.juniper
+  HostName 10.83.252.237
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+  IdentitiesOnly yes 
 
 

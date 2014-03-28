@@ -1,0 +1,88 @@
+#################
+# Machine Setup #
+#################
+# BOOT: 
+### IPMI Network Config: set to DHCP && note the IPMI network add/mask?
+### Boot Order: DVD, USB Flash, USB Disk, ..., Hard Disk?
+# Create Custom Partition: Example
+# SDA: 
+#     SDA1: boot 500MB
+#     SDA2: Physical Volume: Volume_Group_SDA2
+#         ROOT    /        50GB
+#         SWAP    swap     2*Physical_Memory
+#         SDDTEST /sddtest 10GB # Test SSD write data caching (in case testing storage sw)
+# SDB: 
+#     SDB1: Physical Volume: Volume_Group_SDB1
+#         TMP     /tmp     50GB
+#         USR     /usr     50GB
+#         VAR     /var     50GB
+#         HDDTEST /hddtest 40GB # Test HDD file write sw (in case testing storage sw)
+#         OPT     /opt     10GB
+#         HOME    /home    100GB
+### Validate:
+lsblk -f
+mount
+fdisk -l
+lsblk -f
+
+# 
+# * As ROOT: Add User "asarcar" and add it to sudo group
+adduser asarcar 
+passwd asarcar
+### User should be able to execute sudo: 
+### Grant permissions to all members of "sudo"(Ubuntu) or "wheel"(centos) group 
+### Following exists by default in /etc/sudoers file (uncomment if applicable)
+### %sudo   ALL=(ALL:ALL) ALL # OR Centos # %wheel   ALL=(ALL:ALL) ALL
+adduser asarcar sudo 
+# OR Centos # 
+usermod -a -G wheel asarcar
+### Allow sudo passwords to be remembered for at least an hour: duration expected
+### by the script to complete installation: In an untrusted environment remember
+### to disable the timeout
+### Edit the Defaults section to add "timestamp_timeout" 
+### "Defaults    timestamp_timeout=60"
+
+### logout and login user to ensure the new associations are effected 
+### Now asarcar belongs to primary group "asarcar" and additional group "sudo"|"wheel"
+### If you are creating a special group for the project e.g. "xyz" you could addgroup
+### > addgroup xyz && adduser asarcar xyz 
+### > echo "%xyz   ALL=(ALL:ALL) ALL" >> /etc/sudoers 
+id asarcar # validates asarcar belongs to xyz group
+cat /etc/sudoers # validates anyone in "xyz" group has sudo permission 
+cut -d: -f1 /etc/group # displays all groups in the system
+
+# * Ensure that mgmt port is enabled by default on boot with DHCP 
+#   enabled if appropriate
+sudo vi /etc/sysconfig/network-scripts/ifcfg-eth0
+#   ONBOOT=yes 
+#   BOOTPROTO=dhcp or BOOTPROTO=none
+service network restart
+#   Validate the ethernet ports are correctly set and configured
+ethtool eth0
+
+# * Set up ssh access from LOCAL MACHINE to machine and copy the public/private keys
+ssh-copy-id -i id_dsa.xxx asarcar@mc_name_or_ip_addr
+### Edit local .ssh/config file to easily ssh to mc_name_or_ip_addr
+echo "Host mc_name" >> .ssh/config
+echo "Hostname mc_name_or_ip_addr" >> .ssh/config
+echo "User asarcar"
+echo "IdentityFile ~/.ssh/id_dsa.xxx" >> .ssh/config
+scp id_dsa.* mc_name:./.ssh/
+
+# * Set up the installation DevOps scripts
+scp -r myrepo mc_name:.
+
+# * On New Machine ensure screen is installed with appropriate environment
+#   so that any follow installation is appropriately tagged
+ssh mc_name
+sudo yum install -y screen 
+# OR on Ubuntu # 
+sudo apt-get install -y screen
+cp myrepo/dotfiles/.screenrc .
+
+# * Execute the installation script inside a screen session so that you 
+#   monitor the progress from any place on NEW MACHINE
+cd myrepo/
+screen -S DevOps
+script
+./setup.centos.sh  # OR Ubuntu # ./setup.centos.sh 

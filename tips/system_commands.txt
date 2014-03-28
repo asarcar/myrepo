@@ -1,25 +1,3 @@
-#################
-# Machine Setup #
-#################
-# 1. As ROOT: Add User
-# > useradd asarcar
-# > passwd asarcar
-# 2. As ROOT: Allow User to execute Sudo: edit /etc/sudoers file 
-#    Add the following line at end "asarcar ALL=(ALL)       ALL"
-# > visudo 
-# 3. Disable security and privilege levels of command execution "SELINUX=disabled"
-# > sudo vi /etc/selinux/config
-# 4. Turn off firewalls for IPTables IP6Tables
-# > sudo chkconfig iptables off
-# > sudo chkconfig ip6tables off
-# 5. Ensure that ethernet ports are enabled by default on boot with DHCP enabled if appropriate
-# > sudo vi /etc/sysconfig/network-scripts/ifcfg-eth<n>
-#   ONBOOT=yes 
-#   BOOTPROTO=dhcp or BOOTPROTO=none
-# > service network restart
-#   Validate the ethernet ports are correctly set and configured
-# > ethtool eth<n> 
-
 #############
 # HW Status #
 #############
@@ -55,27 +33,66 @@ lspci -vv
 #>                LnkCap: Port #0, Speed 5GT/s, Width x8, ASPM L0s, Latency L0 <1us, L1 <8us
 #>                LnkSta: Speed 5GT/s, Width x8, TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
 
-##################
-# Runtime Status #
-##################
-# Thread #
+########################
+####  System Shield ####
+########################
+## Create a shield
+# cset set --cpu=0,1,6,7 <shield-name>
+## Run the programs in the shield
+# cset proc --set=<shield-name> --exec -- <program-with-args>
+## Interrupts rcvd on eth<n> are run on that shield
+# cat /proc/interrupts | grep eth<n> | cut -f1 -:D # provides the interrupt lines claimed by the NIC
+# op1
+# op2
+# ...
+# echo <op1> /proc/irq/smp_affinity_list
+# echo <op2> /proc/irq/smp_affinity_list
+
+## Thread ID and Pin Thread ID to CPU Cores #
 # ps -p <process-id> -o tid= -L: list all threads
 #> ps -p 8756 -o tid= -L | sort -n | tail -n +2 | head -n -1
 
 # taskset -pc <cpu-id> <tid>: bind the thread <tid> to <cpu-id>
 #> taskset -pc 2 8757
 
+####################
+# TCP Applications #
+####################
+# nc: connect to any tcp port and send ascii strings
+#> echo "stats services" | nc 192.168.0.1 11211
+# memcached: cache content kept in memory distributed accross several hosts
+#> memcached-tool 192.168.0.1:11211
+
+##################
+# Nifty Commands #
+##################
+# sshpass: allows one to execute ssh without submitting password:
+#> sshpass -p 'my-passwd' ssh user@hostname command...
+
+# sudo -S to accept passwd from commandline
+#> echo 'my-passwd' | sudo -S <command>
+
+# Directory Structure Review: tree <dir_name>
+#> tree /home
+##############
+# Monitoring #
+##############
+# top: provide a summary CPU and  memory utilization in % of all processeses
+#> top -H
+
 # CPU Profiling
 #> mpstat -u (display for all cores averaged the %CPU given to usr, sys, wait, ...
 #> mpstat -P ALL 10 100 (display for all cores every 10 seconds)
 mpstat -P 10
+
 # IO/Virtual Memory/MultiProcess Stat
 #> iostat -m
 #> vmstat -s
+
 # System Activity Reporter: sar <-c|-u|-q...>
 #> sar
 
-# Performance Monitoring
+# Network Performance Monitoring
 # netperf: network performance monitoring client tool
 #> netperf -H 192.168.0.1 -c -C l 10 # run client for 10 seconds for the following host
 # netserver: network performance monitoring server

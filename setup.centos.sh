@@ -1,6 +1,12 @@
 #!/bin/bash
-# Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
-# for headless setup. 
+# Simple setup.centos.sh for configuring Centos instances for headless setup. 
+
+if [ $# -ne 1 ]; then
+  echo "Usage: setup.centos.sh <sudo-password>"
+  exit 2 
+fi
+
+PWD=$1
 
 # Validate that the command is executed where setup.sh and 
 # dotfiles are available: else terminate execution of script
@@ -15,16 +21,30 @@ if [ ! -d dotfiles ]; then
 fi
 
 #
-# Machine Setup: Assumed that Machine Setup instructions have been executed: refer to 
-# tips/system_commands.txt
+# Machine Setup: Assumed that basic Machine Setup instructions have been 
+# executed: IPMI set, partitions created, user/group accounts created, sudo
+# permissions granted, mgmt interface configured, etc: 
+# refer to tips/system_commands.txt
 #
 
+# Set up system to accept without password for subsequent commands
+echo $PWD | sudo -S ls -al
+
+## 
+# Disable security and privilege levels of command execution "SELINUX=disabled"
+sed -e s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config | sudo tee /etc/selinux/config > /dev/null
+# Turn off firewalls for IPTables IP6Tables
+sudo chkconfig iptables off
+sudo chkconfig ip6tables off
+
 # Upgrade to the latest packages: remove obsoleted packages
-sudo yum upgrade
+sudo yum -y upgrade
 
 #############
 # UTILITIES #
 #############
+# tree: displays directory tree in color
+sudo yum install -y tree
 # rlwrap: command completion and history 
 sudo yum install -y rlwrap
 # screen: multiple work sessions on a terminal
@@ -44,6 +64,12 @@ sudo yum install -y hwloc
 sudo yum install -y sysstat
 # telnet client
 sudo yum install -y telnet
+# graphviz: rich set of graph drawing tools e.g. contains dot tool
+# used by doxygen to display relationships
+sudo yum install -y graphviz-dev
+# sshpass: allows one to execute ssh without submitting password:
+# sshpass -p 'passwd' ssh user@host command: Centos: Comes packaged with the OS
+
 ############################
 # SW Development Utilities #
 ############################
@@ -80,7 +106,7 @@ sudo rpm -Uvh https://gflags.googlecode.com/files/gflags-2.0-1.amd64.rpm https:/
 # Google Log: Not available via binary yum: install glog-2.0 (dependency on glog-devel) 
 # and glog-devel via RPM
 pushd /tmp
-wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.g
+wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.gz
 tar xzvf glog-0.3.3.tar.gz
 cd glog-0.3.3
 export CMAKE_PREFIX_PATH=/usr
@@ -137,8 +163,10 @@ fi
 if [ -d .env_custom/ ]; then
     mv .env_custom .env_custom~
 fi
-if [ [-d .ssh/ ] -a [ -f .ssh/config] ]; then
-    mv .ssh/config .ssh/config.old
+if [ -d .ssh/ ]; then
+    if [ -f .ssh/config ]; then
+        mv .ssh/config .ssh/config.old
+    fi
 fi
 # Centos seems to create a .emacs file by default
 if [ -f .emacs ]; then
