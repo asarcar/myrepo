@@ -44,10 +44,6 @@ sudo yum install -y hwloc
 sudo yum install -y sysstat
 # telnet client
 sudo yum install -y telnet
-# graphviz: rich set of graph drawing tools e.g. contains dot tool
-# used by doxygen to display relationships
-sudo yum install -y graphviz-dev
-
 ############################
 # SW Development Utilities #
 ############################
@@ -59,7 +55,9 @@ sudo yum install -y graphviz-dev
 # -----------------------------------------------------
 # doxygen: Documentation system for C, C++, Java, Python and other languages
 sudo yum intall -y doxygen
-
+# graphviz: rich set of graph drawing tools e.g. contains dot tool
+# used by doxygen to display relationships
+sudo yum install -y graphviz-dev
 # -----------------------------------------------------
 # Common C++ Development Libraries 
 #
@@ -73,6 +71,7 @@ sudo yum install -y cmake ccache
 # Install common google packages: NONE of the below mentioned are available in yum 
 # libgoogle-perftools-dev libgtest-dev libgoogle-perftools-dev 
 # libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
+# google-perftools: analyze profiled data: useful when pprof is not adequate
 sudo yum install -y protobuf
 
 # Google Flags: Not available via binary yum: install gflags-2.0 (dependency on gflags-devel) 
@@ -116,6 +115,12 @@ sudo service memcached start
 # > memcached-tool 192.168.0.1:11211 
 # 4. Install the client side library to exercise memcached: libmemcached
 sudo yum install -y libmemcached-devel
+
+###########################
+# Miscellaneous Languages #
+###########################
+# Javascript, Node, Python, Heroku, etc. not installed
+# R, Octave, etc. not installed
 
 ########################
 # Personal Environment #

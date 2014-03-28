@@ -31,6 +31,8 @@
 ;; --------------------------------
 ;; -- Personal Additions A Ory S --
 ;; --------------------------------
+
+;; EDITING 
 (global-set-key (kbd "C-?") 'help-command)  
 (global-set-key (kbd "M-?") 'mark-paragraph)  
 (global-set-key (kbd "C-h") 'delete-backward-char)  
@@ -42,3 +44,18 @@
 ;; Load cscope support
 (require 'xcscope)
 (setq cscope-do-not-update-database t)
+
+;; OCTAVE
+;; Begin Using Octave Mode: 
+;; https://www.gnu.org/software/octave/doc/interpreter/Using-Octave-Mode.html
+(autoload 'octave-mode "octave-mod" nil t)
+(setq auto-mode-alist
+    (cons '("\\.m$" . octave-mode) auto-mode-alist))
+;; Tun on abbrevs, auto-fill, and font-lock
+(add-hook 'octave-mode-hook
+    (lambda()
+        (abbrev-mode 1)
+        (auto-fill-mode 1)
+        (if (eq window-system 'x)
+            (font-lock-mode 1))))
+ 

@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 # for headless setup. 
@@ -21,7 +20,7 @@ fi
 #
 
 # Upgrade to the latest packages: remove obsoleted packages
-sudo apt-get -y upgrade
+sudo apt-get -y upgrade --fix-missing
 
 #############
 # UTILITIES #
@@ -64,6 +63,9 @@ sudo apt-get install -y cscope cscope-el
 sudo apt-get install -y gdb
 # doxygen: Documentation system for C, C++, Java, Python and other languages
 sudo apt-get intall -y doxygen
+# graphviz: rich set of graph drawing tools e.g. contains dot tool
+# used by doxygen to display relationships
+sudo apt-get install -y graphviz-dev
 # -----------------------------------------------------
 
 # -----------------------------------------------------
@@ -80,6 +82,8 @@ sudo apt-get install -y libboost-all-dev
 # Install common google packages
 # libgoogle-perftools-dev includes tcmalloc
 sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
+# google-perftools: analyze profiled data beyond pprof: 'gprof' or 'google-pprof': need both libgoogle-perftools-dev and google-perftools
+sudo apt-get install -y google-perftools
 
 # Google libgtest-dev static libraries not installed as binary: Build it
 # Still required with Ubuntu 13.10+
@@ -147,6 +151,16 @@ sudo apt-get install -y r-cran-rgl
 # R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/R')"
 # -----------------------------------------------------
 
+###############################
+# Octave related installation #
+###############################
+# -----------------------------------------------------
+sudo apt-get install -y octave gnuplot
+# -----------------------------------------------------
+
+########################
+# Personal Environment #
+########################
 # -----------------------------------------------------
 # install dotfiles
 # move prior incarnation of dotfiles to an old directory
@@ -160,8 +174,10 @@ fi
 if [ -d .env_custom/ ]; then
     mv .env_custom .env_custom~
 fi
-if [ [-d .ssh/ ] -a [ -f .ssh/config] ]; then
+if [-d .ssh/ ]; then 
+if [-f .ssh/config]; then
     mv .ssh/config .ssh/config.old
+fi
 fi
 # pop out of $HOME directory
 popd

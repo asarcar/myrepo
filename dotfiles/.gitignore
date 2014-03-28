@@ -77,9 +77,10 @@ install_manifest.txt
 *.zip
 
 ###########################
-# Package Generated filed #
+# Package Generated files #
 ###########################
 .Rhistory
+octave-core
 
 #######################
 # Logs and databases #
