@@ -1,0 +1,21 @@
+YUM:
+----
+# Search for any packages in the currently enabled packages
+yum search abc\*
+
+# List all enabled repositories
+yum repolist
+ 
+# EXAMPLE: http://wiki.centos.org/AdditionalResources/Repositories/RPMForge
+# Add a repository: repoforge for Centos-6
+1. Download the repoforge release package
+wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+2. Install Key
+sudo rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
+3. Verify with key the downloaded package 
+rpm -K rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+4. Install the package rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+rpm -i rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+5. Now you are ready to install any package from repoforge
+
+
