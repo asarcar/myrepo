@@ -88,6 +88,7 @@ octave-core
 *.log
 *.sql
 *.sqlite
+*.mat
 
 #######################
 # OS generated files #
