@@ -3,7 +3,7 @@
 # for headless setup. 
 
 if [ $# -ne 1 ]; then
-  echo "Usage: setup.centos.sh <sudo-password>"
+  echo "Usage: setup.sh <sudo-password>"
   exit 2 
 fi
 
@@ -48,8 +48,8 @@ sudo apt-get install -y rlwrap
 sudo apt-get install -y iftop
 # git: distributed version control system
 sudo apt-get install -y git-core
-# dos2unix: removed CR & LF in dos files to LF for unix
-sudo apt-get install -y dos2unix
+# flip -u "filename": removes CR & LF in dos files to LF for unix
+sudo apt-get install -y flip
 # lshw: Hardware Lister
 sudo apt-get install -y lshw
 # hwloc/lstopo: provides a portable abstraction of hierarchical architectures 
@@ -83,7 +83,14 @@ sudo apt-get intall -y doxygen
 # used by doxygen to display relationships
 sudo apt-get install -y graphviz-dev
 # -----------------------------------------------------
-
+# Personal Third Party SW Installs & Binary Directory
+mkdir -p ~/sw
+pushd sw
+popd
+mkdir -p ~/bin
+pushd ~/bin
+wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
+popd
 # -----------------------------------------------------
 # Common C++ Development Libraries 
 # Install latest gcc 
@@ -161,17 +168,30 @@ sudo apt-get install -y r-cran-rgl
 
 # R Package Installation is very unstable: for now commenting out the directory
 ## Install latest packages not available in binary distribution by executing install within R
-# mkdir -p R
+# mkdir -p sw/R
 ## TODO: current all libraries for all R versions and 
 ## for all architectures will go in same directory
-# R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/R')"
+# R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/sw/R')"
 # -----------------------------------------------------
 
 ###############################
 # Octave related installation #
 ###############################
 # -----------------------------------------------------
-sudo apt-get install -y octave gnuplot
+sudo apt-get install -y octave gnuplot liboctave-dev
+## Install latest packages not available in binary distribution
+mkdir -p sw/octave
+pushd sw/octave
+wget http://www.csie.ntu.edu.tw/~cjlin/cgi-bin/libsvm.cgi?+http://www.csie.ntu.edu.tw/~cjlin/libsvm+tar.gz
+mv libsvm.cgi\?+http\:%2F%2Fwww.csie.ntu.edu.tw%2F~cjlin%2Flibsvm+tar.gz libsvm.tar.gz
+tar xzvf libsvm.tar.gz
+rm -f libsvm.tar.gz
+pushd libsvm-3.18/matlab
+octave --eval make
+mv *.mex ../..
+rm -f *.o
+popd 
+popd
 # -----------------------------------------------------
 
 ########################
@@ -208,8 +228,9 @@ ln -sb dotfiles/.screenrc .
 ln -sb dotfiles/.bash_profile .
 ln -sb dotfiles/.bashrc .
 ln -sf dotfiles/.emacs.d .
-ln -sf dotfiles/.Rprofile .
 ln -sb dotfiles/.gitignore .
+ln -sf dotfiles/.Rprofile .
+ln -sf dotfiles/.octaverc .
 ln -sf dotfiles/.env_custom .
 ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
 # ln messes up the permission of .ssh/config file - cp instead

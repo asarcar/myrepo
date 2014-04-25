@@ -54,7 +54,7 @@ sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6
 sudo yum install -y iftop
 # git: distributed version control system
 # Install git-core - installed by default
-# dos2unix: removed CR & LF in dos files to LF for unix
+# dos2unix ("flip" not available?): remove CR & LF in dos to LF for unix
 sudo yum install -y dos2unix
 # lshw: Hardware Lister
 sudo yum install -y lshw
@@ -85,6 +85,15 @@ sudo yum intall -y doxygen
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo yum install -y graphviz-dev
+# -----------------------------------------------------
+# Personal Third Party SW Installs & Binary Directory
+mkdir -p ~/sw
+pushd sw
+popd
+mkdir -p ~/bin
+pushd ~/bin
+wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
+popd
 # -----------------------------------------------------
 # Common C++ Development Libraries 
 #
@@ -148,7 +157,7 @@ sudo ldconfig
 ###########################
 # Javascript, Node, Python, Heroku, etc. not installed
 # R, Octave, etc. not installed
-
+# -----------------------------------------------------
 ########################
 # Personal Environment #
 ########################

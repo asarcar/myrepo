@@ -1,0 +1,26 @@
+## Local startup file for Octave.
+##
+## This file should contain any commands that should be executed each
+## time Octave starts. The commands in this file take precedence over
+## the commands in the system-wide startup file.
+
+## Remove extra blank space around column number labels. The default
+## value is 'format loose'.
+##
+format compact;
+
+## Suppress verbose help message.
+##
+suppress_verbose_help_message(1);
+
+## Turn off pagination.
+##
+more off;
+
+## Set command-line prompt
+##
+PS1(">> "); 
+
+## Path
+## libsvm
+addpath("~/sw/octave", "-end");
