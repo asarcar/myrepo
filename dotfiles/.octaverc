@@ -23,4 +23,4 @@ PS1(">> ");
 
 ## Path
 ## libsvm
-addpath("~/sw/octave", "-end");
+addpath("~/octave", "-end");

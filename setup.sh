@@ -84,9 +84,6 @@ sudo apt-get intall -y doxygen
 sudo apt-get install -y graphviz-dev
 # -----------------------------------------------------
 # Personal Third Party SW Installs & Binary Directory
-mkdir -p ~/sw
-pushd sw
-popd
 mkdir -p ~/bin
 pushd ~/bin
 wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
@@ -168,10 +165,10 @@ sudo apt-get install -y r-cran-rgl
 
 # R Package Installation is very unstable: for now commenting out the directory
 ## Install latest packages not available in binary distribution by executing install within R
-# mkdir -p sw/R
+# mkdir -p R
 ## TODO: current all libraries for all R versions and 
 ## for all architectures will go in same directory
-# R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/sw/R')"
+# R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/R')"
 # -----------------------------------------------------
 
 ###############################
@@ -180,13 +177,23 @@ sudo apt-get install -y r-cran-rgl
 # -----------------------------------------------------
 sudo apt-get install -y octave gnuplot liboctave-dev
 ## Install latest packages not available in binary distribution
-mkdir -p sw/octave
-pushd sw/octave
+mkdir -p octave
+pushd ~/octave
+#
+# octave 3.8 is packaged for all Ubuntu versions >= 14.04
+# From within Octave (>= 3.8) you need to manually install 
+# appropriate versions of the control, general, image, 
+# and signal packages.
+# octave-prompt> pkg list -forge
+# octave-prompt> pkg install -forge -local control general image signal
+#
+
+# Install libsvm
 wget http://www.csie.ntu.edu.tw/~cjlin/cgi-bin/libsvm.cgi?+http://www.csie.ntu.edu.tw/~cjlin/libsvm+tar.gz
 mv libsvm.cgi\?+http\:%2F%2Fwww.csie.ntu.edu.tw%2F~cjlin%2Flibsvm+tar.gz libsvm.tar.gz
 tar xzvf libsvm.tar.gz
 rm -f libsvm.tar.gz
-pushd libsvm-3.18/matlab
+pushd libsvm*/matlab
 octave --eval make
 mv *.mex ../..
 rm -f *.o

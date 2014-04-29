@@ -87,9 +87,6 @@ sudo yum intall -y doxygen
 sudo yum install -y graphviz-dev
 # -----------------------------------------------------
 # Personal Third Party SW Installs & Binary Directory
-mkdir -p ~/sw
-pushd sw
-popd
 mkdir -p ~/bin
 pushd ~/bin
 wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
