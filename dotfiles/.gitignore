@@ -82,13 +82,20 @@ install_manifest.txt
 .Rhistory
 octave-core
 
-#######################
-# Logs and databases #
+######################
+# Logs and Databases #
 ######################
 *.log
 *.sql
 *.sqlite
 *.mat
+
+##########
+# Images #
+##########
+*.png
+*.jpg
+*.gif
 
 #######################
 # OS generated files #
