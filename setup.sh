@@ -115,7 +115,11 @@ sudo make
 sudo mv libg* /usr/lib
 popd
 # -----------------------------------------------------
-
+#####################
+# JAVA installation #
+#####################
+# JDK
+sudo apt-get install -y openjdk-7-jdk
 ###################################
 # JAVASCRIPT related installation #
 ###################################
@@ -200,7 +204,22 @@ rm -f *.o
 popd 
 popd
 # -----------------------------------------------------
-
+##############################
+# Scala related installation #
+##############################
+# -----------------------------------------------------
+mkdir -p scala
+pushd scala
+# sbt: Build tool for Scala/Java: 
+# Beware!: This specifically installs sbt-0.12.4 version
+# TODO: figure out a way to avoid "hardcoding" the version
+wget http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.12.4/sbt.tgz
+tar xzvf sbt.tgz
+pushd ~/bin
+ln -s ~/scala/sbt/bin/* .
+popd
+popd
+# -----------------------------------------------------
 ########################
 # Personal Environment #
 ########################

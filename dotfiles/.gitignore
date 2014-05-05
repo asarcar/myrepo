@@ -79,8 +79,19 @@ install_manifest.txt
 ###########################
 # Package Generated files #
 ###########################
+# R
 .Rhistory
+# Octave
 octave-core
+
+###################
+# SBT/Scala Files #
+###################
+.classpath
+*.sbt
+# Beware this needs to be finetuned: a genuine git directory may be ignored
+project
+
 
 ######################
 # Logs and Databases #
@@ -105,7 +116,7 @@ ehthumbs.db
 Icon?
 Thumbs.db
 
-#######################
+##########################
 # Temporary editor files #
 ##########################
 *~
