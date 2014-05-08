@@ -83,6 +83,7 @@ install_manifest.txt
 .Rhistory
 # Octave
 octave-core
+octave-workspace
 
 ###################
 # SBT/Scala Files #
@@ -111,7 +112,7 @@ project
 #######################
 # OS generated files #
 ######################
-.DS_Store?
+.DS_Store
 ehthumbs.db
 Icon?
 Thumbs.db
