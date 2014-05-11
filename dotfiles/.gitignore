@@ -10,7 +10,8 @@ pkg
 .settings
 .project
 .cproject
-target
+# Scala & Eclipse
+target/
 Debug/src
 Release/src
 .git

@@ -33,8 +33,25 @@ echo $PWD | sudo -S ls -al
 # Upgrade to the latest packages: remove obsoleted packages
 sudo apt-get -y upgrade --fix-missing
 
+# 13.10/14.04 "extra" packages
+# "Ubuntu restricted extras: consists of codecs not installed by default.
+sudo apt-get install -y ubuntu-restricted-extras
+# Adobe Flash Player
+sudo apt-get install -y flashplugin-installer
+# VLC: best open source media player
+sudo apt-get install -y vlc
+# Enable encrypted DVD playback
+sudo apt-get install libdvdread4
+sudo /usr/share/doc/libdvdread4/install-css.sh
+# Install RAR
+sudo apt-get install rar
+# Get rid of "Sorry: Ubuntu xx.yy has experienced an internal error"
+# edit "enabled=1" to "enabled=0"right after: '# sudo service apport start force_start=1'
+# Ensure additional drivers in Ubuntu 13.10/14.04 are installed: 
+#   Unity Dash -> Software & Updates -> Additional Drivers -> Enable Third Party Drivers if listed
+# 
 #############
-# UTILITIES #
+# Utilities #
 #############
 # tree: displays directory tree in color
 sudo apt-get install -y tree
@@ -106,7 +123,7 @@ sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev lib
 sudo apt-get install -y google-perftools
 
 # Google libgtest-dev static libraries not installed as binary: Build it
-# Still required with Ubuntu 13.10+
+# Still required with Ubuntu 13.10/14.04
 pushd /tmp
 mkdir -p .build
 cd .build
@@ -118,6 +135,8 @@ popd
 #####################
 # JAVA installation #
 #####################
+# JRE
+sudo apt-get install icedtea-7-plugin openjdk-7-jre
 # JDK
 sudo apt-get install -y openjdk-7-jdk
 ###################################
@@ -208,6 +227,9 @@ popd
 # Scala related installation #
 ##############################
 # -----------------------------------------------------
+# scala/scalac
+sudo apt-get install -y scala
+# scala build tool (SBT)
 mkdir -p scala
 pushd scala
 # sbt: Build tool for Scala/Java: 
