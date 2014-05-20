@@ -79,4 +79,4 @@
 ;; ----------------------
 ;; -- Custom Additions --
 ;; ----------------------
-(load "~/dotfiles/.env_custom/.emacs.el_custom")
+(load "~/dotfiles/.env_custom/.emacs.custom.el")

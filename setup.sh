@@ -41,10 +41,10 @@ sudo apt-get install -y flashplugin-installer
 # VLC: best open source media player
 sudo apt-get install -y vlc
 # Enable encrypted DVD playback
-sudo apt-get install libdvdread4
+sudo apt-get install -y libdvdread4
 sudo /usr/share/doc/libdvdread4/install-css.sh
 # Install RAR
-sudo apt-get install rar
+sudo apt-get install -y rar
 # Get rid of "Sorry: Ubuntu xx.yy has experienced an internal error"
 # edit "enabled=1" to "enabled=0"right after: '# sudo service apport start force_start=1'
 # Ensure additional drivers in Ubuntu 13.10/14.04 are installed: 
@@ -53,6 +53,10 @@ sudo apt-get install rar
 #############
 # Utilities #
 #############
+# locate: helps find a file anywhere in the already mounted filesystem
+sudo apt-get install -y locate
+# create a database for all the files in the filesystem
+sudo updatedb
 # tree: displays directory tree in color
 sudo apt-get install -y tree
 # rlwrap: command completion and history 
@@ -74,9 +78,6 @@ sudo apt-get install -y hwloc
 # sysstat: sar (system activity report) and iostat monitoring commands
 sudo yum install -y sysstat
 # telnet client: provided by default
-# graphviz: rich set of graph drawing tools e.g. contains dot tool
-# used by doxygen to display relationships
-sudo apt-get install -y graphviz-dev
 # sshpass: allows one to execute ssh without submitting password:
 # sshpass -p 'passwd' ssh user@host command...
 sudo apt-get install -y sshpass
@@ -95,7 +96,7 @@ sudo apt-get install -y cscope cscope-el
 # gdb: GNU debugger
 sudo apt-get install -y gdb
 # doxygen: Documentation system for C, C++, Java, Python and other languages
-sudo apt-get intall -y doxygen
+sudo apt-get install -y doxygen
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo apt-get install -y graphviz-dev
@@ -136,7 +137,7 @@ popd
 # JAVA installation #
 #####################
 # JRE
-sudo apt-get install icedtea-7-plugin openjdk-7-jre
+sudo apt-get install -y icedtea-7-plugin openjdk-7-jre
 # JDK
 sudo apt-get install -y openjdk-7-jdk
 ###################################
@@ -175,23 +176,26 @@ wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo -S sh
 # R related installation #
 ##########################
 # -----------------------------------------------------
-sudo apt-get install -y r-base
+# R Package Installation is very unstable: commenting out all R related installation
+# sudo apt-get install -y r-base
 # Install ESS: R code within emacs
-sudo apt-get install -y ess
+# sudo apt-get install -y ess
 # Common R Packages ----------------------------------
 
 # Installation of rgl package gave error:
 # > "configure: error: missing required header GL/gl.h...
 # >  * removing ‘/home/asarcar/R/x86_64-pc-linux-gnu-library/2.15/rgl’"
 # Hence used the ubuntu binary distribution:
-sudo apt-get install -y r-cran-rgl
+# sudo apt-get install -y r-cran-rgl
 
-# R Package Installation is very unstable: for now commenting out the directory
 ## Install latest packages not available in binary distribution by executing install within R
-# mkdir -p R
+mkdir -p ~/R
+pushd ~/R
 ## TODO: current all libraries for all R versions and 
 ## for all architectures will go in same directory
-# R -e "install.packages(c('gclus', 'ggplot2', 'pysch', 'sm'), lib='~/R')"
+# R -e "install.packages(c('gclus', 'ggplot2', 'sm'), lib='~/R')"
+# R -e "install.packages('pysch', lib='~/R')"
+popd
 # -----------------------------------------------------
 
 ###############################
@@ -200,7 +204,7 @@ sudo apt-get install -y r-cran-rgl
 # -----------------------------------------------------
 sudo apt-get install -y octave gnuplot liboctave-dev
 ## Install latest packages not available in binary distribution
-mkdir -p octave
+mkdir -p ~/octave
 pushd ~/octave
 #
 # octave 3.8 is packaged for all Ubuntu versions >= 14.04
@@ -230,8 +234,8 @@ popd
 # scala/scalac
 sudo apt-get install -y scala
 # scala build tool (SBT)
-mkdir -p scala
-pushd scala
+mkdir -p ~/scala
+pushd ~/scala
 # sbt: Build tool for Scala/Java: 
 # Beware!: This specifically installs sbt-0.12.4 version
 # TODO: figure out a way to avoid "hardcoding" the version

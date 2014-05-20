@@ -81,7 +81,7 @@ sudo yum install -y sshpass
 # https://launchpad.net/~cassou/+archive/emacs
 # -----------------------------------------------------
 # doxygen: Documentation system for C, C++, Java, Python and other languages
-sudo yum intall -y doxygen
+sudo yum install -y doxygen
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo yum install -y graphviz-dev
