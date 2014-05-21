@@ -28,7 +28,7 @@ lsblk -f
 # 
 # * As ROOT: Add User "asarcar" and add it to sudo group
 adduser asarcar 
-passwd asarcar
+# user asarcar is added and prompted to for passwd for asarcar as well
 ### User should be able to execute sudo: 
 ### Grant permissions to all members of "sudo"(Ubuntu) or "wheel"(centos) group 
 ### Following exists by default in /etc/sudoers file (uncomment if applicable)

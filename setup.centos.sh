@@ -75,6 +75,19 @@ sudo yum install -y sshpass
 # SW Development Utilities #
 ############################
 # -----------------------------------------------------
+# Common C++ Compilers: Moved far ahead of installations that 
+# require these tools to ensure completion of all installation activity
+# C++ installation moved to as far to the end as possible as it requires 
+# the installation of C++ compilers to be completed 
+# Install latest gcc 
+#
+# Install latest gcc - already installed 
+
+# Install latest compile accelerators: distcc: NOT available in yum
+
+sudo yum install -y cmake ccache
+
+# -----------------------------------------------------
 # Install emacs24 - emacs23 available as binary package - emacs24 not yet available as binary
 # Install cscope - installed by default
 # Install gdb - installed by default
@@ -92,15 +105,9 @@ pushd ~/bin
 wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
 popd
 # -----------------------------------------------------
+# -----------------------------------------------------
 # Common C++ Development Libraries 
-#
-# Install latest gcc - already installed 
-
-# Install latest compile accelerators: distcc: NOT available in yum
-
 # Install common C++ packages: libboost-all-dev: NOT available in yum 
-sudo yum install -y cmake ccache
-
 # Install common google packages: NONE of the below mentioned are available in yum 
 # libgoogle-perftools-dev libgtest-dev libgoogle-perftools-dev 
 # libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev

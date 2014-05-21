@@ -76,7 +76,7 @@ sudo apt-get install -y lshw
 # hwloc/lstopo: provides a portable abstraction of hierarchical architectures 
 sudo apt-get install -y hwloc
 # sysstat: sar (system activity report) and iostat monitoring commands
-sudo yum install -y sysstat
+sudo apt-get install -y sysstat
 # telnet client: provided by default
 # sshpass: allows one to execute ssh without submitting password:
 # sshpass -p 'passwd' ssh user@host command...
@@ -86,10 +86,21 @@ sudo apt-get install -y sshpass
 # SW Development Utilities #
 ############################
 # -----------------------------------------------------
+# Common C++ Compilers: Moved far ahead of installations that 
+# require these tools to ensure completion of all installation activity
+# C++ installation moved to as far to the end as possible as it requires 
+# the installation of C++ compilers to be completed 
+# Install latest gcc 
+sudo apt-get install -y gcc
+
+# Install latest compile accelerators
+sudo apt-get install -y cmake distcc ccache
+
+# -----------------------------------------------------
 # Install emacs24
 # https://launchpad.net/~cassou/+archive/emacs
 sudo apt-add-repository -y ppa:cassou/emacs
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
 # Install cscope
 sudo apt-get install -y cscope cscope-el
@@ -106,33 +117,6 @@ mkdir -p ~/bin
 pushd ~/bin
 wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
 popd
-# -----------------------------------------------------
-# Common C++ Development Libraries 
-# Install latest gcc 
-sudo apt-get install -y gcc
-
-# Install latest compile accelerators
-sudo apt-get install -y cmake distcc ccache
-
-# Install common C++ packages: boost
-sudo apt-get install -y libboost-all-dev
-
-# Install common google packages
-# libgoogle-perftools-dev includes tcmalloc
-sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
-# google-perftools: analyze profiled data beyond pprof: 'gprof' or 'google-pprof': need both libgoogle-perftools-dev and google-perftools
-sudo apt-get install -y google-perftools
-
-# Google libgtest-dev static libraries not installed as binary: Build it
-# Still required with Ubuntu 13.10/14.04
-pushd /tmp
-mkdir -p .build
-cd .build
-sudo cmake -DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/
-sudo make
-sudo mv libg* /usr/lib
-popd
-# -----------------------------------------------------
 #####################
 # JAVA installation #
 #####################
@@ -215,35 +199,55 @@ pushd ~/octave
 # octave-prompt> pkg install -forge -local control general image signal
 #
 
-# Install libsvm
-wget http://www.csie.ntu.edu.tw/~cjlin/cgi-bin/libsvm.cgi?+http://www.csie.ntu.edu.tw/~cjlin/libsvm+tar.gz
-mv libsvm.cgi\?+http\:%2F%2Fwww.csie.ntu.edu.tw%2F~cjlin%2Flibsvm+tar.gz libsvm.tar.gz
-tar xzvf libsvm.tar.gz
-rm -f libsvm.tar.gz
-pushd libsvm*/matlab
-octave --eval make
-mv *.mex ../..
-rm -f *.o
-popd 
+# Install libsvm: libsvm make fails due to warning: comment out
+# wget http://www.csie.ntu.edu.tw/~cjlin/cgi-bin/libsvm.cgi?+http://www.csie.ntu.edu.tw/~cjlin/libsvm+tar.gz
+# mv libsvm.cgi\?+http\:%2F%2Fwww.csie.ntu.edu.tw%2F~cjlin%2Flibsvm+tar.gz libsvm.tar.gz
+# tar xzvf libsvm.tar.gz
+# rm -f libsvm.tar.gz
+# pushd libsvm*/matlab
+# octave --eval make
+# mv *.mex ../..
+# rm -f *.o
+# popd 
 popd
 # -----------------------------------------------------
 ##############################
 # Scala related installation #
 ##############################
 # -----------------------------------------------------
+# No point in install scala in AWS EC2 micro VMs: not enough memory
 # scala/scalac
-sudo apt-get install -y scala
+# sudo apt-get install -y scala
 # scala build tool (SBT)
 mkdir -p ~/scala
 pushd ~/scala
 # sbt: Build tool for Scala/Java: 
 # Beware!: This specifically installs sbt-0.12.4 version
 # TODO: figure out a way to avoid "hardcoding" the version
-wget http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.12.4/sbt.tgz
-tar xzvf sbt.tgz
-pushd ~/bin
-ln -s ~/scala/sbt/bin/* .
+# wget http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.12.4/sbt.tgz
+# tar xzvf sbt.tgz
+# pushd ~/bin
+# ln -s ~/scala/sbt/bin/* .
+# popd
 popd
+# -----------------------------------------------------
+# Common C++ Development Libraries 
+# Install common C++ packages: boost
+sudo apt-get install -y libboost-all-dev
+
+# Install common google packages
+# libgoogle-perftools-dev includes tcmalloc
+sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
+# google-perftools: analyze profiled data beyond pprof: 'gprof' or 'google-pprof': need both libgoogle-perftools-dev and google-perftools
+sudo apt-get install -y google-perftools
+
+# Google libgtest-dev static libraries not installed as binary: Build it
+# Still required with Ubuntu 13.10/14.04
+sudo mkdir -p /tmp/.build
+pushd /tmp/.build
+sudo cmake -DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/
+sudo make
+sudo mv libg* /usr/lib
 popd
 # -----------------------------------------------------
 ########################
