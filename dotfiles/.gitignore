@@ -90,6 +90,7 @@ octave-workspace
 # SBT/Scala Files #
 ###################
 .classpath
+.history
 # Beware this needs to be finetuned: a genuine git directory may be ignored
 project
 
