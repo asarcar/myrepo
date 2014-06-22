@@ -151,6 +151,12 @@ sudo apt-get install -y rlwrap
 ###############################
 sudo apt-get install -y pychecker
 
+###########################
+# GO related installation #
+###########################
+sudo apt-get install -y golang
+sudo apt-get install -y golang-mode
+
 ###############################
 # HEROKU related installation #
 ###############################
