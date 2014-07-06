@@ -15,6 +15,7 @@ target/
 Debug/src
 Release/src
 .git
+.worksheet/
 #######################
 ### Compiled source ###
 #######################
