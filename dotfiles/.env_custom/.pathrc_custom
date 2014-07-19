@@ -1,0 +1,47 @@
+# .pathrc file
+# By Arijit Sarcar (sarcar_a@yahoo.com)
+#
+
+# Concept:
+# Sourced from .profile and .bash_profile
+# 1) .profile: Executed by non-interactive login sessions. 
+#   Example are desktop sessions created by gnome or any
+#   desktop environment.
+# 2) .bash_profile: Executed by interactive login sessions
+#   Example: when you ssh or login to a computer via console
+# 3) .bashrc: Executed only when creating an interactive non-login session
+#   Example: Open an xterm or start a screen session
+
+
+# Configure PATH
+#  - These are line by line so that you can kill one without affecting the others.
+#  - Lowest priority first, highest priority last.
+# ENVIRONMENT VARIABLES
+# PATH=$PATH:/usr/bin:/usr/local/bin:/usr/local/sbin
+
+if [ -d /usr/local/heroku/bin ]; then
+  PATH=$PATH:/usr/local/heroku/bin
+fi
+
+if [ -d $HOME/git/go_test ]; then
+  export GOPATH=$HOME/git/go_test
+  if [ -d $GOPATH/bin ]; then
+    PATH=$PATH:$GOPATH/bin
+  fi
+fi
+
+# Ensure these are the last two additions
+if [ -d $HOME/bin ]; then
+  PATH=$PATH:$HOME/bin
+fi
+
+PATH=$PATH:.
+
+# PATH=$PATH:.
+# export PATH=$PATH
+# export PATH=$HOME/bin:$PATH
+# export PATH=/usr/bin:$PATH
+# export PATH=/usr/local/bin:$PATH
+# export PATH=/usr/local/sbin:$PATH
+# export PATH=/usr/local/heroku/bin:$PATH # Heroku: https://toolbelt.heroku.com/standalone
+# /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/local/heroku/bin:/home/asarcar/git/go_test/bin:/home/asarcar/bin:.

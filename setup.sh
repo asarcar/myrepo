@@ -2,12 +2,14 @@
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 # for headless setup. 
 
-if [ $# -ne 1 ]; then
-  echo "Usage: setup.sh <sudo-password>"
+# Set up system to accept without password for subsequent commands
+echo ">> execute 'echo password | sudo -S ls -al' so that subsequent sudo commands do not require password"
+echo ">> close the terminal afterwards since we now have unrestricted sudo access"
+
+if [ $# -ne 0 ]; then
+  echo "Usage: setup.sh"
   exit 2 
 fi
-
-PWD=$1
 
 # Validate that the command is executed where setup.sh and 
 # dotfiles are available: else terminate execution of script
@@ -27,8 +29,6 @@ fi
 # permissions granted, mgmt interface configured, etc: 
 # refer to tips/system_commands.txt
 #
-# Set up system to accept without password for subsequent commands
-echo $PWD | sudo -S ls -al
 
 # Upgrade to the latest packages: remove obsoleted packages
 sudo apt-get -y upgrade --fix-missing
@@ -83,7 +83,7 @@ sudo apt-get install -y sysstat
 sudo apt-get install -y sshpass
 
 ############################
-# SW Development Utilities #
+# sw Development Utilities #
 ############################
 # -----------------------------------------------------
 # Common C++ Compilers: Moved far ahead of installations that 
@@ -287,6 +287,7 @@ popd
 cp -r dotfiles $HOME
 pushd $HOME
 ln -sb dotfiles/.screenrc .
+ln -sb dotfiles/.profile .
 ln -sb dotfiles/.bash_profile .
 ln -sb dotfiles/.bashrc .
 ln -sf dotfiles/.emacs.d .

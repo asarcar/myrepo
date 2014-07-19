@@ -10,22 +10,3 @@ if [ -f $HOME/.env_custom/.function_custom ]; then
   source $HOME/.env_custom/.function_custom
 fi
 
-# ENVIRONMENT VARIABLES
-if [ -d /usr/local/heroku/bin ]; then
-  PATH=$PATH:/usr/local/heroku/bin
-fi
-
-if [ -d $HOME/git/go_test ]; then
-  export GOPATH=$HOME/git/go_test
-  if [ -d $GOPATH/bin ]; then
-    PATH=$PATH:$GOPATH/bin
-  fi
-fi
-
-# Ensure these are the last two additions
-if [ -d $HOME/bin ]; then
-  PATH=$PATH:$HOME/bin
-fi
-
-PATH=$PATH:.
-

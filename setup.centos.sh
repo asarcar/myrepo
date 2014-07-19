@@ -1,12 +1,14 @@
 #!/bin/bash
 # Simple setup.centos.sh for configuring Centos instances for headless setup. 
 
-if [ $# -ne 1 ]; then
-  echo "Usage: setup.centos.sh <sudo-password>"
+# Set up system to accept without password for subsequent commands
+echo ">> execute 'echo password | sudo -S ls -al' so that subsequent sudo commands do not require password"
+echo ">> close the terminal afterwards since we now have unrestricted sudo access"
+
+if [ $# -ne 0 ]; then
+  echo "Usage: setup.centos.sh"
   exit 2 
 fi
-
-PWD=$1
 
 # Validate that the command is executed where setup.sh and 
 # dotfiles are available: else terminate execution of script
@@ -26,9 +28,6 @@ fi
 # permissions granted, mgmt interface configured, etc: 
 # refer to tips/system_commands.txt
 #
-
-# Set up system to accept without password for subsequent commands
-echo $PWD | sudo -S ls -al
 
 ## 
 # Disable security and privilege levels of command execution "SELINUX=disabled"
@@ -193,10 +192,10 @@ popd
 cp -r dotfiles $HOME
 pushd $HOME
 ln -sb dotfiles/.screenrc .
+ln -sb dotfiles/.profile .
 ln -sb dotfiles/.bash_profile .
 ln -sb dotfiles/.bashrc .
 ln -sf dotfiles/.emacs.d .
-ln -sf dotfiles/.Rprofile .
 ln -sb dotfiles/.gitignore .
 ln -sf dotfiles/.env_custom .
 ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
