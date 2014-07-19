@@ -33,16 +33,17 @@ fi
 # Upgrade to the latest packages: remove obsoleted packages
 sudo apt-get -y upgrade --fix-missing
 
+# LOCAL INSTALLATION ONLY: Better to hand install
 # 13.10/14.04 "extra" packages
 # "Ubuntu restricted extras: consists of codecs not installed by default.
-sudo apt-get install -y ubuntu-restricted-extras
+#> sudo apt-get install -y ubuntu-restricted-extras
 # Adobe Flash Player
-sudo apt-get install -y flashplugin-installer
+#> sudo apt-get install -y flashplugin-installer
 # VLC: best open source media player
-sudo apt-get install -y vlc
+#> sudo apt-get install -y vlc
 # Enable encrypted DVD playback
-sudo apt-get install -y libdvdread4
-sudo /usr/share/doc/libdvdread4/install-css.sh
+#> sudo apt-get install -y libdvdread4
+#> sudo /usr/share/doc/libdvdread4/install-css.sh
 # Install RAR
 sudo apt-get install -y rar
 # Get rid of "Sorry: Ubuntu xx.yy has experienced an internal error"
