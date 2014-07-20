@@ -131,18 +131,21 @@ sudo apt-get install -y openjdk-7-jdk
 #############################
 # Node related installation #
 #############################
+# NOT INSTALLED
 # Install nvm: node-version manager
-curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+#> wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
 
 # Load nvm and install latest production node
-source $HOME/.nvm/nvm.sh
-nvm install v0.10.12
-nvm use v0.10.12
+#> source $HOME/.nvm/nvm.sh
+#> nvm install v0.10.12
+#> nvm use v0.10.12
 
 # Install jshint to allow checking of JS code within emacs
 # http://jshint.com/
-npm install -g jshint
+#> npm install -g jshint
 
+#  rlwrap (readline wrapper) utility provides a command 
+# history and editing of keyboard input for any other command
 # Install rlwrap to provide libreadline features with node
 # See: http://nodejs.org/api/repl.html#repl_repl
 sudo apt-get install -y rlwrap
@@ -161,11 +164,13 @@ sudo apt-get install -y golang-mode
 ###############################
 # HEROKU related installation #
 ###############################
-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo -S sh
+# NOT INSTALLED
+#> wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo -S sh
 
 ##########################
 # R related installation #
 ##########################
+# NOT INSTALLED
 # -----------------------------------------------------
 # R Package Installation is very unstable: commenting out all R related installation
 # sudo apt-get install -y r-base
@@ -180,23 +185,24 @@ wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo -S sh
 # sudo apt-get install -y r-cran-rgl
 
 ## Install latest packages not available in binary distribution by executing install within R
-mkdir -p ~/R
-pushd ~/R
+#> mkdir -p ~/R
+#> pushd ~/R
 ## TODO: current all libraries for all R versions and 
 ## for all architectures will go in same directory
 # R -e "install.packages(c('gclus', 'ggplot2', 'sm'), lib='~/R')"
 # R -e "install.packages('pysch', lib='~/R')"
-popd
+#> popd
 # -----------------------------------------------------
 
 ###############################
 # Octave related installation #
 ###############################
+# NOT INSTALLED
 # -----------------------------------------------------
 sudo apt-get install -y octave gnuplot liboctave-dev
 ## Install latest packages not available in binary distribution
-mkdir -p ~/octave
-pushd ~/octave
+#> mkdir -p ~/octave
+#> pushd ~/octave
 #
 # octave 3.8 is packaged for all Ubuntu versions >= 14.04
 # From within Octave (>= 3.8) you need to manually install 
@@ -216,18 +222,19 @@ pushd ~/octave
 # mv *.mex ../..
 # rm -f *.o
 # popd 
-popd
+#> popd
 # -----------------------------------------------------
 ##############################
 # Scala related installation #
 ##############################
+# NOT INSTALLED
 # -----------------------------------------------------
 # No point in install scala in AWS EC2 micro VMs: not enough memory
 # scala/scalac
 # sudo apt-get install -y scala
 # scala build tool (SBT)
-mkdir -p ~/scala
-pushd ~/scala
+#> mkdir -p ~/scala
+#> pushd ~/scala
 # sbt: Build tool for Scala/Java: 
 # Beware!: This specifically installs sbt-0.12.4 version
 # TODO: figure out a way to avoid "hardcoding" the version
@@ -236,7 +243,7 @@ pushd ~/scala
 # pushd ~/bin
 # ln -s ~/scala/sbt/bin/* .
 # popd
-popd
+#> popd
 # -----------------------------------------------------
 # Common C++ Development Libraries 
 # Install common C++ packages: boost
