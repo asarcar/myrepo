@@ -1,0 +1,56 @@
+#
+# BASHRC: custom changes needed at work
+#
+
+if [ -d $HOME/public_html ]; then
+  export HTML_HOME=$HOME/public_html
+fi
+
+if [ -d $HOME/scbdb ]; then
+  export SCBDB_HOME=$HOME/scbdb
+fi
+
+if [ -d $HOME/git ]; then
+  export GIT_HOME=$HOME/git
+fi
+
+if [ -d $GIT_HOME/go_test ]; then
+  export GOPATH=$GIT_HOME/go_test
+fi
+
+if [ -d /evo/files ]; then
+  export EVO_FILES=/evo/files
+
+  if [ -d $EVO_FILES/images/$USER ]; then
+    export EVO_MY_IMG_DIR=$EVO_FILES/images/$USER
+  fi
+
+  if [ -d $EVO_FILES/public/evo_test ]; then
+    export EVO_TEST=$EVO_FILES/public/evo_test
+
+    if [ -d $EVO_TEST/evo-devtest/tools ]; then
+      export EVO_TOOLS=$EVO_TEST/evo-devtest/tools
+    fi
+
+    if [ -d $EVO_TEST/.vm_logs/$USER ]; then
+      export EVO_MY_VMM=$EVO_TEST/.vm_logs/$USER
+    fi
+  fi
+
+fi
+
+# EVO: Work
+if [[ -z "$EVO_NAME" ]]; then
+  export EVO_NAME=evo_tot
+fi
+
+if [ -d $GIT_HOME/$EVO_NAME ]; then
+  export EVO_HOME=$GIT_HOME/$EVO_NAME
+  if [ -d $EVO_HOME/tools/bin ]; then
+    export EVO_TOOLS_BIN=$EVO_HOME/tools/bin
+  fi
+  if [ -d $EVO_HOME/cevo/ccd-ptx-re/obj-native/install/usr/sbin ]; then
+    export EVO_INSTALL_BIN=$EVO_HOME/cevo/ccd-ptx-re/obj-native/install/usr/sbin
+  fi
+fi
+

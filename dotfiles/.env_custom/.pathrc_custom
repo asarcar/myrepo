@@ -13,21 +13,24 @@
 #   Example: Open an xterm or start a screen session
 
 
-# Configure PATH
-#  - These are line by line so that you can kill one without affecting the others.
-#  - Lowest priority first, highest priority last.
-# ENVIRONMENT VARIABLES
-# PATH=$PATH:/usr/bin:/usr/local/bin:/usr/local/sbin
+# Always reset PATH to what it was when first login session was executed
+PATH=$PREVPATH
 
-if [ -d /usr/local/heroku/bin ]; then
-  PATH=$PATH:/usr/local/heroku/bin
+# Enable only when Heroku is used
+# if [ -d /usr/local/heroku/bin ]; then
+#   PATH=$PATH:/usr/local/heroku/bin
+# fi
+
+if [ -d $GOPATH/bin ]; then
+  PATH=$PATH:$GOPATH/bin
 fi
 
-if [ -d $HOME/git/go_test ]; then
-  export GOPATH=$HOME/git/go_test
-  if [ -d $GOPATH/bin ]; then
-    PATH=$PATH:$GOPATH/bin
-  fi
+#------------------------------------------------------------
+# Context Specific 
+#------------------------------------------------------------
+# Execute context specific Path
+if [ -f $HOME/.env_custom/.pathrc_custom_work ]; then
+  source $HOME/.env_custom/.pathrc_custom_work
 fi
 
 # Ensure these are the last two additions
@@ -36,12 +39,3 @@ if [ -d $HOME/bin ]; then
 fi
 
 PATH=$PATH:.
-
-# PATH=$PATH:.
-# export PATH=$PATH
-# export PATH=$HOME/bin:$PATH
-# export PATH=/usr/bin:$PATH
-# export PATH=/usr/local/bin:$PATH
-# export PATH=/usr/local/sbin:$PATH
-# export PATH=/usr/local/heroku/bin:$PATH # Heroku: https://toolbelt.heroku.com/standalone
-# /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/local/heroku/bin:/home/asarcar/git/go_test/bin:/home/asarcar/bin:.

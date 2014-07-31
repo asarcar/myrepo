@@ -12,9 +12,9 @@
    This should create the files cscope.out and cscope.files.
 ** SHELL: Create project-name.files & cscope-DB in any dir $DIR and for any project $PROJ
    > cd $DIR
-   > find . -name *.[chR] -o -name *.cc -o -name *.cpp -o -name *.py -o -name *.php -o -name *.txt > $PROJ.files
+   > find . -name *.[chR] -o -name *.cc -o -name *.cpp -o -name *.hpp -o -name *.java -o -name *.scala -o -name *.py -o -name *.go -o -name *.php -o -name *.txt > $PROJ.files
    > cscope -q -b -R -i $PROJ.files
-   > in-emacs-editor> "M-x cscope-set-initial-director $DIR"
+   > in-emacs-editor> "M-x cscope-set-initial-directory $DIR"
 
 * Key Bindings	   
   C-c s s Find symbol.

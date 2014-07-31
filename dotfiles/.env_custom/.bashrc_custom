@@ -1,5 +1,12 @@
 # User Specific Changes
 
+#------------------------------------------------------------
+# Context Specific 
+#------------------------------------------------------------
+if [ -f $HOME/.env_custom/.bashrc_custom_work ]; then
+  source $HOME/.env_custom/.bashrc_custom_work
+fi
+
 # Execute user specific .alias 
 if [ -f $HOME/.env_custom/.alias_custom ]; then
   source $HOME/.env_custom/.alias_custom
@@ -9,4 +16,3 @@ fi
 if [ -f $HOME/.env_custom/.function_custom ]; then
   source $HOME/.env_custom/.function_custom
 fi
-

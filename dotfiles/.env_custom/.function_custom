@@ -310,3 +310,11 @@ proj_db() {
     cat $filename | xargs etags -a -o $tagfilename
     popd
 }
+
+#------------------------------------------------------------
+# Context Specific 
+#------------------------------------------------------------
+# Execute context specific .alias files
+if [ -f $HOME/.env_custom/.function_custom_work ]; then
+  source $HOME/.env_custom/.function_custom_work
+fi

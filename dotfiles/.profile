@@ -12,6 +12,10 @@
 if [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
 fi
+
+# Remember PATH: we can use it when making local modification
+export PREVPATH=$PATH
+
 if [ -f "$HOME/.env_custom/.pathrc_custom" ]; then
    . "$HOME/.env_custom/.pathrc_custom"
 fi

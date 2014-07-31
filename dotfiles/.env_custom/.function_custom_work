@@ -1,0 +1,80 @@
+#
+# FUNCTIONS: modifications needed at work
+#
+ewrap () {
+  if [ "$#" -lt 1 ]; then
+    echo "Usage: ewrap prog-name arguments";
+    return;
+  fi
+  echo "Got args=$*";
+  prog=$1;
+  shift 1;
+  args="$*";
+  # implied parameters --zkaddr 127.0.0.1:2181 
+  echo "Running: zkwrap.sh ${prog} ${args}";
+  $EVO_HOME/tools/bin/zkwrap.sh $EVO_HOME/cevo/ccd-ptx-re/obj-native/install/usr/sbin/${prog} ${args};
+}
+
+eallcleanbuild () {
+  pushd $EVO_HOME/cevo
+  evo make clean
+  cd ../evo/evo_ptx
+  evo gradle clean build
+  cd ../../cevo
+  popd
+  eccleanbuild
+}
+
+eccleanbuild () {
+  pushd $EVO_HOME/cevo
+  evo make clean
+  ecbuild
+}
+
+ecbuild () {
+  if [ -f log.tmp ]; then
+    mv -f log.tmp log.prev.tmp
+  fi 
+  evo make -j8 > log.tmp 2>&1 &
+  echo "To track build progress: tail -f ${EVO_HOME}/cevo/log.tmp"
+}
+
+erepodiff () {
+  if [ "$#" != 2 ] || ( [ "$1" != "master" ] && [ "$1" != "evo_latest" ] ); then
+      echo "Usage: erepodif <master|evo_latest> diff-file-name";
+      return;
+  fi
+  if [ -f $HTML_HOME/$2 ]; then
+    mv -f $HTML_HOME/$2 $HTML_HOME/$2.tmp
+  fi 
+  pushd $EVO_HOME/cevo;
+  evo repo forall -pc "git diff -M -C m/$1" > $HTML_HOME/$2;
+  popd
+}
+
+esendreview() {
+  if [ "$#" != 2 ] || [ ! -f $HTML_HOME/$2 ]; then
+    echo "Usage: esendreview one-word-subject description-file-in-html-dir";
+    return;
+  fi
+  erepodiff evo_latest $1.diff
+  if [ -f /tmp/$1.mail.txt ]; then
+    rm -f /tmp/$1.mail.txt;
+  fi
+  echo "To: psg-evo-code-review@juniper.net" > /tmp/$1.mail.txt
+  echo "Cc: asarcar@juniper.net" >> /tmp/$1.mail.txt
+  echo "From: asarcar@juniper.net" >> /tmp/$1.mail.txt
+  echo "Subject: review-code [ $1 ]" >> /tmp/$1.mail.txt
+
+  echo "" >> /tmp/$1.mail.txt
+  echo "Please review:" >> /tmp/$1.mail.txt
+  echo "" >> /tmp/$1.mail.txt
+  echo "Link to description: http://www-in/~asarcar/$2" >> /tmp/$1.mail.txt
+  echo "Link to diff:        http://www-in/~asarcar/$1.diff" >> /tmp/$1.mail.txt
+  echo "" >> /tmp/$1.mail.txt
+  echo "Thanks a lot." >> /tmp/$1.mail.txt
+  echo "-Ory" >> /tmp/$1.mail.txt
+  echo "" >> /tmp/$1.mail.txt
+
+  sendmail -odb -oem -oi -t  < /tmp/$1.mail.txt
+}

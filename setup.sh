@@ -82,7 +82,10 @@ sudo apt-get install -y sysstat
 # sshpass: allows one to execute ssh without submitting password:
 # sshpass -p 'passwd' ssh user@host command...
 sudo apt-get install -y sshpass
-
+# quota allows one to view ones disk quota and usage
+sudo apt-get install -y quota
+# sendmail: powerful, efficient, and scalable Mail Transport Agent
+sudo apt-get install -y sendmail
 ############################
 # sw Development Utilities #
 ############################
@@ -100,6 +103,8 @@ sudo apt-get install -y cmake distcc ccache
 # -----------------------------------------------------
 # Install emacs24
 # https://launchpad.net/~cassou/+archive/emacs
+# Firewall blocks ports other than 80: getting the keyserver via port 80
+sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CEC45805
 sudo apt-add-repository -y ppa:cassou/emacs
 sudo apt-get update -y
 sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
@@ -107,8 +112,12 @@ sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
 sudo apt-get install -y cscope cscope-el
 # gdb: GNU debugger
 sudo apt-get install -y gdb
-# doxygen: Documentation system for C, C++, Java, Python and other languages
+#
+# DOXYGEN: Documentation system for C, C++, Java, Python and other languages
+#
 sudo apt-get install -y doxygen
+# Message Sequence Charts: charts embedded in docs via \msc command
+sudo apt-get install -y mscgen
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo apt-get install -y graphviz-dev

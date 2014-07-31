@@ -60,7 +60,6 @@ build
 CMakeCache.txt
 CMakeFiles
 # Careful - how to do so for only CMake generated Makefile
-Makefile
 cmake_install.cmake
 install_manifest.txt
 
@@ -135,3 +134,10 @@ Thumbs.db
 # SW Repository Filed #
 #######################
 .gitignore
+
+####################
+# EVO Work Related #
+####################
+obj-*
+*tmp
+__gen*

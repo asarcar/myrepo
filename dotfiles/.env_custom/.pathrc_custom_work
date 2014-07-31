@@ -1,0 +1,5 @@
+#
+# PATH: modifications needed at work
+if [ -d $EVO_HOME/tools/bin ]; then
+    PATH=$PATH:$EVO_HOME/tools/bin
+fi

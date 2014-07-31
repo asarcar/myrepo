@@ -69,7 +69,8 @@ sudo yum install -y graphviz-dev
 # sshpass: allows one to execute ssh without submitting password:
 # sshpass -p 'passwd' ssh user@host command: available in epel-release*rpm release package
 sudo yum install -y sshpass
-
+# sendmail: powerful, efficient, and scalable Mail Transport Agent
+sudo yum install -y sendmail
 ############################
 # SW Development Utilities #
 ############################
