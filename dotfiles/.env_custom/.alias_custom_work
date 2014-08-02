@@ -9,7 +9,7 @@ alias buildEvoImage.pl='$EVO_TOOLS/buildEvoImage/buildEvoImage.pl'
 alias evoCommitTest.pl='$EVO_TOOLS/evoCommitTest/evoCommitTest.pl'
 alias evoLaunchVmm.pl='$EVO_TOOLS/launchVMM/launchVmm+.pl'
 
-# EVO Branch Setup
+# EVO Branch Initial Setup
 alias evostable='pushd $EVO_HOME && evo bootstrap && popd'
 alias evolatest='pushd $EVO_HOME && export EVO_MANIFEST_BRANCH=evo_latest && evo bootstrap && unset EVO_MANIFEST_BRANCH && popd'
 
