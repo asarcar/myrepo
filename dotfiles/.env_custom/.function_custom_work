@@ -78,3 +78,32 @@ esendreview() {
 
   sendmail -odb -oem -oi -t  < /tmp/$1.mail.txt
 }
+
+ebranchset() {
+  if [ "$#" != 1 ] || [ ! -d $GIT_HOME/$1 ]; then
+    echo "Usage: ebranchset existing-branch-name";
+    return;
+  fi
+  export EVO_NAME=$1
+  source $HOME/.bashrc
+}
+
+ebranchcreate() {
+  if [ "$#" -lt 1 ] || [ "$#" -gt 2 ] || [ -d $GIT_HOME/$1 ] || ( [ "$#" == 2 ] && [ "$2" != "stable" ] && [ "$2" != "tot" ] ); then
+    echo "Usage: ebranchcreate new-branch-name [stable|tot]";
+    return;
+  fi
+  pushd $GIT_HOME;
+  git clone evogit:sandbox $1;
+  ebranchset $1;
+  pushd $EVO_HOME;
+  git config user.email asarcar@juniper.net;
+  popd
+  popd
+}
+
+etest() {
+  pushd $EVO_HOME;
+  git config user.email asarcar@juniper.net;
+  popd
+}
