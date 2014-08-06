@@ -2,6 +2,12 @@ Host *
   IdentitiesOnly yes
 
 # Personal 
+Host home
+  Hostname 76.102.32.230
+  Port 27227
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.personal
+
 # Ubuntu
 Host zeus
   HostName zeus 
@@ -16,14 +22,14 @@ Host titan
 
 # AWS-14.04 Ubuntu
 Host aws
-  HostName ec2-54-186-77-129.us-west-2.compute.amazonaws.com
-  User asarcar
-  IdentityFile ~/.ssh/aws.pem
+  HostName ec2-54-187-235-201.us-west-2.compute.amazonaws.com
+  User sarcar
+  IdentityFile ~/.ssh/sarcar_aws.pem
 
 Host uaws
-  HostName ec2-54-186-255-62.us-west-2.compute.amazonaws.com
+  HostName ec2-54-187-235-201.us-west-2.compute.amazonaws.com
   User ubuntu
-  IdentityFile ~/.ssh/aws.pem
+  IdentityFile ~/.ssh/sarcar_aws.pem
 
 # Heroku
 Host heroku.com
