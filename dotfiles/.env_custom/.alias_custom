@@ -64,3 +64,12 @@ alias win2unix="sed -i 's/\r/\n/g'"
 alias detabifytable="awk -F\"\t\" '{print \$1, \$2, \$3, \$4}'"
 alias lf="ls | xargs head -1"
 alias rmtmp="\rm *~ .*~ *.*~ *.pyc"
+
+#------------------------------------------------------------
+# Context Specific 
+#------------------------------------------------------------
+# Execute context specific .alias files
+if [ -f $HOME/.env_custom/.alias_custom_work ]; then
+  source $HOME/.env_custom/.alias_custom_work
+fi
+

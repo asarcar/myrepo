@@ -6,6 +6,7 @@ ewrap () {
     echo "Usage: ewrap prog-name arguments";
     return;
   fi
+  echo "Assuming Called: ${EVO_HOME}/tools/bin/zkserver.sh start"
   echo "Got args=$*";
   prog=$1;
   shift 1;
@@ -13,6 +14,11 @@ ewrap () {
   # implied parameters --zkaddr 127.0.0.1:2181 
   echo "Running: zkwrap.sh ${prog} ${args}";
   $EVO_HOME/tools/bin/zkwrap.sh $EVO_HOME/cevo/ccd-ptx-re/obj-native/install/usr/sbin/${prog} ${args};
+}
+
+eallbuild () {
+  esbuild
+  ecbuild
 }
 
 eallcleanbuild () {
@@ -29,51 +35,97 @@ eccleanbuild () {
   pushd $EVO_HOME/cevo
   evo make clean
   ecbuild
+  popd
 }
 
 ecbuild () {
+  cd $EVO_HOME/cevo
   if [ -f log.tmp ]; then
+    echo "mv log.tmp log.prev.tmp"
     mv -f log.tmp log.prev.tmp
   fi 
   evo make -j8 > log.tmp 2>&1 &
   echo "To track build progress: tail -f ${EVO_HOME}/cevo/log.tmp"
 }
 
-erepodiff () {
-  if [ "$#" != 2 ] || ( [ "$1" != "master" ] && [ "$1" != "evo_latest" ] ); then
-      echo "Usage: erepodif <master|evo_latest> diff-file-name";
+esbuild () {
+  cd $EVO_HOME/evo
+  evo gradle build
+}
+
+erepofpdiff () {
+  if [ "$#" != 2 ] || ( [ "$1" != "evo_latest" ]  && [ "$1" != "master" ] ); then
+      echo "Usage: erepofpdiff <evo_latest|master> diff-file-name";
       return;
   fi
-  if [ -f $HTML_HOME/$2 ]; then
-    mv -f $HTML_HOME/$2 $HTML_HOME/$2.tmp
+  if [ -f $2 ]; then
+    mv -f $2 $2.tmp
   fi 
   pushd $EVO_HOME/cevo;
-  evo repo forall -pc "git diff -M -C m/$1" > $HTML_HOME/$2;
+  evo repo forall -pc "git format-patch --stdout m/$1" > $2;
+  popd;
+}
+
+erepoapply () {
+  if [ "$#" != 1 ] || [ ! -f $1 ]; then
+      echo "Usage: erepoappy diff-file-name<diff-file-name|format-path-diff-file-name";
+      return;
+  fi
+  pushd $EVO_HOME/cevo;
+  $HOME/bin/evo_ap $1
+  popd
+}
+ 
+erepopush () {
+  if [ "$#" != 3 ]; then
+      echo "Usage: erepopush <PR-num> <Hw-Test-ID> <SW-Test-ID>";
+      return;
+  fi
+  # evo push -p <comma separated PRs> -s <comma separated HW smoke test ids> -y <comma separated VM smoke test ids>
+  evo push -p $1 -s $2 -y $3
+}
+
+erepodiff () {
+  if [ "$#" != 2 ] || ( [ "$1" != "evo_latest" ]  && [ "$1" != "master" ] ); then
+      echo "Usage: erepodiff <evo_latest|master> diff-file-name";
+      return;
+  fi
+  if [ -f $2 ]; then
+    mv -f $2 $2.tmp
+  fi 
+  pushd $EVO_HOME;
+  evo repo forall -pc "git diff -M -C m/$1" > $2;
+  popd;
+}
+
+erepogdiff () {
+  pushd $EVO_HOME
+  evo repo forall -pc "bash ${HOME}/bin/git_diff m/master"
   popd
 }
 
 esendreview() {
-  if [ "$#" != 2 ] || [ ! -f $HTML_HOME/$2 ]; then
-    echo "Usage: esendreview one-word-subject description-file-in-html-dir";
+  if [ "$#" != 1 ] || [ ! -f $HTML_HOME/$1.diff ] || [ ! -f $HTML_HOME/$1.txt ]; then
+    echo "Usage: esendreview one-word-subject";
+    echo "       $1.diff and $1.txt should exist ~/public_html directory"
     return;
   fi
-  erepodiff evo_latest $1.diff
   if [ -f /tmp/$1.mail.txt ]; then
     rm -f /tmp/$1.mail.txt;
   fi
-  echo "To: psg-evo-code-review@juniper.net" > /tmp/$1.mail.txt
+  echo "To: psg-evo-eng@juniper.net" > /tmp/$1.mail.txt
   echo "Cc: asarcar@juniper.net" >> /tmp/$1.mail.txt
   echo "From: asarcar@juniper.net" >> /tmp/$1.mail.txt
   echo "Subject: review-code [ $1 ]" >> /tmp/$1.mail.txt
 
   echo "" >> /tmp/$1.mail.txt
-  echo "Please review:" >> /tmp/$1.mail.txt
+  echo "Please review and provide your feedback:" >> /tmp/$1.mail.txt
   echo "" >> /tmp/$1.mail.txt
-  echo "Link to description: http://www-in/~asarcar/$2" >> /tmp/$1.mail.txt
-  echo "Link to diff:        http://www-in/~asarcar/$1.diff" >> /tmp/$1.mail.txt
+  echo "Link to description: http://www-in/~asarcar/$1.diff" >> /tmp/$1.mail.txt
+  echo "Link to diff:        http://www-in/~asarcar/$1.txt" >> /tmp/$1.mail.txt
   echo "" >> /tmp/$1.mail.txt
   echo "Thanks a lot." >> /tmp/$1.mail.txt
-  echo "-Ory" >> /tmp/$1.mail.txt
+  echo "-Arijit Ory Sarcar" >> /tmp/$1.mail.txt
   echo "" >> /tmp/$1.mail.txt
 
   sendmail -odb -oem -oi -t  < /tmp/$1.mail.txt
@@ -84,26 +136,60 @@ ebranchset() {
     echo "Usage: ebranchset existing-branch-name";
     return;
   fi
-  export EVO_NAME=$1
-  source $HOME/.bashrc
+  export EVO_NAME=$1;
+  source $HOME/.bashrc;
+  cd $EVO_HOME;
 }
 
 ebranchcreate() {
-  if [ "$#" -lt 1 ] || [ "$#" -gt 2 ] || [ -d $GIT_HOME/$1 ] || ( [ "$#" == 2 ] && [ "$2" != "stable" ] && [ "$2" != "tot" ] ); then
-    echo "Usage: ebranchcreate new-branch-name [stable|tot]";
+  if [ "$#" -lt 1 ] || [ "$#" -gt 2 ] || [ -d $GIT_HOME/$1 ] || ( [ "$#" == 2 ] && [ "$2" != "master" ] && [ "$2" != "evo_latest" ] ); then
+    echo "Usage: ebranchcreate new-branch-name [evo_latest|master]";
     return;
   fi
   pushd $GIT_HOME;
+
+  echo "Git: Set user.email to Work: allows evo bootstrap pick correctly email"
+  git config --global user.email $WORK_EMAIL;
   git clone evogit:sandbox $1;
   ebranchset $1;
-  pushd $EVO_HOME;
-  git config user.email asarcar@juniper.net;
-  popd
-  popd
+  echo "Git: Set Local user.email to Work"
+  git config user.email $PERSONAL_EMAIL;
+
+  if [ "$#" == 2 ] && [ "$2" == "master" ]
+  then
+    evo bootstrap;
+    # Check out & Build entire tree
+    evo checkout all;
+  else
+    export EVO_MANIFEST_BRANCH=evo_latest;
+    evo bootstrap;
+    unset EVO_MANIFEST_BRANCH;
+    # Check out & Build only cevo tree
+    evo checkout all;
+  fi
+
+  echo "Git: ReSet user.email to Personal"
+  git config --global user.email $PERSONAL_EMAIL;
+
+  popd;
+  cd $EVO_HOME;
 }
 
-etest() {
-  pushd $EVO_HOME;
-  git config user.email asarcar@juniper.net;
+# EVO Code Browse
+ecbdb() {
+  pushd $SCBDB_HOME
+  if [ -d $EVO_NAME ]
+  then
+    pushd $EVO_NAME
+    rm -f $EVO_NAME.files
+    rm -f $EVO_NAME.TAGS
+    rm -f cscope.*
+  else
+    mkdir -p $EVO_NAME
+    pushd $EVO_NAME
+  fi
+  find $EVO_HOME -name *.[ch] -o -name *.cc -o -name *.cpp -o -name *.hpp -o -name *.java -o -name *.scala -o -name *.py -o -name *.go -o -name *.php | grep -v "/obj-" > $EVO_NAME.files
+  cscope -q -b -R -i $EVO_NAME.files
+  cat $EVO_NAME.files | xargs etags -a -o $EVO_NAME.TAGS
   popd
 }

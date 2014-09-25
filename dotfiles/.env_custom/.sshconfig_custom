@@ -22,14 +22,14 @@ Host titan
 
 # AWS-14.04 Ubuntu
 Host aws
-  HostName ec2-54-187-235-201.us-west-2.compute.amazonaws.com
-  User sarcar
-  IdentityFile ~/.ssh/sarcar_aws.pem
+  HostName ec2-54-186-77-129.us-west-2.compute.amazonaws.com
+  User asarcar
+  IdentityFile ~/.ssh/aws.pem
 
 Host uaws
-  HostName ec2-54-187-235-201.us-west-2.compute.amazonaws.com
+  HostName ec2-54-186-255-62.us-west-2.compute.amazonaws.com
   User ubuntu
-  IdentityFile ~/.ssh/sarcar_aws.pem
+  IdentityFile ~/.ssh/aws.pem
 
 # Heroku
 Host heroku.com
@@ -46,9 +46,21 @@ Host github.com
   IdentityFile ~/.ssh/id_dsa.github
 
 # Juniper
-# Work-Desktop: 10.92.8.95
-Host work 
+# Work-VM: 10.160.3.71
+Host work
+  Hostname svl-evodev-asarcar.juniper.net
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+
+# Work-Old-VM: 10.92.8.95
+Host work-old 
   Hostname asarcar-desktop.englab.juniper.net
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+
+# MAC Laptop: 172.21.23.181
+Host mac
+  HostName asarcar-mbp15.jnpr.net
   User asarcar
   IdentityFile ~/.ssh/id_dsa.juniper
 
@@ -60,7 +72,7 @@ Host evogit
   IdentityFile ~/.ssh/id_dsa.juniper
 
 # EvoCode
-Host code.englab.juniper.net
+Host evocode
   Hostname code.englab.juniper.net
   User devo
   IdentityFile ~/.ssh/id_dsa.juniper
@@ -102,6 +114,27 @@ Host cdbu
   IdentityFile ~/.ssh/id_dsa.juniper
  
 # CTO LAB SERVERS
+# Open Fabric Platform Servers: ofp<1|2>
+Host ofp1
+  HostName 10.83.252.233
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+
+Host ofp2
+  HostName 10.83.252.232
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+
+Host rofp1
+  HostName 10.83.252.233
+  User root
+  IdentityFile ~/.ssh/id_dsa.juniper
+
+Host rofp2
+  HostName 10.83.252.232
+  User root
+  IdentityFile ~/.ssh/id_dsa.juniper
+
 # Host Network Adapter Servers: HostNetworkAdapter-1/2
 Host hna-1
   HostName 10.83.252.236
@@ -111,4 +144,20 @@ Host hna-1
 Host hna-2
   HostName 10.83.252.237
   User asarcar
+  IdentityFile ~/.ssh/id_dsa.juniper
+
+# IPG Lab Servers: HNA Testing
+Host ipg-lab-7
+  HostName ieng-serv07.englab.juniper.net
+  User regress
+  IdentityFile ~/.ssh/id_dsa.juniper
+
+Host ipg-lab-6
+  HostName ieng-serv06.englab.juniper.net
+  User regress
+  IdentityFile ~/.ssh/id_dsa.juniper
+
+Host ipg-lab-5
+  HostName ieng-serv05.englab.juniper.net
+  User regress
   IdentityFile ~/.ssh/id_dsa.juniper

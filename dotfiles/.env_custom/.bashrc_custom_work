@@ -1,7 +1,6 @@
 #
 # BASHRC: custom changes needed at work
 #
-
 if [ -d $HOME/public_html ]; then
   export HTML_HOME=$HOME/public_html
 fi

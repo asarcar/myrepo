@@ -15,6 +15,7 @@ target/
 Debug/src
 Release/src
 .git
+.gitattributes
 .worksheet/
 #######################
 ### Compiled source ###
@@ -141,3 +142,8 @@ Thumbs.db
 obj-*
 *tmp
 __gen*
+_gen_*
+mcode_temp/
+ptx/
+gw-agent/
+rpd-agent/

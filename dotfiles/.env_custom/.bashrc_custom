@@ -3,6 +3,10 @@
 #------------------------------------------------------------
 # Context Specific 
 #------------------------------------------------------------
+if [ -f $HOME/.env_custom/.bashrc_custom_user_specific ]; then
+  source $HOME/.env_custom/.bashrc_custom_user_specific
+fi
+
 if [ -f $HOME/.env_custom/.bashrc_custom_work ]; then
   source $HOME/.env_custom/.bashrc_custom_work
 fi
