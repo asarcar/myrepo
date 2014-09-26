@@ -1,22 +1,6 @@
 #
 # BASHRC: custom changes needed at work
 #
-if [ -d $HOME/public_html ]; then
-  export HTML_HOME=$HOME/public_html
-fi
-
-if [ -d $HOME/scbdb ]; then
-  export SCBDB_HOME=$HOME/scbdb
-fi
-
-if [ -d $HOME/git ]; then
-  export GIT_HOME=$HOME/git
-fi
-
-if [ -d $GIT_HOME/go_test ]; then
-  export GOPATH=$GIT_HOME/go_test
-fi
-
 if [ -d /evo/files ]; then
   export EVO_FILES=/evo/files
 

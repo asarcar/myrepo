@@ -72,7 +72,7 @@ Host evogit
   IdentityFile ~/.ssh/id_dsa.juniper
 
 # EvoCode
-Host evocode
+Host code.englab.juniper.net
   Hostname code.englab.juniper.net
   User devo
   IdentityFile ~/.ssh/id_dsa.juniper

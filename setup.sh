@@ -56,8 +56,6 @@ sudo apt-get install -y rar
 #############
 # locate: helps find a file anywhere in the already mounted filesystem
 sudo apt-get install -y locate
-# create a database for all the files in the filesystem
-sudo updatedb
 # tree: displays directory tree in color
 sudo apt-get install -y tree
 # rlwrap: command completion and history 
@@ -86,6 +84,12 @@ sudo apt-get install -y sshpass
 sudo apt-get install -y quota
 # sendmail: powerful, efficient, and scalable Mail Transport Agent
 sudo apt-get install -y sendmail
+# devscripts: dget and other utilities for package installation
+sudo apt-get install -y devscripts
+# tkcvs: A graphical front-end to CVS/Subversion/git
+# tkdiff: graphical side by side diff utility: GIT_EXTERNAL_DIFF
+# git diff 
+sudo apt-get install -y tkcvs
 ############################
 # sw Development Utilities #
 ############################
@@ -121,12 +125,6 @@ sudo apt-get install -y mscgen
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo apt-get install -y graphviz-dev
-# -----------------------------------------------------
-# Personal Third Party SW Installs & Binary Directory
-mkdir -p ~/bin
-pushd ~/bin
-wget http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
-popd
 #####################
 # JAVA installation #
 #####################
@@ -260,8 +258,12 @@ sudo apt-get install -y libboost-all-dev
 
 # Install common google packages
 # libgoogle-perftools-dev includes tcmalloc
-sudo apt-get install -y libprotobuf-dev libgtest-dev libgoogle-perftools-dev libsnappy-dev libleveldb-dev libgoogle-glog-dev libgflags-dev
-# google-perftools: analyze profiled data beyond pprof: 'gprof' or 'google-pprof': need both libgoogle-perftools-dev and google-perftools
+sudo apt-get install -y libprotobuf-dev libgtest-dev 
+sudo apt-get install -y libgoogle-perftools-dev libsnappy-dev libleveldb-dev 
+# Warning: Precise(12.04) has stopped supporting installation of glog and gflags: This may fail
+sudo apt-get install -y libgoogle-glog-dev libgflags-dev
+# google-perftools: analyze profiled data beyond pprof: 'gprof' or 'google-pprof': 
+# need both libgoogle-perftools-dev and google-perftools
 sudo apt-get install -y google-perftools
 
 # Google libgtest-dev static libraries not installed as binary: Build it
@@ -273,26 +275,22 @@ sudo make
 sudo mv libg* /usr/lib
 popd
 # -----------------------------------------------------
-########################
-# Personal Environment #
-########################
-# -----------------------------------------------------
 # install dotfiles
-# move prior incarnation of dotfiles to an old directory
+# move prior incarnation of dotfiles and scripts to an old directory
 pushd $HOME
 if [ -d ./dotfiles/ ]; then
-    mv dotfiles dotfiles.old
+  mv --force --backup dotfiles dotfiles.old
 fi
 if [ -d .emacs.d/ ]; then
-    mv .emacs.d .emacs.d~
+  mv --force --backup .emacs.d .emacs.old
 fi
 if [ -d .env_custom/ ]; then
-    mv .env_custom .env_custom~
+  mv --force --backup .env_custom .env_custom.old
 fi
 if [ -d .ssh/ ]; then
-    if [ -f .ssh/config ]; then
-        mv .ssh/config .ssh/config.old
-    fi
+  if [ -f .ssh/config ]; then
+    mv --force --backup .ssh/config .ssh/config.old
+  fi
 fi
 # pop out of $HOME directory
 popd
@@ -300,7 +298,18 @@ popd
 ########################
 # Personal Environment #
 ########################
-# Copy the new dotfiles inside this git directory to $HOME
+# -----------------------------------------------------
+# Personal Third Party SW Installed Binary & Scripts Directory
+mkdir -p $HOME/bin
+pushd $HOME/bin
+# wget file if timestamp of remote is newer than the previous timestamp
+# Note: wget by default retains the timestamp of the remote server
+wget -N http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
+popd
+# Copy all scripts to bin directory: \cp: use non interactive version
+# u: timestamp; b: backup; f: force; p: respect permissions
+\cp -ubfp scripts/* $HOME/bin
+# Copy the new scripts and dotfiles to $HOME
 cp -r dotfiles $HOME
 pushd $HOME
 ln -sb dotfiles/.screenrc .
@@ -309,13 +318,15 @@ ln -sb dotfiles/.bash_profile .
 ln -sb dotfiles/.bashrc .
 ln -sf dotfiles/.emacs.d .
 ln -sb dotfiles/.gitignore .
-ln -sf dotfiles/.Rprofile .
-ln -sf dotfiles/.octaverc .
-ln -sf dotfiles/.env_custom .
+ln -sb dotfiles/.Rprofile .
+ln -sb dotfiles/.octaverc .
+ln -sb dotfiles/.env_custom .
 ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
 # ln messes up the permission of .ssh/config file - cp instead
 # ln -sb ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
-cp ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
+\cp -ubfp ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
 popd
 # -----------------------------------------------------
 
+# create a database for all the files in the filesystem
+sudo updatedb

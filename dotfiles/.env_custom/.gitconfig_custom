@@ -9,3 +9,5 @@
 	excludesfile = ~/.gitignore
 [push]
 	default = tracking
+[diff]
+        external = ~/bin/git_diff_wrapper.sh

@@ -41,8 +41,7 @@ eccleanbuild () {
 ecbuild () {
   cd $EVO_HOME/cevo
   if [ -f log.tmp ]; then
-    echo "mv log.tmp log.prev.tmp"
-    mv -f log.tmp log.prev.tmp
+    mv --force --backup log.tmp log.prev.tmp
   fi 
   evo make -j8 > log.tmp 2>&1 &
   echo "To track build progress: tail -f ${EVO_HOME}/cevo/log.tmp"
@@ -59,7 +58,7 @@ erepofpdiff () {
       return;
   fi
   if [ -f $2 ]; then
-    mv -f $2 $2.tmp
+    mv --force --backup $2 $2.tmp
   fi 
   pushd $EVO_HOME/cevo;
   evo repo forall -pc "git format-patch --stdout m/$1" > $2;
@@ -72,7 +71,7 @@ erepoapply () {
       return;
   fi
   pushd $EVO_HOME/cevo;
-  $HOME/bin/evo_ap $1
+  $HOME/bin/evo_ap.py $1
   popd
 }
  
@@ -91,7 +90,7 @@ erepodiff () {
       return;
   fi
   if [ -f $2 ]; then
-    mv -f $2 $2.tmp
+    mv --force --backup $2 $2.tmp
   fi 
   pushd $EVO_HOME;
   evo repo forall -pc "git diff -M -C m/$1" > $2;
@@ -113,22 +112,21 @@ esendreview() {
   if [ -f /tmp/$1.mail.txt ]; then
     rm -f /tmp/$1.mail.txt;
   fi
-  echo "To: psg-evo-eng@juniper.net" > /tmp/$1.mail.txt
-  echo "Cc: asarcar@juniper.net" >> /tmp/$1.mail.txt
-  echo "From: asarcar@juniper.net" >> /tmp/$1.mail.txt
-  echo "Subject: review-code [ $1 ]" >> /tmp/$1.mail.txt
-
-  echo "" >> /tmp/$1.mail.txt
-  echo "Please review and provide your feedback:" >> /tmp/$1.mail.txt
-  echo "" >> /tmp/$1.mail.txt
+  echo "To: psg-evo-eng@juniper.net"                          > /tmp/$1.mail.txt
+  echo "Cc: asarcar@juniper.net"                             >> /tmp/$1.mail.txt
+  echo "From: asarcar@juniper.net"                           >> /tmp/$1.mail.txt
+  echo "Subject: review-code [ $1 ]"                         >> /tmp/$1.mail.txt
+  echo ""                                                    >> /tmp/$1.mail.txt
+  echo "Please review and provide your feedback:"            >> /tmp/$1.mail.txt
+  echo ""                                                    >> /tmp/$1.mail.txt
   echo "Link to description: http://www-in/~asarcar/$1.diff" >> /tmp/$1.mail.txt
-  echo "Link to diff:        http://www-in/~asarcar/$1.txt" >> /tmp/$1.mail.txt
-  echo "" >> /tmp/$1.mail.txt
-  echo "Thanks a lot." >> /tmp/$1.mail.txt
-  echo "-Arijit Ory Sarcar" >> /tmp/$1.mail.txt
-  echo "" >> /tmp/$1.mail.txt
+  echo "Link to diff:        http://www-in/~asarcar/$1.txt"  >> /tmp/$1.mail.txt
+  echo ""                                                    >> /tmp/$1.mail.txt
+  echo "Thanks a lot."                                       >> /tmp/$1.mail.txt
+  echo "-Arijit Ory Sarcar"                                  >> /tmp/$1.mail.txt
+  echo ""                                                    >> /tmp/$1.mail.txt
 
-  sendmail -odb -oem -oi -t  < /tmp/$1.mail.txt
+  sendmail -odb -oem -oi -t                                   < /tmp/$1.mail.txt
 }
 
 ebranchset() {
