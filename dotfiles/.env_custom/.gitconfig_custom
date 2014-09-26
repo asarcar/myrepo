@@ -1,13 +1,22 @@
 [user]
-	name = Arijit Sarcar
-	email = sarcar_a@yahoo.com
+	name         = Arijit Sarcar
+	email        = sarcar_a@yahoo.com
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+	diff         = auto
+	status       = auto
+	branch       = auto
 [core]
 	excludesfile = ~/.gitignore
 [push]
-	default = tracking
-[diff]
-        external = ~/bin/git_diff_wrapper.sh
+	default      = tracking
+#
+# Turn off diff.external option
+# Any accidental git diff cmd executed remotely would take ages!!
+# [diff]
+#         external     = ~/bin/git_diff_wrapper.sh
+#
+[difftool]
+        prompt       = false
+        tool         = tkdiff
+[merge]
+        tool         = tkdiff

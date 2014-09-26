@@ -97,9 +97,13 @@ erepodiff () {
   popd;
 }
 
-erepogdiff () {
+#
+# Exercise this code with great care if executing remotely
+# Entire repo diff GUI remote display would take ages!!
+# 
+erepoguidiff () {
   pushd $EVO_HOME
-  evo repo forall -pc "bash ${HOME}/bin/git_diff m/master"
+  evo repo forall -pc "git difftool m/master"
   popd
 }
 
@@ -186,7 +190,7 @@ ecbdb() {
     mkdir -p $EVO_NAME
     pushd $EVO_NAME
   fi
-  find $EVO_HOME -name *.[ch] -o -name *.cc -o -name *.cpp -o -name *.hpp -o -name *.java -o -name *.scala -o -name *.py -o -name *.go -o -name *.php | grep -v "/obj-" > $EVO_NAME.files
+  find $EVO_HOME -name *.[ch] -o -name *.cc -o -name *.cpp -o -name *.hpp -o -name *.java -o -name *.scala -o -name *.py -o -name *.go -o -name *.php | grep -v "/obj-re\|/obj-native64" > $EVO_NAME.files
   cscope -q -b -R -i $EVO_NAME.files
   cat $EVO_NAME.files | xargs etags -a -o $EVO_NAME.TAGS
   popd
