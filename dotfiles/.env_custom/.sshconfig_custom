@@ -67,12 +67,12 @@ Host mac
 # EVO
 # EvoGit
 Host evogit
-  Hostname evogit.englab.juniper.net
+  Hostname svl-evogit-01.juniper.net
   User devo
   IdentityFile ~/.ssh/id_dsa.juniper
 
 # EvoCode
-Host code.englab.juniper.net
+Host code
   Hostname code.englab.juniper.net
   User devo
   IdentityFile ~/.ssh/id_dsa.juniper
