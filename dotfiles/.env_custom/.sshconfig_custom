@@ -22,14 +22,14 @@ Host titan
 
 # AWS-14.04 Ubuntu
 Host aws
-  HostName ec2-54-186-77-129.us-west-2.compute.amazonaws.com
+  HostName ec2-54-200-231-18.us-west-2.compute.amazonaws.com
   User asarcar
-  IdentityFile ~/.ssh/aws.pem
+  IdentityFile ~/.ssh/sarcar_aws.pem
 
 Host uaws
-  HostName ec2-54-186-255-62.us-west-2.compute.amazonaws.com
+  HostName ec2-54-200-231-18.us-west-2.compute.amazonaws.com
   User ubuntu
-  IdentityFile ~/.ssh/aws.pem
+  IdentityFile ~/.ssh/sarcar_aws.pem
 
 # Heroku
 Host heroku.com
