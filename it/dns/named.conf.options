@@ -1,0 +1,57 @@
+// List of clients that we will allow recursive DNS queries from
+// acl "trusted" {
+//     10.7.22.2;    # ns1 - zeus; can be set to localhost
+//     10.7.22.3;    # ns2 - zeus2
+// };
+
+options {
+	directory "/var/cache/bind";
+
+	// If there is a firewall between you and nameservers you want
+	// to talk to, you may need to fix the firewall to allow multiple
+	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+	// If your ISP provided one or more IP addresses for stable 
+	// nameservers, you probably want to use them as forwarders.  
+	// Uncomment the following block, and insert the addresses replacing 
+	// the all-0's placeholder.
+
+	// 75.75.7<5|6>.7<5|6>: cdns01|2.comcast.net
+	// 8.8.<8|4>.<8|4>: google-public-dns-<a|b>.google.com
+	forwarders {
+            75.75.75.75;
+            75.75.76.76;
+	    8.8.8.8;
+            8.8.4.4;
+	};
+
+	//========================================================================
+	// allows-query: allow local LAN clients to send DNS queries to server
+	//========================================================================
+	allow-query {
+	    10.7.22.0/24;
+	    127.0.0.1;
+	};
+	//========================================================================
+	// allows-transfer: lists which subnets/masks are allowed to get copies
+	// of DNS server's zone data. Set this to local LAN. Only relevant when 
+	// we run multiple DNS servers. We can also set allow-transfer { none; }
+	// to disable zone transfers by default
+	//========================================================================
+        allow-transfer { 
+	    10.7.22.0/24;
+	    127.0.0.1;
+	};     
+	// recursion yes;                # enables recursive queries
+	// allow-recursion { trusted; }; # allows recursive queries from "trusted" clients
+        // listen-on { 10.7.22.2; };     # ns1 private IP address - listen on private network
+	//========================================================================
+	// If BIND logs error messages about the root key being expired,
+	// you will need to update your keys.  See https://www.isc.org/bind-keys
+	//========================================================================
+	dnssec-validation auto;
+
+	auth-nxdomain no;    # conform to RFC1035
+	listen-on-v6 { any; };
+};
+

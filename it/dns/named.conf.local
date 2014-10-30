@@ -1,0 +1,37 @@
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+// Challenge Key: Used by DHCP to populate FORWARD and REVERVE Lookup Zone Entries
+key "rndc-key" {
+    algorithm hmac-md5;
+    secret "t4lS7i8cCEw3i77IySx3PQ==";
+};
+
+// FORWARD LOOKUP ZONE - Holds A records, maps hostnames to IPs
+zone "asarcar.com"
+{
+    type master;                             
+    // /etc/bind directory cannot be used when dynamic update of DNS
+    // entries is sought by DHCP as apparmor blocks those access 
+    // instead we should be using /var/lib/bind/
+    // file "/etc/bind/zones/fwd.db.asarcar.com";  # fwd zone file path
+    file "/var/lib/bind/fwd.db.asarcar.com";   
+    // allow-transfer { 10.7.22.3; }; # zeus2: secondary DNS server
+    allow-update { key rndc-key; };
+};
+
+// REVERSE LOOKUP ZONE - Holds PTR records, maps IPs to hostnames
+// 10.7.22.2
+zone "22.7.10.in-addr.arpa"
+{
+    type master;
+    // file "/etc/bind/zones/rev.db.22.7.10.in-addr.arpa";  # 10.7.22.0/24 subnet
+    file "/var/lib/bind/rev.db.22.7.10.in-addr.arpa";  # 10.7.22.0/24 subnet
+    // allow-transfer { 10.7.22.3; }; # zeus2: secondary DNS server
+    allow-update { key rndc-key; };
+};
