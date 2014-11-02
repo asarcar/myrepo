@@ -71,6 +71,11 @@ sudo yum install -y graphviz-dev
 sudo yum install -y sshpass
 # sendmail: powerful, efficient, and scalable Mail Transport Agent
 sudo yum install -y sendmail
+# dockers: allows dev and sysadmins to dev, ship, and run applications.
+# docker Engine is container virtualization technology
+# docker Hub is SAAS service for sharign and managing app stacks
+# docker: CentOS-7: included in Extras Repol; CentOS-6 install docker-io
+sudo yum install -y docker
 ############################
 # SW Development Utilities #
 ############################

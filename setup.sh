@@ -90,6 +90,10 @@ sudo apt-get install -y devscripts
 # tkdiff: graphical side by side diff utility: GIT_EXTERNAL_DIFF
 # git diff 
 sudo apt-get install -y tkcvs
+# dockers: allows dev and sysadmins to dev, ship, and run applications.
+# docker Engine is container virtualization technology
+# docker Hub is SAAS service for sharign and managing app stacks
+sudo apt-get -y install docker.io
 ############################
 # sw Development Utilities #
 ############################
