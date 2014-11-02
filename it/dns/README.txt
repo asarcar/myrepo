@@ -20,3 +20,11 @@ tail -f /var/log/syslog | grep named
 
 * Ensure: DNS service is always started on boot:
 sudo update-rc.d bind9 defaults 
+
+
+DNS Client Installation
+-----------------------
+* Add DNS Server IP to resolv.conf
+*** sudo printf 'search asarcar.com # your private domain\nnameserver 10.7.22.2\n' | sudo tee /etc/resolvconf/resolv.conf.d/base > /dev/null
+*** sudo resolvconf -u
+*** Validate DNS Server is appropriately recorded: cat /etc/resolv.conf
