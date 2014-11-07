@@ -1,19 +1,29 @@
 $ORIGIN .
 $TTL 259200	; 3 days
-22.7.10.in-addr.arpa	IN SOA	dnsserver.asarcar.com. admin.asarcar.com. (
-				2014102532 ; serial
+22.7.10.in-addr.arpa	IN SOA	ns1.asarcar.com. admin.asarcar.com. (
+				2014102544 ; serial
 				3600       ; refresh (1 hour)
 				600        ; retry (10 minutes)
 				86400      ; expire (1 day)
 				3600       ; minimum (1 hour)
 				)
-			NS	dnsserver.asarcar.com.
+			NS	ns1.asarcar.com.
 $ORIGIN 22.7.10.in-addr.arpa.
+$TTL 300	; 5 minutes
+102			PTR	Ory-iPhone.asarcar.com.
+103			PTR	SARCAR-iPAD.asarcar.com.
 $TTL 259200	; 3 days
-2			PTR	asarcar.com.
-			PTR	dhcpserver.asarcar.com.
-			PTR	dnsserver.asarcar.com.
-			PTR	vpnserver.asarcar.com.
-			PTR	webserver.asarcar.com.
+2			PTR	ns1.corp.saralnet.com.
+			PTR	ns1.asarcar.com.
+			PTR	www.corp.saralnet.com.
 			PTR	www.asarcar.com.
+			PTR	corp.saralnet.com.
+			PTR	zeus.corp.saralnet.com.
 			PTR	zeus.asarcar.com.
+			PTR	asarcar.com.
+			PTR	vpnserver.corp.saralnet.com.
+			PTR	vpnserver.asarcar.com.
+			PTR	dhcpserver.corp.saralnet.com.
+			PTR	dhcpserver.asarcar.com.
+$TTL 300	; 5 minutes
+50			PTR	titan.asarcar.com.

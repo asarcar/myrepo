@@ -1,17 +1,31 @@
 DNS Server Installation
 -----------------------
-* Provide Conf File: 
-sudo cp named.conf.options named.conf.local /etc/bind/
+* Provide Conf and View Files For Internal/External Zone Definitions: 
+sudo cp named.conf named.conf.options named.conf.views /etc/bind/
+sudo cp internal_zones.conf external_zones.conf /var/lib/bind
 
-* Validate DNS Conf File: named-checkconf /etc/bind/named.conf
 
-* Provide FWD/REVERSE Bind Zone Files: 
+* Generate cryptographic hash (rndc.key) used by DHCP to enter records in DNS
+sudo /usr/bin/rndc-confgen -a 
+
+* Validate DNS Conf File: 
+named-checkconf /etc/bind/named.conf
+
+* Provide FWD/REVERSE Bind Zone Files For Internal View:
 sudo cp fwd.db.asarcar.com /var/lib/bind/
+sudo cp fwd.db.corp.saralnet.com /var/lib/bind/
 sudo cp rev.db.22.7.10.in-addr.arpa /var/lib/bind/
 
-* Validate Bind Zone Files:
+* Provide FWD/REVERSE Bind Zone Files For External View:
+sudo cp fwd.db.saralnet.com /var/lib/bind/
+sudo cp rev.db.230.32.102.76.in-addr.arpa /var/lib/bind/
+
+* Validate Bind Zone Files (Internal and External):
 named-checkzone asarcar.com /var/lib/bind/fwd.db.asarcar.com
+named-checkzone corp.saralnet.com /var/lib/bind/fwd.db.corp.saralnet.com
 named-checkzone 22.7.10.in-addr.arpa /var/lib/bind/rev.db.22.7.10.in-addr.arpa
+named-checkzone saralnet.com /var/lib/bind/fwd.db.saralnet.com
+named-checkzone 230.32.102.76.in-addr.arpa /var/lib/bind/rev.db.230.32.102.76.in-addr.arpa
 
 * sudo /etc/init.d/bind9 start
 

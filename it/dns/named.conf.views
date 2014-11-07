@@ -1,0 +1,39 @@
+//
+// Do any local configuration here
+//
+
+// List of internal clients where we allow privileged
+// queries: e.g. recursive DNS queries
+acl "safe-subnet" {
+    172.17.0.16; # prefix used by docker instances: allow querying
+};
+
+view "internal" { 
+    // Only serve clients directly on the Intranet either directly or via VPN 
+    match-clients { localnets; localhost; safe-subnet; };
+    match-destinations { localnets; localhost; safe-subnet; };
+
+    // As your caching name server clients will be using this server
+    // for DNS lookups to get to sites all over the Web you'll need to 
+    // turn on recursion
+    recursion yes;
+  
+    // These are your "authoritative" internal zones, and would probably
+    // also be included in the "localhost_resolver" view above :
+    include "/var/lib/bind/internal_zones.conf";
+
+    // Root hints zone is provided by named.conf.default-zones
+    include "/etc/bind/named.conf.default-zones";
+};
+
+view "external" {
+    // Serve clients from extranet 
+    match-clients { any; };
+    match-destinations { any; };
+
+    // Deny recursion: not providing free DNS service
+    recursion no;
+  
+    // Authoritative external zones: Web, Mail, and DNS Servers 
+    include "/var/lib/bind/external_zones.conf";
+};
