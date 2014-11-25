@@ -94,6 +94,8 @@ sudo apt-get install -y tkcvs
 # docker Engine is container virtualization technology
 # docker Hub is SAAS service for sharign and managing app stacks
 sudo apt-get -y install docker.io
+# bridge utilities allows one to run brctl functions
+sudo apt-get -y install bridge-utils
 ############################
 # sw Development Utilities #
 ############################
