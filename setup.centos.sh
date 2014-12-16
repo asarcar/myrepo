@@ -36,9 +36,6 @@ sed -e s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config | sudo tee /et
 sudo chkconfig iptables off
 sudo chkconfig ip6tables off
 
-# Upgrade to the latest packages: remove obsoleted packages
-sudo yum -y upgrade
-
 #############
 # UTILITIES #
 #############
@@ -160,6 +157,25 @@ sudo ldconfig
 # > memcached-tool 192.168.0.1:11211 
 # 4. Install the client side library to exercise memcached: libmemcached
 # sudo yum install -y libmemcached-devel
+
+
+############################################################################################
+# Now that all packages have been listed and installed:
+# yum-utils: package management related utility programs
+# update: list of available packages and their versions
+# upgrade: install the newest versions
+# package-cleanup --dupes: remove duplicate packages
+# clean: remove packages that yum caches when we install/update programs
+sudo yum install -y yum-utils
+sudo yum -y update
+sudo yum -y upgrade
+# Find/Review unused packages: package-cleanup --leaves
+# Find/Review lost packages: package-cleanup --orphans
+sudo package-cleanup --dupes
+sudo package-cleanup --cleandupes
+sudo yum clean -y all
+############################################################################################
+
 
 ###########################
 # Miscellaneous Languages #

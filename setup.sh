@@ -116,7 +116,6 @@ sudo apt-get install -y cmake distcc ccache
 # Firewall blocks ports other than 80: getting the keyserver via port 80
 sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CEC45805
 sudo apt-add-repository -y ppa:cassou/emacs
-sudo apt-get update -y
 sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
 # Install cscope
 sudo apt-get install -y cscope cscope-el
@@ -271,6 +270,22 @@ sudo apt-get install -y libgoogle-glog-dev libgflags-dev
 # google-perftools: analyze profiled data beyond pprof: 'gprof' or 'google-pprof': 
 # need both libgoogle-perftools-dev and google-perftools
 sudo apt-get install -y google-perftools
+
+############################################################################################
+# Now that all packages have been listed and installed:
+# apt-utils: package management related utility programs
+# update: list of available packages and their versions
+# upgrade: install the newest versions
+# autoclean: remove partial packages
+# clean: remove .deb packages that apt caches when we install/update programs
+# autoremove: remove packages installed as dependencies after original package is removed
+sudo apt-get install -y apt-utils
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y autoclean
+sudo apt-get -y clean
+sudo apt-get -y autoremove
+############################################################################################
 
 # Google libgtest-dev static libraries not installed as binary: Build it
 # Still required with Ubuntu 13.10/14.04

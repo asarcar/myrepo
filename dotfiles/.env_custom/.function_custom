@@ -246,8 +246,8 @@ function corename()   # Get name of app that created a corefile.
     done
 }
 
-# Kill the application with the name provided
-kill_process () { 
+function kill_process () # Kill the application with the name provided
+{ 
     echo -e "Killing process $@\nProcess Number: "`ps xw | grep "$@" | cut -f2 -d ' ' | head -1`" killed!";
     kill `ps xw | grep "$@" | cut -f2 -d ' ' | head -1`;
 }
@@ -256,8 +256,9 @@ kill_process () {
 # Source Code Utilities:
 #-------------------------------------------------------------
 file_ext="-name *.[chRCH] -o -name *.cc -o -name *.cpp -o -name *.c++ -o -name *.hh -o -name *.hpp -o -name *.h++ -o -name *.java -o -name *.py -o -name *.php -o -name *.js -o -name *.html -o -name *.txt"
-# Count number of lines of code in the directory $1 and (optionally) with extension $2
-proj_lc() {
+
+proj_lc() # Count number of lines of code in the directory $1 and (optionally) with extension $2
+{
     local tmp=$file_ext
 
     # Usage Validation
@@ -274,8 +275,8 @@ proj_lc() {
     find $1 $tmp | xargs wc -l
 }
 
-# Create project DB: cscope and etags DB for code in directory $1, put the DB in directory $2, and (optionally) only for files with extension $3 
-proj_db() {
+proj_db() # Create project DB: cscope and etags DB for code in dir $1, put the DB in dir $2, and (optionally) only for files with extension $3 
+{
     local tmp=$file_ext
     local dirname=""
     local filename=""
@@ -309,6 +310,64 @@ proj_db() {
     cscope -q -b -R -i $filename
     cat $filename | xargs etags -a -o $tagfilename
     popd
+}
+
+#------------------------------------------------------------
+# LOGs
+#------------------------------------------------------------
+alog () {
+  if [ "$#" != 1 ]; then
+      echo "Usage: authlog grepword";
+      echo "Example: authlog sshd";
+      return;
+  fi
+  grep $1 /var/log/auth.log | less;
+}
+
+# Daemon Log: /var/log/daemon.log
+# Debug Log: /var/log/debug
+# Kernel Log: /var/log/kern.log
+# Kernel Ring Buffer: dmesg | grep pnp | less; /var/log/dmesg
+# Messages Log For Apps/System Facilities: /var/log/messages
+# System Log: /var/log/syslog
+# Application Logs: /var/log/apache2/access.log or error.log
+# faillog: display login failure stored in binary at /var/log/faillog
+# lastlog: display las logins stored in binary at /var/log/lastlog
+# who: display /var/log/wtmp login records
+# syslogd (sysklogd): log router/aggregator based of /etc/syslog.conf
+#   syslog is the protocol as well as application to send message to 
+#   Linux system logfile located at /var/log directory. Sysklogd provides 
+#   two system utilities which provide support for system logging and 
+#   kernel message trapping. Usually most program and apps use C or 
+#   syslog application / library sending syslog messages.
+# logger: (logger --help) adds message to syslog
+# logrotate: keeps current log file size reasonable. compress and move
+#   old log files based on config at /etc/logrotate.{d/.conf}
+#   cmds are at /etc/cron.daily/{logrotate,sysklogd}. also see savelog 
+
+#------------------------------------------------------------
+# Network Specific
+#------------------------------------------------------------
+function int_ip() # gets the ip address of the INTERFACE passed
+{
+    # Usage Validation
+    if [ "$#" -eq 0 ]; then
+        /sbin/ifconfig | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}';
+        return;
+    fi
+
+    /sbin/ifconfig $1 | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}';
+}
+
+function ext_ip() # gets the ip address of the INTERFACE passed
+{ 
+    # Usage Validation
+    if [ "$#" != 0 ]; then
+        echo "Usage: ext_ip";
+        return;
+    fi
+
+    curl http://ipecho.net/plain; echo;
 }
 
 #------------------------------------------------------------
