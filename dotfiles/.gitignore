@@ -46,6 +46,11 @@ Release/src
 *.la
 *.a
 
+#########################
+# Compiled Python Files #
+#########################
+*.pyc
+
 ################################
 # SW Dev Generated Directories #
 ################################
@@ -111,13 +116,21 @@ project
 *.jpg
 *.gif
 
-#######################
-# OS generated files #
-######################
+#########################
+# Folder view cfg files #
+#########################
 .DS_Store
+Desktop.ini
 ehthumbs.db
 Icon?
+
+# Thumbnail cache files
+._*
 Thumbs.db
+
+# Files that may appear on external disks
+.Spotlight-V100
+.Trashes
 
 ##########################
 # Temporary editor files #

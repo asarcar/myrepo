@@ -1,0 +1,50 @@
+# editor options
+export EDITOR='emacs -nw'
+export VISUAL='emacs -nw' 
+
+# grep options
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;31' # green for matches
+
+# sort options
+# Ensures cross-platform sorting behavior of GNU sort.
+# http://www.gnu.org/software/coreutils/faq/coreutils-faq.html#Sort-does-not-sort-in-normal-order_0021
+unset LANG
+export LC_ALL=POSIX
+
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE='32768';
+export HISTFILESIZE="${HISTSIZE}";
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL='ignoreboth';
+
+# Prefer US English and use UTF-8.
+export LANG='en_US.UTF-8';
+export LC_ALL='en_US.UTF-8';
+
+# Highlight section titles in manual pages.
+export LESS_TERMCAP_md="${yellow}";
+
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER='less -X';
+
+# Always enable colored `grep` output.
+export GREP_OPTIONS='--color=auto';
+
+# Miscellaneous
+if [ -d $HOME/public_html ]; then
+  export HTML_HOME=$HOME/public_html
+fi
+
+if [ -d $HOME/scbdb ]; then
+  export SCBDB_HOME=$HOME/scbdb
+fi
+
+if [ -d $HOME/git ]; then
+  export GIT_HOME=$HOME/git
+fi
+
+if [ -d $GIT_HOME/go_test ]; then
+  export GOPATH=$GIT_HOME/go_test
+fi
+

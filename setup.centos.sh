@@ -213,13 +213,19 @@ popd
 # Copy the new dotfiles inside this git directory to $HOME
 cp -r dotfiles $HOME
 pushd $HOME
-ln -sb dotfiles/.screenrc .
-ln -sb dotfiles/.profile .
-ln -sb dotfiles/.bash_profile .
 ln -sb dotfiles/.bashrc .
+ln -sb dotfiles/.bash_profile .
+ln -sb dotfiles/.bash_prompt .
+ln -sb dotfiles/.exports .
 ln -sf dotfiles/.emacs.d .
+ln -sb dotfiles/.gdbinit .
 ln -sb dotfiles/.gitignore .
-ln -sf dotfiles/.env_custom .
+ln -sb dotfiles/.inputrc .
+ln -sb dotfiles/.octaverc .
+ln -sb dotfiles/.profile .
+ln -sb dotfiles/.Rprofile .
+ln -sb dotfiles/.screenrc .
+ln -sb dotfiles/.env_custom .
 ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
 # ln messes up the permission of .ssh/config file - cp instead
 # ln -sb ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config

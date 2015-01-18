@@ -1,21 +1,5 @@
 # User Specific Changes
 
-if [ -d $HOME/public_html ]; then
-  export HTML_HOME=$HOME/public_html
-fi
-
-if [ -d $HOME/scbdb ]; then
-  export SCBDB_HOME=$HOME/scbdb
-fi
-
-if [ -d $HOME/git ]; then
-  export GIT_HOME=$HOME/git
-fi
-
-if [ -d $GIT_HOME/go_test ]; then
-  export GOPATH=$GIT_HOME/go_test
-fi
-
 # 1) Install rlwrap if not present: http://stackoverflow.com/a/677212
 command -v rlwrap >/dev/null 2>&1 || { echo >&2 "Install rlwrap to use node: sudo apt-get install -y rlwrap";}
 
@@ -30,20 +14,11 @@ fi
 #------------------------------------------------------------
 # Context Specific 
 #------------------------------------------------------------
-if [ -f $HOME/.env_custom/.bashrc_custom_user_specific ]; then
-  source $HOME/.env_custom/.bashrc_custom_user_specific
-fi
-
-if [ -f $HOME/.env_custom/.bashrc_custom_work ]; then
-  source $HOME/.env_custom/.bashrc_custom_work
-fi
-
-# Execute user specific .alias 
-if [ -f $HOME/.env_custom/.alias_custom ]; then
-  source $HOME/.env_custom/.alias_custom
-fi
-
-# Execute user specific .function 
-if [ -f $HOME/.env_custom/.function_custom ]; then
-  source $HOME/.env_custom/.function_custom
-fi
+# user specific .bashrc
+# work specific .bashrc
+# user specific .alias 
+# user specific .function 
+for file in $HOME/.env_custom/.{bashrc_custom_user_specific,bashrc_custom_work,alias_custom,function_custom}; do
+    [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done
+unset file
