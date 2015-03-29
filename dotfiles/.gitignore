@@ -59,6 +59,7 @@ doc
 lib
 include
 tmp
+gen
 build
 ###############
 # Built files #

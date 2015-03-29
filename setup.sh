@@ -68,6 +68,10 @@ sudo apt-get install -y rlwrap
 sudo apt-get install -y iftop
 # git: distributed version control system
 sudo apt-get install -y git-core
+# mercurial: easy-to-use, scalable distributed version control system
+# Many package from Google are available in Mercurial
+# Example: go protobuf/tools
+sudo apt-get install mercurial
 # flip -u "filename": removes CR & LF in dos files to LF for unix
 sudo apt-get install -y flip
 # lshw: Hardware Lister
@@ -172,6 +176,7 @@ sudo apt-get install -y pychecker
 ###########################
 sudo apt-get install -y golang
 sudo apt-get install -y golang-mode
+sudo apt-get install -y golang-go.tools
 
 ###############################
 # HEROKU related installation #
