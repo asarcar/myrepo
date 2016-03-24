@@ -2,9 +2,9 @@
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 # for headless setup. 
 
-# Set up system to accept without password for subsequent commands
-echo ">> execute 'echo password | sudo -S ls -al' so that subsequent sudo commands do not require password"
-echo ">> close the terminal afterwards since we now have unrestricted sudo access"
+# You may set up system to accept without password for subsequent commands:
+# > echo password | sudo -S ls -al
+# close the terminal afterwards since we now have unrestricted sudo access"
 
 if [ $# -ne 0 ]; then
   echo "Usage: setup.sh"
@@ -30,8 +30,22 @@ fi
 # refer to tips/system_commands.txt
 #
 
+############################################################################################
+# Start with a clean slate: update, upgrade, cleanup, etc.
+# apt-utils: package management related utility programs
+# update: list of available packages and their versions
+# upgrade: install the newest versions
+# autoclean: remove partial packages
+# clean: remove .deb packages that apt caches when we install/update programs
+# autoremove: remove packages installed as dependencies after original package is removed
+sudo apt-get install -y apt-utils
+sudo apt-get -y update
 # Upgrade to the latest packages: remove obsoleted packages
 sudo apt-get -y upgrade --fix-missing
+sudo apt-get -y autoclean
+sudo apt-get -y clean
+sudo apt-get -y autoremove
+############################################################################################
 
 # LOCAL INSTALLATION ONLY: Better to hand install
 # 13.10/14.04 "extra" packages
@@ -66,12 +80,12 @@ sudo apt-get install -y screen
 sudo apt-get install -y rlwrap
 # iftop: Command line tool that displays bandwidth usage on an interface
 sudo apt-get install -y iftop
-# git: distributed version control system
-sudo apt-get install -y git-core
+# git: distributed version control system - installed at machine set up phase
+# > sudo apt-get install -y git
 # mercurial: easy-to-use, scalable distributed version control system
 # Many package from Google are available in Mercurial
 # Example: go protobuf/tools
-sudo apt-get install mercurial
+sudo apt-get install -y mercurial
 # flip -u "filename": removes CR & LF in dos files to LF for unix
 sudo apt-get install -y flip
 # lshw: Hardware Lister
@@ -94,12 +108,60 @@ sudo apt-get install -y devscripts
 # tkdiff: graphical side by side diff utility: GIT_EXTERNAL_DIFF
 # git diff 
 sudo apt-get install -y tkcvs
+# bridge utilities allows one to run brctl functions
+sudo apt-get install -y bridge-utils
+
+#################################################################################
+# Docker Installation: https://docs.docker.com/engine/installation/linux/centos/
 # dockers: allows dev and sysadmins to dev, ship, and run applications.
 # docker Engine is container virtualization technology
-# docker Hub is SAAS service for sharign and managing app stacks
-sudo apt-get -y install docker.io
-# bridge utilities allows one to run brctl functions
-sudo apt-get -y install bridge-utils
+# docker Hub is SAAS service for sharing and managing app stacks
+# https://docs.docker.com/engine/installation/linux/ubuntulinux/
+# Ensure APT works with https method. CA certificates are installed
+sudo apt-get install -y apt-transport-https 
+sudo apt-get install -y ca-certificates
+# Add GPG key
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+# WARNING: We only support Trust (14.04) and Wily (15.10) installation
+if [ $(lsb_release -rs) == "14.04" ]; then
+    echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" | \
+        sudo tee /etc/apt/sources.list.d/docker.list 
+    sudo apt-get install -y apparmor
+elif [ $(lsb_release -rs) == "15.10" ]; then
+    echo "deb https://apt.dockerproject.org/repo ubuntu-wily main" | \
+    sudo tee /etc/apt/sources.list.d/docker.list 
+else
+    echo "Docker installation only supported for 14.04 (trusty) or 15.10 (wily)"
+    exit 2  
+fi
+# Purge old repo
+sudo apt-get purge lxc-docker -y
+# Update the APT package index
+sudo apt-get -y update
+# verify that APT is pulling the right repository: 
+# APT pulls from the new repo when you run apt-get upgrade 
+# > apt-cache policy docker-engine
+# linux-image-extra: allows use of aufs storage driver
+sudo apt-get install -y linux-image-extra-$(uname -r)
+# install docker & run the service
+sudo apt-get install -y docker-engine
+sudo service docker start
+# * Allow communicating with docker daemon as user
+# docker daemon listens to Unix socket owned by root 
+# create Unix group docker and add user to groups docker 
+# to allow RD/WR to the socket i.e. communication with docker group
+sudo usermod -aG docker `whoami`
+# log out and log back as that triggers user running with correct permissions
+# verify that docker may be run with sudo
+# > docker run hello-world
+# configure docker to start on boot
+# Ubuntu uses systemd as its boot and service manager 15.04 onwards and 
+# upstart for versions <14.10 - installation configures upstart for 14.04 
+if [ $(lsb_release -rs) == "15.10" ]; then
+    sudo systemctl enable docker
+fi
+#################################################################################
+
 ############################
 # sw Development Utilities #
 ############################
@@ -134,6 +196,25 @@ sudo apt-get install -y mscgen
 # graphviz: rich set of graph drawing tools e.g. contains dot tool
 # used by doxygen to display relationships
 sudo apt-get install -y graphviz-dev
+
+
+############################################################################################
+# Update, Upgrade, Clean: now that all packages have been listed and installed:
+# apt-utils: package management related utility programs
+# update: list of available packages and their versions
+# upgrade: install the newest versions
+# autoclean: remove partial packages
+# clean: remove .deb packages that apt caches when we install/update programs
+# autoremove: remove packages installed as dependencies after original package is removed
+sudo apt-get install -y apt-utils
+sudo apt-get -y update
+# Upgrade to the latest packages: remove obsoleted packages
+sudo apt-get -y upgrade --fix-missing
+sudo apt-get -y autoclean
+sudo apt-get -y clean
+sudo apt-get -y autoremove
+############################################################################################
+
 #####################
 # JAVA installation #
 #####################
@@ -171,18 +252,11 @@ sudo apt-get install -y rlwrap
 ###############################
 sudo apt-get install -y pychecker
 
-###########################
-# GO related installation #
-###########################
-sudo apt-get install -y golang
-sudo apt-get install -y golang-mode
-sudo apt-get install -y golang-go.tools
-
 ###############################
 # HEROKU related installation #
 ###############################
 # NOT INSTALLED
-#> wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo -S sh
+# > wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sudo -S sh
 
 ##########################
 # R related installation #
@@ -268,7 +342,7 @@ sudo apt-get install -y libboost-all-dev
 
 # Install common google packages
 # libgoogle-perftools-dev includes tcmalloc
-sudo apt-get install -y libprotobuf-dev libgtest-dev 
+sudo apt-get install -y libgtest-dev 
 sudo apt-get install -y libgoogle-perftools-dev libsnappy-dev libleveldb-dev 
 # Warning: Precise(12.04) has stopped supporting installation of glog and gflags: This may fail
 sudo apt-get install -y libgoogle-glog-dev libgflags-dev
@@ -276,30 +350,86 @@ sudo apt-get install -y libgoogle-glog-dev libgflags-dev
 # need both libgoogle-perftools-dev and google-perftools
 sudo apt-get install -y google-perftools
 
-############################################################################################
-# Now that all packages have been listed and installed:
-# apt-utils: package management related utility programs
-# update: list of available packages and their versions
-# upgrade: install the newest versions
-# autoclean: remove partial packages
-# clean: remove .deb packages that apt caches when we install/update programs
-# autoremove: remove packages installed as dependencies after original package is removed
-sudo apt-get install -y apt-utils
-sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y autoclean
-sudo apt-get -y clean
-sudo apt-get -y autoremove
-############################################################################################
+# Install Zero Message Queue
+sudo apt-get install -y libzmq3-dev
 
+###########
+# Local installs for packages. Use when
+# - Need features of versions not up to date in distributions
+# - When binaries are not installed appropriately
+#
+sudo mkdir -p /tmp
+pushd /tmp
+#####
 # Google libgtest-dev static libraries not installed as binary: Build it
 # Still required with Ubuntu 13.10/14.04
-sudo mkdir -p /tmp/.build
-pushd /tmp/.build
+sudo mkdir -p .build
+pushd .build
 sudo cmake -DCMAKE_BUILD_TYPE=RELEASE /usr/src/gtest/
 sudo make
 sudo mv libg* /usr/lib
 popd
+#####
+
+#####
+# Google libprotobuf-dev: grpc needs proto 3. Packaged version comes with proto 2 
+# Still required with Ubuntu 13.10/14.04
+git clone git@github.com:google/protobuf.git
+pushd protobuf
+# source from github, generate the configure script first:
+# autogen script needs autoreconf available in dh-autoreconf package
+sudo apt-get install -y dh-autoreconf
+./autogen.sh
+# Most packages install in /usr (include, lib, and bin)
+# Protobuf installs in /usr/local/ (include, lib, and bin)
+# Instead of changing LD_LIBRARY_PATH & running ldconfig
+# we choose to install protobuf in /usr as any other package
+./configure --prefix=/usr
+make check
+sudo make install
+popd
+
+#####
+# Google gRPC: Debian 'jessie-backports' distribution i.e.
+# deb http://http.debian.net/debian jessie-backports main
+# even when appended to /etc/apt/sources.list
+# does not work until 14.04 to add gRPC.
+git clone https://github.com/grpc/grpc.git 
+pushd grpc 
+git submodule update --init 
+make
+sudo make install prefix=/usr
+popd
+#####
+
+#####
+# Go: Gustavo Niemeyer from Q2'15 is not pushing Go to Ubuntu
+# The recommended way is to use godeb to get the latest installs
+# Ubuntu 14.04LTS installs only 1.2.1 version of Go
+# > sudo apt-get install -y golang golang-mode golang-go.tools
+#
+mkdir -p go_tmp
+pushd go_tmp
+# We need godeb to bootstrap the go installation process
+# Install golang in Ubuntu packages if not already installed
+# Needed to boot the install process of godeb
+command -v go > /dev/null 2>&1 || sudo apt-get install -y golang
+
+# Remove previous version of go package that may (or not) 
+# have been installed from Ubuntu repos
+GOPATH=`pwd` go get gopkg.in/niemeyer/godeb.v1/cmd/godeb
+sudo apt-get remove --purge -y golang golang-go golang-doc golang-go.tools
+sudo apt-get autoremove -y
+./bin/godeb install
+popd
+#####
+
+popd
+###########
+
+########################
+# Personal Environment #
+########################
 # -----------------------------------------------------
 # install dotfiles
 # move prior incarnation of dotfiles and scripts to an old directory
@@ -318,23 +448,26 @@ if [ -d .ssh/ ]; then
     mv --force --backup .ssh/config .ssh/config.old
   fi
 fi
+if [ -f .emacs ]; then
+    mv .emacs .emacs.old
+fi
 # pop out of $HOME directory
 popd
 
-########################
-# Personal Environment #
-########################
 # -----------------------------------------------------
 # Personal Third Party SW Installed Binary & Scripts Directory
 mkdir -p $HOME/bin
 pushd $HOME/bin
 # wget file if timestamp of remote is newer than the previous timestamp
 # Note: wget by default retains the timestamp of the remote server
-wget -N http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py
+wget -N https://github.com/google/styleguide/tree/gh-pages/cpplint/cpplint.py
+chmod +x cpplint.py
 popd
-# Copy all scripts to bin directory: \cp: use non interactive version
+# -----------------------------------------------------
+# Copy all scripts to bin directory: cp: use non interactive version
 # u: timestamp; b: backup; f: force; p: respect permissions
-\cp -ubfp scripts/* $HOME/bin
+cp -ubfp scripts/* $HOME/bin
+# -----------------------------------------------------
 # Copy the new scripts and dotfiles to $HOME
 cp -r dotfiles $HOME
 pushd $HOME
@@ -354,7 +487,7 @@ ln -sb dotfiles/.env_custom .
 ln -sb dotfiles/.env_custom/.gitconfig_custom .gitconfig
 # ln messes up the permission of .ssh/config file - cp instead
 # ln -sb ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
-\cp -ubfp ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
+cp -ubfp ~/dotfiles/.env_custom/.sshconfig_custom .ssh/config
 popd
 # -----------------------------------------------------
 

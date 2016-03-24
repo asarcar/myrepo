@@ -60,29 +60,33 @@ service network restart
 #   Validate the ethernet ports are correctly set and configured
 ethtool eth0
 
+# * Create login/password, sudo access on mc; cp authorized_keys - pwdless ssh access
+sudo adduser asarcar
+sudo adduser asarcar sudo
 # * Set up ssh access from LOCAL MACHINE to machine and copy the public/private keys
-ssh-copy-id -i id_dsa.xxx asarcar@mc_name_or_ip_addr
+# * in case of AWS EC2 copy authorized_keys from ~ubuntu/.ssh to ~asarcar/.ssh/
+ssh-copy-id -i id_dsa.xxx.pub asarcar@mc_name_or_ip_addr:.ssh/authorized_keys
 ### Edit local .ssh/config file to easily ssh to mc_name_or_ip_addr
-echo "Host mc_name" >> .ssh/config
-echo "Hostname mc_name_or_ip_addr" >> .ssh/config
-echo "User asarcar"
-echo "IdentityFile ~/.ssh/id_dsa.xxx" >> .ssh/config
-scp id_dsa.* mc_name:./.ssh/
+printf "Host mc_name\nHostname mc_name_or_ip_addr\nUser asarcar\nIdentityFile ~/.ssh/<id_dsa.xxx|idxxx.pem>\n" >> .ssh/config
 
-# * Set up the installation DevOps scripts
-scp -r myrepo mc_name:.
+# Set up access to github via ssh on new machine
+scp ~/.ssh/config mc_name:./.ssh/; scp .ssh/id_dsa.github mc_name:./.ssh/
 
-# * On New Machine ensure screen is installed with appropriate environment
-#   so that any follow installation is appropriately tagged
+# Access on New Machine:
+# * Copy the installation, access files, and DevOps scripts
 ssh mc_name
-sudo yum install -y screen 
-# OR on Ubuntu # 
-sudo apt-get install -y screen
-cp myrepo/dotfiles/.screenrc .
+sudo <apt-get|yum> install -y git
+git clone git@github.com:asarcar/myrepo.git
 
+# * Ensure screen is installed with appropriate environment
+#   so that any follow installation is appropriately tagged
+sudo <apt-get|yum> install -y screen 
+pushd myrepo/
+cp dotfiles/.screenrc ~
 # * Execute the installation script inside a screen session so that you 
 #   monitor the progress from any place on NEW MACHINE
-cd myrepo/
 screen -S DevOps
 script
-./setup.centos.sh  # OR Ubuntu # ./setup.centos.sh 
+## sudo passwd is prompted if not entered before
+./setup[.centos].sh
+popd

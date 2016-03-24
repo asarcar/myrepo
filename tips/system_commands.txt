@@ -116,3 +116,12 @@ netstat -tulpn
 # dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}': gives all kernel versions installed
 sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}' | grep -ve "$(uname -r | sed -r 's/-[a-z]+//')")
 
+################
+# Service Cmds #
+################
+service --status-all
+service <service-name> {start|stop|restart|force-reload|status}
+# The old System-V style init way and upstart.
+sudo initctl list
+update-rc.d [-f] <service-name> {defaults|remove|...}
+

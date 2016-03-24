@@ -10,10 +10,12 @@
 ** EMACS: Navigate to the topmost direcory (under which all your code directories of current project are) 
    in emacs (using C-x,C-f) and type C-c s I. 
    This should create the files cscope.out and cscope.files.
-** SHELL: Create project-name.files & cscope-DB in any dir $DIR and for any project $PROJ
+** SHELL: Create cscope.files & cscope-DB in any dir $DIR
    > cd $DIR
-   > find . -name *.[chR] -o -name *.cc -o -name *.cpp -o -name *.hpp -o -name *.java -o -name *.scala -o -name *.py -o -name *.go -o -name *.php -o -name *.txt > $PROJ.files
-   > cscope -q -b -R -i $PROJ.files
+   > find $DIR -name *.[chR] -o -name *.cc -o -name *.cpp -o -name *.hpp -o -name *.java -o -name *.scala -o -name *.py -o -name *.go -o -name *.php -o -name *.txt > cscope.files # provide full path name of the DIR
+   # a. Often Emacs does not like any other name than cscope.files
+   # b. Often cscope -q option is not liked: -q option mismatch between command line and old symbol database
+   > cscope -b -R -i cscope.files
    > in-emacs-editor> "M-x cscope-set-initial-directory $DIR"
 
 * Key Bindings	   
