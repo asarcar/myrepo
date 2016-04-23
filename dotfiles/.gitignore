@@ -56,10 +56,12 @@ Release/src
 ################################
 bin
 doc
+docs
 lib
 include
 tmp
 gen
+gens
 build
 ###############
 # Built files #
