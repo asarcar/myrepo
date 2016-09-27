@@ -1,10 +1,27 @@
 Host *
   IdentitiesOnly yes
+# Use "ssh -X" instead of always turning on "ForwardX11 yes" in config
 
-# Personal 
+# Personal: Remote Connection 
 Host home
-  Hostname 76.102.32.230
+  Hostname 24.4.33.112
   Port 27227
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.personal
+
+# Personal: Local LAN
+Host zeus
+  Hostname zeus
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.personal
+
+Host aphrodite
+  Hostname aphrodite
+  User asarcar
+  IdentityFile ~/.ssh/id_dsa.personal
+
+Host artemis
+  Hostname artemis
   User asarcar
   IdentityFile ~/.ssh/id_dsa.personal
 
@@ -22,12 +39,12 @@ Host titan
 
 # AWS-14.04 Ubuntu
 Host aws
-  HostName ec2-54-200-231-18.us-west-2.compute.amazonaws.com
+  HostName ec2-54-191-65-131.us-west-2.compute.amazonaws.com
   User asarcar
-  IdentityFile ~/.ssh/sarcar_aws.pem
+  IdentityFile ~/.ssh/arijit.sarcar.aws.vm.pem
 
 Host uaws
-  HostName ec2-54-200-231-18.us-west-2.compute.amazonaws.com
+  HostName ec2-54-191-9-56.us-west-2.compute.amazonaws.com
   User ubuntu
   IdentityFile ~/.ssh/sarcar_aws.pem
 
@@ -43,7 +60,13 @@ Host heroku.com
 Host github.com
   Hostname github.com
   Port 22
-  IdentityFile ~/.ssh/id_dsa.github
+  IdentityFile ~/.ssh/id_rsa.git
+
+# Bitbucket Atlassian
+Host bitbucket.org
+  Hostname bitbucket.org
+  Port 22
+  IdentityFile ~/.ssh/id_rsa.git
 
 # Juniper
 # Work-VM: 10.160.3.71

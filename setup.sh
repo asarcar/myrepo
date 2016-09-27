@@ -123,43 +123,50 @@ sudo apt-get install -y apt-transport-https
 sudo apt-get install -y ca-certificates
 # Add GPG key
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-# WARNING: We only support Trust (14.04) and Wily (15.10) installation
+# WARNING: We only support Trust (14.04), Wily (15.10), and Xenial (16.04) installation
+dockerinstall="yes"
+modernrelease="yes"
 if [ $(lsb_release -rs) == "14.04" ]; then
-    echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" | \
-        sudo tee /etc/apt/sources.list.d/docker.list 
-    sudo apt-get install -y apparmor
+    relname="trusty"
+    modernrelease="no"
 elif [ $(lsb_release -rs) == "15.10" ]; then
-    echo "deb https://apt.dockerproject.org/repo ubuntu-wily main" | \
-    sudo tee /etc/apt/sources.list.d/docker.list 
+    relname="wily"
+elif [ $(lsb_release -rs) == "16.04" ]; then
+    relname="xenial"
 else
-    echo "Docker installation only supported for 14.04 (trusty) or 15.10 (wily)"
-    exit 2  
+    dockerinstall="no"
+    echo "Docker installation only supported for 14.04 (trusty), 15.10 (wily), or 16.04 (xenial)"
 fi
-# Purge old repo
-sudo apt-get purge lxc-docker -y
-# Update the APT package index
-sudo apt-get -y update
-# verify that APT is pulling the right repository: 
-# APT pulls from the new repo when you run apt-get upgrade 
-# > apt-cache policy docker-engine
-# linux-image-extra: allows use of aufs storage driver
-sudo apt-get install -y linux-image-extra-$(uname -r)
-# install docker & run the service
-sudo apt-get install -y docker-engine
-sudo service docker start
-# * Allow communicating with docker daemon as user
-# docker daemon listens to Unix socket owned by root 
-# create Unix group docker and add user to groups docker 
-# to allow RD/WR to the socket i.e. communication with docker group
-sudo usermod -aG docker `whoami`
-# log out and log back as that triggers user running with correct permissions
-# verify that docker may be run with sudo
-# > docker run hello-world
-# configure docker to start on boot
-# Ubuntu uses systemd as its boot and service manager 15.04 onwards and 
-# upstart for versions <14.10 - installation configures upstart for 14.04 
-if [ $(lsb_release -rs) == "15.10" ]; then
-    sudo systemctl enable docker
+
+if [ $dockerinstall == "yes" ]; then
+    echo "deb https://apt.dockerproject.org/repo ubuntu-$relname main" | \
+    sudo tee /etc/apt/sources.list.d/docker.list 
+    # Purge old repo
+    sudo apt-get purge lxc-docker -y
+    # Update the APT package index
+    sudo apt-get -y update
+    # verify that APT is pulling the right repository: 
+    # APT pulls from the new repo when you run apt-get upgrade 
+    # > apt-cache policy docker-engine
+    # linux-image-extra: allows use of aufs storage driver
+    sudo apt-get install -y linux-image-extra-$(uname -r)
+    # install docker & run the service
+    sudo apt-get install -y docker-engine
+    sudo service docker start
+    # * Allow communicating with docker daemon as user
+    # docker daemon listens to Unix socket owned by root 
+    # create Unix group docker and add user to groups docker 
+    # to allow RD/WR to the socket i.e. communication with docker group
+    sudo usermod -aG docker `whoami`
+    # log out and log back as that triggers user running with correct permissions
+    # verify that docker may be run with sudo
+    # > docker run hello-world
+    # configure docker to start on boot
+    # Ubuntu uses systemd as its boot and service manager 15.04 onwards and 
+    # upstart for versions <14.10 - installation configures upstart for 14.04 
+    if [ $modernrelease == "yes" ]; then
+	sudo systemctl enable docker
+    fi
 fi
 #################################################################################
 
@@ -172,7 +179,8 @@ fi
 sudo apt-get install -y python3-numpy python3-scipy python3-matplotlib 
 sudo apt-get install -y ipython3 ipython3-notebook python3-pandas python3-nose
 sudo apt-get install -y build-essential python3-dev python3-setuptools python3-pip
-sudo apt-get install -y libatlas-dev libatlas3gf-base
+# atlas3gf not yet available on Xenia (16.04) release
+sudo apt-get install -y libatlas-dev libatlas3-base
 # ensure atlas is used to provide the implementation of the blas and lapack linear algebra routines
 sudo update-alternatives --set libblas.so.3 /usr/lib/atlas-base/atlas/libblas.so.3
 sudo update-alternatives --set liblapack.so.3 /usr/lib/atlas-base/atlas/liblapack.so.3
@@ -345,16 +353,16 @@ sudo apt-get install -y octave gnuplot liboctave-dev
 # scala/scalac
 # sudo apt-get install -y scala
 # scala build tool (SBT)
-#> mkdir -p ~/scala
-#> pushd ~/scala
+#> mkdir -p ~/sw_installs/scala
+#> pushd ~/sw_installs/scala
 # sbt: Build tool for Scala/Java: 
 # Beware!: This specifically installs sbt-0.12.4 version
 # TODO: figure out a way to avoid "hardcoding" the version
-# wget http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.12.4/sbt.tgz
-# tar xzvf sbt.tgz
-# pushd ~/bin
-# ln -s ~/scala/sbt/bin/* .
-# popd
+#> wget http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.12.4/sbt.tgz
+#> tar xzvf sbt.tgz
+#> pushd ~/bin
+#> ln -s ~/scala/sbt/bin/* .
+#> popd
 #> popd
 # -----------------------------------------------------
 # Common C++ Development Libraries 

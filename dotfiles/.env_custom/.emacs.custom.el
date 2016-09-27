@@ -18,14 +18,14 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
-;; SCALA
-(package-initialize)
-(unless (package-installed-p 'scala-mode2)
-  (package-refresh-contents) (package-install 'scala-mode2))
+;; SCALA: Not enabled by default as AWS RAM is less - scala is a memory hog
+;; (package-initialize)
+;; (unless (package-installed-p 'scala-mode2)
+;;   (package-refresh-contents) (package-install 'scala-mode2))
 ;; SBT
-(package-initialize)
-(unless (package-installed-p 'sbt-mode)
-  (package-refresh-contents) (package-install 'sbt-mode))
+;; (package-initialize)
+;; (unless (package-installed-p 'sbt-mode)
+;;  (package-refresh-contents) (package-install 'sbt-mode))
 ;; ---------------------------------
 
 ;; ------------------------------------

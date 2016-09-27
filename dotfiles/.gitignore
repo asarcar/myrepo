@@ -55,8 +55,6 @@ Release/src
 # SW Dev Generated Directories #
 ################################
 bin
-doc
-docs
 lib
 include
 tmp
