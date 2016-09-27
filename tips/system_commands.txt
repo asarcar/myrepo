@@ -115,6 +115,7 @@ netstat -tulpn
 # uname -r | sed -r 's/-[a-z]+//': gives current kernel version 
 # dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}': gives all kernel versions installed
 sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}' | grep -ve "$(uname -r | sed -r 's/-[a-z]+//')")
+sudo update-grub2 
 
 ################
 # Service Cmds #

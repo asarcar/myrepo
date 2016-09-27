@@ -28,12 +28,16 @@ named-checkzone saralnet.com /var/lib/bind/fwd.db.saralnet.com
 named-checkzone 230.32.102.76.in-addr.arpa /var/lib/bind/rev.db.230.32.102.76.in-addr.arpa
 
 * sudo /etc/init.d/bind9 start
+# Undo: sudo /etc/init.d/bind9 stop OR sudo service bind9 stop
+# Review: service bind9 status
 
 * Validate by perusing log file: 
 tail -f /var/log/syslog | grep named
 
 * Ensure: DNS service is always started on boot:
 sudo update-rc.d bind9 defaults 
+# Undo: sudo update-rc.d -f bind9 remove
+# Review: Creation of File: /etc/init.d/bind9
 
 
 DNS Client Installation

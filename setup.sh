@@ -110,7 +110,8 @@ sudo apt-get install -y devscripts
 sudo apt-get install -y tkcvs
 # bridge utilities allows one to run brctl functions
 sudo apt-get install -y bridge-utils
-
+# clip for copy and paste: cat xyz | xclip -sel clip
+sudo apt-get install -y xclip
 #################################################################################
 # Docker Installation: https://docs.docker.com/engine/installation/linux/centos/
 # dockers: allows dev and sysadmins to dev, ship, and run applications.
@@ -165,6 +166,26 @@ fi
 ############################
 # sw Development Utilities #
 ############################
+# -----------------------------------------------------
+# Common python3 utilities
+# packaged with Ubuntu versions 14.04 
+sudo apt-get install -y python3-numpy python3-scipy python3-matplotlib 
+sudo apt-get install -y ipython3 ipython3-notebook python3-pandas python3-nose
+sudo apt-get install -y build-essential python3-dev python3-setuptools python3-pip
+sudo apt-get install -y libatlas-dev libatlas3gf-base
+# ensure atlas is used to provide the implementation of the blas and lapack linear algebra routines
+sudo update-alternatives --set libblas.so.3 /usr/lib/atlas-base/atlas/libblas.so.3
+sudo update-alternatives --set liblapack.so.3 /usr/lib/atlas-base/atlas/liblapack.so.3
+# --user: avoids root permission by installin in $home/.local to ignore old scikit-learn installation 
+# while for numpy and scipy. 
+# --install-option="--prefix=" required if python has a distutils.cfg cfg with prefix= entry.
+pip3 install --user --install-option="--prefix=" --upgrade scikit-learn
+pip3 install --user --install-option="--prefix=" --upgrade Flask
+# -----------------------------------------------------
+
+# Install latest compile accelerators
+sudo apt-get install -y cmake distcc ccache
+
 # -----------------------------------------------------
 # Common C++ Compilers: Moved far ahead of installations that 
 # require these tools to ensure completion of all installation activity
