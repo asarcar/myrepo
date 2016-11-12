@@ -176,16 +176,20 @@ fi
 # sw Development Utilities #
 ############################
 # -----------------------------------------------------
-# Common python3 utilities
+# Common python utilities
 # packaged with Ubuntu versions 14.04 
 
+sudo apt-get install -y build-essential 
 # Python2 Libraries
-sudo apt-get install -y python-setuptools python-pip python-numpy
+sudo apt-get install -y python-numpy python-scipy python-matplotlib python-tk 
+sudo apt-get install -y ipython ipython-notebook python-pandas python-nose
+sudo apt-get install -y python-dev python-setuptools python-pip
 
 # Python3 Libraries
-sudo apt-get install -y python3-numpy python3-scipy python3-matplotlib 
+sudo apt-get install -y python3-numpy python3-scipy python3-matplotlib python3-tk 
 sudo apt-get install -y ipython3 ipython3-notebook python3-pandas python3-nose
-sudo apt-get install -y build-essential python3-dev python3-setuptools python3-pip
+sudo apt-get install -y python3-dev python3-setuptools python3-pip
+
 # Audio libraries
 sudo apt-get install -y sudo apt-get install -y portaudio19-dev
 
@@ -193,10 +197,16 @@ sudo apt-get install -y sudo apt-get install -y portaudio19-dev
 sudo easy_install pip
 
 # upgrade to the latest version of pip
-sudo pip install --upgrade pip
-
-# Jupyter Notebook
+sudo -H pip install --upgrade pip
+# elpy: Backend for the elpy Emacs mode
+# jedi: autocompletion tool; rope: python refactoring library
+sudo -H pip install --upgrade elpy jedi rope
+# Jupyter Notebook: install python2 and python3 kernels
 sudo -H pip3 install jupyter
+sudo -H python2 -m pip install ipykernel
+sudo -H python3 -m pip install ipykernel
+python2 -m ipykernel install --user
+python3 -m ipykernel install --user
 
 # atlas3gf not yet available on Xenia (16.04) release
 sudo apt-get install -y libatlas-dev libatlas3-base

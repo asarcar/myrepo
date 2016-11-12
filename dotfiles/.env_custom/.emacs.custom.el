@@ -14,23 +14,36 @@
 ;; ---------------------------------
 ;; Package within Emacs Installation 
 ;; ---------------------------------
-;; MELPA (or Marmalade) Repository
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-;; SCALA: Not enabled by default as AWS RAM is less - scala is a memory hog
-;; (package-initialize)
-;; (unless (package-installed-p 'scala-mode2)
-;;   (package-refresh-contents) (package-install 'scala-mode2))
-;; SBT
-;; (package-initialize)
-;; (unless (package-installed-p 'sbt-mode)
-;;  (package-refresh-contents) (package-install 'sbt-mode))
-;; ---------------------------------
+;; First time emacs load may take some time
+;; as the packages are fetched and installed.
+(when (>= emacs-major-version 24)
+  (require 'package)
+  ; list the packages you want
+  (setq package-list '(ein elpy iedit scala-mode sbt-mode))
 
+  ; list the repositories containing them
+  ;; (add-to-list
+  ;;  'package-archives
+  ;;  '("melpa" . "http://melpa.org/packages/") t)
+  (setq
+   package-archives
+   '(("gnu" . "http://elpa.gnu.org/packages/")
+     ("marmalade" . "http://marmalade-repo.org/packages/")
+     ("melpa" . "http://melpa.org/packages/")
+     ("elpy" . "http://jorgenschaefer.github.io/packages/")))
+    
+  ; initialize package
+  (package-initialize)
+  ; fetch the list of packages available
+  (unless package-archive-contents
+    (package-refresh-contents))
+  ; install the missing packages
+  (dolist (package package-list)
+    (unless (package-installed-p package)
+      (package-install package))))
 ;; ------------------------------------
 ;; Programming Language Specific Hooks
-;; ------------------------------------5B
+;; ------------------------------------
 ;; CSCOPE
 ;; Load cscope support
 (require 'xcscope)
@@ -161,6 +174,41 @@
   ;; (https://github.com/nsf/gocode) and yasnippet-go
   ;; (https://github.com/dominikh/yasnippet-go)
 ))
+
+;; Python Hook
+(add-hook 'python-mode-hook (lambda ()
+  (setq python-indent-offset 2)
+  (setq python-indent 2)
+  (setq python-guess-indent . nil)
+  (setq indent-tabs-mode . nil)
+  (setq tab-width 2)
+))
+
+;; Python ELPY
+(require 'json)
+(require 'elpy)
+(elpy-enable)
+(global-set-key [?\C-<] 'elpy-nav-backward-block)
+(global-set-key [?\C->] 'elpy-nav-forward-block)
+(global-set-key [M-right] 'elpy-nav-forward-indent)
+(global-set-key [C-M-right] 'elpy-nav-move-iblock-right)
+
+;; Fixing bug:
+;; (a) elpy key binding snippet expansion
+;; (a) key binding in iedit mode
+(define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
+(define-key global-map (kbd "C-c o") 'iedit-mode)
+
+;; iPYTHON NOTEBOOK
+(elpy-use-ipython)
+;; IPython 5 has a new terminal interface, which is not compatible
+;; with Emacs' inferior shells. Fix it, add the --simple-prompt
+(setq python-shell-interpreter "ipython"
+  python-shell-interpreter-args "--simple-prompt -i")
+;; iPYTHON NOTEBOOK
+(require 'ein)
+(global-set-key "\C-ce" 'ein:notebooklist-open)
+(set-variable 'ein:use-auto-complete-superpack t)
 
 
 
