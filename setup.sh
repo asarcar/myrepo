@@ -190,35 +190,40 @@ sudo apt-get install -y python3-numpy python3-scipy python3-matplotlib python3-t
 sudo apt-get install -y ipython3 ipython3-notebook python3-pandas python3-nose
 sudo apt-get install -y python3-dev python3-setuptools python3-pip
 
-# Audio libraries
-sudo apt-get install -y sudo apt-get install -y portaudio19-dev
-
-# Link al the appropriate pip/pip3/pip3.5 scripts in /usr/local/bin
-sudo easy_install pip
-
 # upgrade to the latest version of pip
 sudo -H pip install --upgrade pip
+sudo -H pip3 install --upgrade pip
+
 # elpy: Backend for the elpy Emacs mode
 # jedi: autocompletion tool; rope: python refactoring library
 sudo -H pip install --upgrade elpy jedi rope
+sudo -H pip3 install --upgrade elpy jedi rope
+
 # Jupyter Notebook: install python2 and python3 kernels
-sudo -H pip3 install jupyter
+sudo -H pip install --upgrade jupyter
+sudo -H pip3 install --upgrade jupyter
 sudo -H python2 -m pip install ipykernel
 sudo -H python3 -m pip install ipykernel
 python2 -m ipykernel install --user
 python3 -m ipykernel install --user
 
+# Linary Algebra & ML Packages
 # atlas3gf not yet available on Xenia (16.04) release
 sudo apt-get install -y libatlas-dev libatlas3-base
-# ensure atlas is used to provide the implementation of the blas and lapack linear algebra routines
+# ensure atlas is used to provide the implementation
+# of the blas and lapack linear algebra routines
 sudo update-alternatives --set libblas.so.3 /usr/lib/atlas-base/atlas/libblas.so.3
 sudo update-alternatives --set liblapack.so.3 /usr/lib/atlas-base/atlas/liblapack.so.3
+
+sudo -H pip install --upgrade scikit-learn
+sudo -H pip3 install --upgrade scikit-learn
+
 # --user: avoids root permission by installing in ~/.local
 # to ignore old scikit-learn installation while for numpy and scipy. 
 # --install-option="--prefix=" required if python has a distutils.cfg cfg with prefix= entry.
-pip3 install --user --install-option="--prefix=" --upgrade scikit-learn
-pip3 install --user --install-option="--prefix=" --upgrade Flask
-pip3 install --user --install-option="--prefix=" --upgrade pyaudio
+# pip3 install --user --install-option="--prefix=" --upgrade scikit-learn
+# pip3 install --user --install-option="--prefix=" --upgrade Flask
+# pip3 install --user --install-option="--prefix=" --upgrade pyaudio
 # -----------------------------------------------------
 
 # Install latest compile accelerators
