@@ -245,7 +245,7 @@ sudo apt-get install -y cmake distcc ccache
 # https://launchpad.net/~cassou/+archive/emacs
 # Firewall blocks ports other than 80: getting the keyserver via port 80
 sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CEC45805
-sudo apt-add-repository -y ppa:cassou/emacs
+sudo apt-add-repository -y ppa:ubuntu-elisp/ppa
 sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
 # Install cscope
 sudo apt-get install -y cscope cscope-el
@@ -384,21 +384,14 @@ sudo apt-get install -y octave gnuplot liboctave-dev
 ##############################
 # NOT INSTALLED
 # -----------------------------------------------------
-# No point in install scala in AWS EC2 micro VMs: not enough memory
-# scala/scalac
-# sudo apt-get install -y scala
-# scala build tool (SBT)
-#> mkdir -p ~/sw_installs/scala
-#> pushd ~/sw_installs/scala
-# sbt: Build tool for Scala/Java: 
-# Beware!: This specifically installs sbt-0.12.4 version
-# TODO: figure out a way to avoid "hardcoding" the version
-#> wget http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.12.4/sbt.tgz
-#> tar xzvf sbt.tgz
-#> pushd ~/bin
-#> ln -s ~/scala/sbt/bin/* .
-#> popd
-#> popd
+# No point in install scala in AWS EC2 micro VMs:
+# not enough memory
+# scala/scalac/sbt
+sudo apt-get install -y scala
+echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+sudo apt-get update
+sudo apt-get install sbt
 # -----------------------------------------------------
 # Common C++ Development Libraries 
 # Install common C++ packages: boost
