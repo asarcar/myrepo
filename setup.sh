@@ -68,6 +68,7 @@ sudo apt-get install -y rar
 #############
 # Utilities #
 #############
+sudo apt-get install -y openssh-client openssh-server
 # locate: helps find a file anywhere in the already mounted filesystem
 sudo apt-get install -y locate
 # tree: displays directory tree in color
@@ -190,6 +191,7 @@ sudo apt-get install -y python3-numpy python3-scipy python3-matplotlib python3-t
 sudo apt-get install -y ipython3 ipython3-notebook python3-pandas python3-nose
 sudo apt-get install -y python3-dev python3-setuptools python3-pip
 
+# remove pip installed in /usr/local/bin as it points to 3.5
 # upgrade to the latest version of pip
 sudo -H pip install --upgrade pip
 sudo -H pip3 install --upgrade pip

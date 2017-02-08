@@ -19,7 +19,7 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   ; list the packages you want
-  (setq package-list '(ein elpy iedit scala-mode sbt-mode))
+  (setq package-list '(auto-complete ein elpy iedit scala-mode sbt-mode))
 
   ; list the repositories containing them
   ;; (add-to-list
