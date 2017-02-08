@@ -115,6 +115,8 @@ sudo apt-get install -y bridge-utils
 sudo apt-get install -y xclip
 # clip for copy and paste: cat xyz | xclip -sel clip
 sudo apt-get install -y ngrok-client
+# texlive: selection of TeX Live packages - useful for LaTEX
+sudo apt-get install -y texlive
 #################################################################################
 # Docker Installation: https://docs.docker.com/engine/installation/linux/centos/
 # dockers: allows dev and sysadmins to dev, ship, and run applications.
