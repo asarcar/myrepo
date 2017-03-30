@@ -3,21 +3,42 @@ Host *
 # Use "ssh -X" instead of always turning on "ForwardX11 yes" in config
 
 # Personal: Remote Connection 
-Host home
+Host hzeus
   Hostname 24.4.33.112
   Port 27227
   User asarcar
   IdentityFile ~/.ssh/id_rsa.personal
 
-# Personal: Local LAN
+Host weos
+  Hostname 73.71.156.183
+  Port 27227
+  User asarcar
+  IdentityFile ~/.ssh/id_rsa.personal
+
+Host wathena
+  Hostname 73.71.156.183
+  Port 27107
+  User asarcar
+  IdentityFile ~/.ssh/id_rsa.personal
+
+# Personal: Local Connnection
 Host zeus
   Hostname zeus
   User asarcar
   IdentityFile ~/.ssh/id_rsa.personal
 
-# Windows/Ubuntu
 Host titan
-  HostName titan
+  Hostname titan
+  User asarcar
+  IdentityFile ~/.ssh/id_rsa.personal
+
+Host athena
+  Hostname athena
+  User asarcar
+  IdentityFile ~/.ssh/id_rsa.personal
+
+Host eos
+  Hostname eos
   User asarcar
   IdentityFile ~/.ssh/id_rsa.personal
 

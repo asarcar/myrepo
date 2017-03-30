@@ -117,6 +117,8 @@ sudo apt-get install -y xclip
 sudo apt-get install -y ngrok-client
 # texlive: selection of TeX Live packages - useful for LaTEX
 sudo apt-get install -y texlive
+# dvipng: convert DVI files to PNG graphics
+sudo apt-get install -y dvipng
 #################################################################################
 # Docker Installation: https://docs.docker.com/engine/installation/linux/centos/
 # dockers: allows dev and sysadmins to dev, ship, and run applications.
@@ -251,8 +253,8 @@ sudo apt-get install -y cmake distcc ccache
 sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CEC45805
 sudo apt-add-repository -y ppa:ubuntu-elisp/ppa
 sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
-# Install cscope
-sudo apt-get install -y cscope cscope-el
+# Install cscope xcscope
+sudo apt-get install -y cscope cscope-el xcscope-el
 # gdb: GNU debugger
 sudo apt-get install -y gdb
 #

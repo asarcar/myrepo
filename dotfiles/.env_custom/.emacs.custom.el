@@ -1,4 +1,10 @@
 ;; -------
+;; COLORS
+;; -------
+(add-to-list 'default-frame-alist '(foreground-color . "black"))
+(add-to-list 'default-frame-alist '(background-color . "white"))
+
+;; -------
 ;; EDITING 
 ;; -------
 (global-set-key (kbd "C-?") 'help-command)  
@@ -22,15 +28,13 @@
   (setq package-list '(auto-complete ein elpy iedit scala-mode sbt-mode))
 
   ; list the repositories containing them
-  ;; (add-to-list
-  ;;  'package-archives
-  ;;  '("melpa" . "http://melpa.org/packages/") t)
   (setq
    package-archives
-   '(("gnu" . "http://elpa.gnu.org/packages/")
-     ("marmalade" . "http://marmalade-repo.org/packages/")
-     ("melpa" . "http://melpa.org/packages/")
-     ("elpy" . "http://jorgenschaefer.github.io/packages/")))
+   '(
+     ("gnu" . "http://elpa.gnu.org/packages/")
+     ("melpa" . "https://stable.melpa.org/packages/")
+    )
+   )
     
   ; initialize package
   (package-initialize)
@@ -210,6 +214,5 @@
 (global-set-key "\C-ce" 'ein:notebooklist-open)
 (set-variable 'ein:use-auto-complete-superpack t)
 
-
-
-
+;; Emacs ORG Mode: display latex images
+(setq org-latex-create-formula-image-program 'dvipng)
