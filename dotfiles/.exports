@@ -40,8 +40,8 @@ if [ -d $HOME/scbdb ]; then
   export SCBDB_HOME=$HOME/scbdb
 fi
 
-if [ -d $HOME/git ]; then
-  export GIT_HOME=$HOME/git
+if [ -d $HOME/ws ]; then
+  export GIT_HOME=$HOME/ws
 fi
 
 if [ -d $GIT_HOME/go_test ]; then
