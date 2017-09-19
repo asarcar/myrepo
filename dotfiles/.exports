@@ -2,10 +2,6 @@
 export EDITOR='emacs -nw'
 export VISUAL='emacs -nw' 
 
-# grep options
-export GREP_OPTIONS='--color=auto'
-export GREP_COLOR='1;31' # green for matches
-
 # sort options
 # Ensures cross-platform sorting behavior of GNU sort.
 # http://www.gnu.org/software/coreutils/faq/coreutils-faq.html#Sort-does-not-sort-in-normal-order_0021
@@ -27,9 +23,6 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
-
-# Always enable colored `grep` output.
-export GREP_OPTIONS='--color=auto';
 
 # Miscellaneous
 if [ -d $HOME/public_html ]; then

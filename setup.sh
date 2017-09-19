@@ -119,6 +119,17 @@ sudo apt-get install -y ngrok-client
 sudo apt-get install -y texlive
 # dvipng: convert DVI files to PNG graphics
 sudo apt-get install -y dvipng
+
+# rdp: remote desktop for viewing GUI apps
+sudo apt-get install -y xrdp
+sudo apt-get install -y xfce4 
+# Direct xRDP to use xFCE4
+echo xfce4-session | tee -a $HOME/.xsession
+# Direct xRDP to start xFCE4
+echo startxfce4 | sudo tee -a /etc/xrdp/startwm.sh
+sudo service xrdp restart
+
+ 
 #################################################################################
 # Docker Installation: https://docs.docker.com/engine/installation/linux/centos/
 # dockers: allows dev and sysadmins to dev, ship, and run applications.
