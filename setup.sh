@@ -119,6 +119,8 @@ sudo apt-get install -y ngrok-client
 sudo apt-get install -y texlive
 # dvipng: convert DVI files to PNG graphics
 sudo apt-get install -y dvipng
+# dnsutils: dig, nslookup, and nsupdate
+sudo apt-get install -y dnsutils
 
 # rdp: remote desktop for viewing GUI apps
 sudo apt-get install -y xrdp
