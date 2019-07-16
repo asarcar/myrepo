@@ -23,8 +23,28 @@ alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 alias which='which -a'
 
+#---------------------------
+# Disk Space usage/free
+#---------------------------
 alias du='du -kh'    # Makes a more readable output.
 alias df='df -kTh'
+
+#--------------------------
+# Network ports
+#--------------------------
+alias nets='sudo netstat -tulpn'
+alias ipaddr='ip addr' # shows current IP address 
+
+#--------------------------
+# System
+#--------------------------
+alias un='uname -a'
+alias ps='ps aux'
+alias svcinfo='systemctl status '
+# 'htop' - graphical representatio of top - shows all processes with CPU/MEM utilization
+# mounts:
+#   mount /dev/sda2 /mnt; mount shows all existing mounts
+#   /etc/fstab shows all bootable mounts
 
 #-------------------------------------------------------------
 # The 'ls' family (this assumes you use a recent GNU ls).
