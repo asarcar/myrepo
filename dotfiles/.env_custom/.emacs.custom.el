@@ -25,7 +25,8 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   ; list the packages you want
-  (setq package-list '(auto-complete ein elpy iedit scala-mode sbt-mode))
+  ; ORY ein causing issues; (setq package-list '(auto-complete ein elpy iedit scala-mode sbt-mode))
+  (setq package-list '(auto-complete elpy go-mode iedit scala-mode sbt-mode))
 
   ; list the repositories containing them
   (setq
@@ -50,8 +51,8 @@
 ;; ------------------------------------
 ;; CSCOPE
 ;; Load cscope support
-(require 'xcscope)
-(setq cscope-do-not-update-database t)
+; ORY xscope causing issues; (require 'xcscope)
+; ORY (setq cscope-do-not-update-database t)
 
 ;; Next-Error function is bound to "C-x `": remap if necessary
 ;; (global-set-key (kbd "M-'") 'next-error)
@@ -204,15 +205,20 @@
 (define-key global-map (kbd "C-c o") 'iedit-mode)
 
 ;; iPYTHON NOTEBOOK
-(elpy-use-ipython)
+; ORY elpy with iPython5 causing issues; (elpy-use-ipython)
+(setq python-shell-interpreter "jupyter"
+      python-shell-interpreter-args "console --simple-prompt"
+      python-shell-prompt-detect-failure-warning nil)
+(add-to-list 'python-shell-completion-native-disabled-interpreters
+	                  "jupyter")
 ;; IPython 5 has a new terminal interface, which is not compatible
 ;; with Emacs' inferior shells. Fix it, add the --simple-prompt
-(setq python-shell-interpreter "ipython"
-  python-shell-interpreter-args "--simple-prompt -i")
+; ORY (setq python-shell-interpreter "ipython"
+; ORY       python-shell-interpreter-args "--simple-prompt -i")
 ;; iPYTHON NOTEBOOK
-(require 'ein)
-(global-set-key "\C-ce" 'ein:notebooklist-open)
-(set-variable 'ein:use-auto-complete-superpack t)
+; ORY (require 'ein)
+; ORY (global-set-key "\C-ce" 'ein:notebooklist-open)
+; ORY (set-variable 'ein:use-auto-complete-superpack t)
 
 ;; Emacs ORG Mode: display latex images
 (setq org-latex-create-formula-image-program 'dvipng)

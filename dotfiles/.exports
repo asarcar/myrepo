@@ -37,7 +37,7 @@ if [ -d $HOME/ws ]; then
   export GIT_HOME=$HOME/ws
 fi
 
-if [ -d $GIT_HOME/go_test ]; then
-  export GOPATH=$GIT_HOME/go_test
+if [ -d $GIT_HOME/go ]; then
+  export GOPATH=$GIT_HOME/go
 fi
 

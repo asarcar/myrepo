@@ -260,12 +260,12 @@ sudo apt-get install -y gcc
 sudo apt-get install -y cmake distcc ccache
 
 # -----------------------------------------------------
-# Install emacs24
+# Install emacs25
 # https://launchpad.net/~cassou/+archive/emacs
 # Firewall blocks ports other than 80: getting the keyserver via port 80
 sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CEC45805
 sudo apt-add-repository -y ppa:ubuntu-elisp/ppa
-sudo apt-get install -y emacs24 emacs24-el emacs24-common-non-dfsg
+sudo apt-get install -y emacs25 emacs25-el emacs25-common-non-dfsg
 # Install cscope xcscope
 sudo apt-get install -y cscope cscope-el xcscope-el
 # gdb: GNU debugger
